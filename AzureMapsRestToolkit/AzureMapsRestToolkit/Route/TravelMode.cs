@@ -5,13 +5,28 @@
     /// </summary>
     public enum TravelMode
     {
-        bicycle,
-        bus,
-        car,
-        motorcycle,
-        pedestrian,
-        taxi,
-        truck,
-        van
+        [NameArgument("bicycle")]
+        Bicycle,
+
+        [NameArgument("bus")]
+        Bus,
+
+        [NameArgument("car")]
+        Car,
+
+        [NameArgument("motorcycle")]
+        Motorcycle,
+
+        [NameArgument("pedestrian")]
+        Pedestrian,
+
+        [NameArgument("taxi")]
+        Taxi,
+
+        [NameArgument("truck")]
+        Truck,
+
+        [NameArgument("van")]
+        Van
     }
 }

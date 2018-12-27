@@ -14,7 +14,7 @@ namespace AzureMapsToolkit_Core_Test
 {
     public class UnitTest
     {
-        public const string _KEY = "";
+        public const string _KEY = "fyPo4BWO5PvgFLPL6myK9wVWJrrxGcMjOi39FBGORh0";
 
         [Fact]
         public void InvalidIPCountry()
@@ -149,6 +149,7 @@ namespace AzureMapsToolkit_Core_Test
             var req = new RouteRequestDirections
             {
                 Query = "52.50931,13.42936:52.50274,13.43872",
+                VehicleEngineType = VehicleEngineType.Combustion
             };
             var directions = am.GetRouteDirections(req).Result;
             Assert.NotNull(directions);
@@ -178,8 +179,8 @@ namespace AzureMapsToolkit_Core_Test
             req.Add(new RouteRequestDirections
             {
                 Query = "47.639987,-122.128384:47.621252,-122.184408:47.596437,-122.332000",
-                RouteType = RouteType.fastest,
-                TravelMode = TravelMode.car
+                RouteType = RouteType.Fastest,
+                TravelMode = TravelMode.Car
             });
 
             var result = am.GetRouteDirections(req).Result;
@@ -198,7 +199,7 @@ namespace AzureMapsToolkit_Core_Test
 
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
             var req = new RouteMatrixRequest();
-            req.RouteType = RouteType.fastest;
+            req.RouteType = RouteType.Fastest;
 
             var origins = new List<Coordinate> {
                 new Coordinate { Longitude = 4.85106f, Latitude = 52.36006f }
