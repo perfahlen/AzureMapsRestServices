@@ -10,17 +10,15 @@ namespace AzureMapsToolkit.Common
         /// <summary>
         /// Internal combustion engine.
         /// </summary>
-         combustion,
-
-        //[JsonProperty("combustion")]
-        //public string Combustion { get; set; }
+        [NameArgument("combustion")]
+         Combustion,
+        
 
         /// <summary>
         /// Electric engine.
         /// </summary>
-        electric
+        [NameArgument("electric")]
+        Electric
 
-        //[JsonProperty("electric")]
-        //public string Electric { get; set; }
     }
 }

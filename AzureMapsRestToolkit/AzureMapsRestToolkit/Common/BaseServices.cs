@@ -95,27 +95,27 @@ namespace AzureMapsRestToolkit.Common
                     var argumentName = string.Empty;
                     var argumentValue = string.Empty;
 
+                    var underLayingtype = Nullable.GetUnderlyingType(propertyInfo.PropertyType);
 
-                    if (propertyInfo.PropertyType.IsEnum)
+                    if (underLayingtype != null && underLayingtype.IsEnum)
                     {
-                        var attr = (propertyInfo.PropertyType
-                            .GetMember(propertyInfo.PropertyType.GetEnumName(propertyInfo.GetValue(request)))
-                            .FirstOrDefault());
-
-                        if (attr != null)
-                            argumentValue = (attr.GetCustomAttributes(typeof(NameArgument), false).FirstOrDefault() as NameArgument)?.Name;
-                    }
-
-                    var attribute = propertyInfo.GetCustomAttributes(typeof(NameArgument), false);
-                    if (attribute.Length > 0)
-                        argumentName = ((NameArgument)attribute[0]).Name;
-
-                    if (argumentName == string.Empty)
                         argumentName = Char.ToLower(propertyInfo.Name[0]) + propertyInfo.Name.Substring(1);
+                        argumentValue = (propertyInfo.GetValue(request).GetType().GetMember(propertyInfo.GetValue(request).ToString())?.FirstOrDefault().GetCustomAttributes(typeof(NameArgument), false).FirstOrDefault() as NameArgument).Name;
+                    }
+                    else
+                    {
+
+                        var attribute = propertyInfo.GetCustomAttributes(typeof(NameArgument), false);
+                        if (attribute.Length > 0)
+                            argumentName = ((NameArgument)attribute[0]).Name;
+
+                        if (argumentName == string.Empty)
+                            argumentName = Char.ToLower(propertyInfo.Name[0]) + propertyInfo.Name.Substring(1);
 
 
-                    if (string.IsNullOrEmpty(argumentValue))
-                        argumentValue = propertyInfo.GetValue(request).ToString();
+                        if (string.IsNullOrEmpty(argumentValue))
+                            argumentValue = propertyInfo.GetValue(request).ToString();
+                    }
 
                     arguments += $"{firstChar}{argumentName}={argumentValue}";
                     firstChar = '&';
@@ -125,7 +125,7 @@ namespace AzureMapsRestToolkit.Common
         }
 
 
-        
+
 
         internal async Task<byte[]> GetByteArray(string baseAddress, string url)
         {
