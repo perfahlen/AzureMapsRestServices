@@ -282,13 +282,12 @@ namespace AzureMapsToolkit_Core_Test
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
             var req = new SearchAddressStructuredRequest
             {
-                // eNE%2024th%20Street&municipality=Redmond&countrySubdivision=WA&postalCode=98052
-                CountryCode = "US",
-                StreetNumber = "15127",
-                StreetName = "NE 24th Street",
-                Municipality = "Redmond",
-                PostalCode = "98052",
-                CountrySubdivision = "WA"
+                CountryCode = "SE",
+                StreetNumber = "10",
+                StreetName = "Storgatan",
+                Municipality = "Sundsvall",
+                PostalCode = "85230",
+                CountrySubdivision = "Sundsvall"
 
             };
             var result = am.GetSearchAddressStructured(req).Result;
