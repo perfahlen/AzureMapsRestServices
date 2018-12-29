@@ -14,7 +14,7 @@ namespace AzureMapsToolkit_Core_Test
 {
     public class UnitTest
     {
-        public const string _KEY = "fyPo4BWO5PvgFLPL6myK9wVWJrrxGcMjOi39FBGORh0";
+        public const string _KEY = "";
 
         [Fact]
         public void InvalidIPCountry()
