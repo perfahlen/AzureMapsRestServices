@@ -19,6 +19,7 @@ Exception is captures by the library and if any exceptions captured it will be r
 ## Example
 Search address example
 ```
+var am = new AzureMapsToolkit.AzureMapsServices('<Azure Maps Key>');
 var searchAddressRequest = new SearchAddressRequest
 {
    Query = "15127 NE 24th Street,Redmond, WA 98052",
