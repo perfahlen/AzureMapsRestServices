@@ -9,7 +9,7 @@ using AzureMapsToolkit.Search;
 using AzureMapsToolkit.Timezone;
 using AzureMapsToolkit.Traffic;
 using AzureMapsToolkit.Geolocation;
-using AzureMapsRestToolkit.Common;
+using AzureMapsToolkit.Common;
 
 namespace AzureMapsToolkit
 {

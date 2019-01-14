@@ -9,7 +9,7 @@ using System.Linq;
 using System.Net.Http.Headers;
 using AzureMapsToolkit;
 
-namespace AzureMapsRestToolkit.Common
+namespace AzureMapsToolkit.Common
 {
     public class BaseServices
     {
