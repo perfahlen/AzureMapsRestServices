@@ -2,6 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Description>.Net standard library for Azure Maps Services</Description>
+    <PackageProjectUrl>https://github.com/perfahlen/AzureMapsRestServices</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/perfahlen/AzureMapsRestServices/blob/master/LICENSE</PackageLicenseUrl>
+    <RepositoryUrl>https://github.com/perfahlen/AzureMapsRestServices</RepositoryUrl>
+    <RepositoryType>GIT</RepositoryType>
+    <PackageTags>Azure Maps REST Toolkit</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>

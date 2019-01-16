@@ -1,5 +1,4 @@
-﻿using AzureMapsToolkit.Common;
-using AzureMapsToolkit.GeoJson;
+﻿using AzureMapsToolkit.GeoJson;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -7,9 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Linq;
 using System.Net.Http.Headers;
-using AzureMapsToolkit;
 
-namespace AzureMapsRestToolkit.Common
+namespace AzureMapsToolkit.Common
 {
     public class BaseServices
     {
