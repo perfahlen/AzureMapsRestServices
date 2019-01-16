@@ -585,7 +585,7 @@ namespace AzureMapsToolkit_Core_Test
 
             Assert.Null(r.Error);
 
-            Assert.Equal(5, r.Result.Count());
+            Assert.Equal(6, r.Result.Count());
         }
 
         [Fact]
