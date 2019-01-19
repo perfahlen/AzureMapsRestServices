@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureMapsToolkit-Core-Test"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureMapsRestToolkit", "AzureMapsRestToolkit\AzureMapsRestToolkit\AzureMapsRestToolkit.csproj", "{A60A5943-85BE-45C5-8927-0A5EDBAC5676}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp1", "..\..\..\am-verify\ConsoleApp1\ConsoleApp1.csproj", "{B1C10C47-20E9-4F9B-81C6-069FE73B4358}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{A60A5943-85BE-45C5-8927-0A5EDBAC5676}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A60A5943-85BE-45C5-8927-0A5EDBAC5676}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A60A5943-85BE-45C5-8927-0A5EDBAC5676}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B1C10C47-20E9-4F9B-81C6-069FE73B4358}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B1C10C47-20E9-4F9B-81C6-069FE73B4358}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B1C10C47-20E9-4F9B-81C6-069FE73B4358}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B1C10C47-20E9-4F9B-81C6-069FE73B4358}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
