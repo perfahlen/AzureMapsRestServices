@@ -654,6 +654,7 @@ namespace AzureMapsToolkit
         {
             try
             {
+                Url = string.Empty;
                 var baseAddress = "https://atlas.microsoft.com/traffic/flow/tile/png";
                 Url += GetQuery<TrafficFlowTileRequest>(req, true);
 
@@ -691,6 +692,7 @@ namespace AzureMapsToolkit
         {
             try
             {
+                Url = string.Empty;
                 var baseAddress = "https://atlas.microsoft.com/traffic/incident/tile/png";
                 Url += GetQuery<TrafficIncidentTileRequest>(req, true);
 

@@ -137,6 +137,7 @@ namespace AzureMapsToolkit.Common
 
         internal async Task<Response<T>> ExecuteRequest<T, U>(string baseUrl, U req) where U : RequestBase
         {
+            Url = string.Empty;
             try
             {
                 Url += GetQuery<U>(req, true);
