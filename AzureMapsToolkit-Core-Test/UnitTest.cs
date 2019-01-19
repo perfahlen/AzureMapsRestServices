@@ -148,11 +148,25 @@ namespace AzureMapsToolkit_Core_Test
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
             var req = new RouteRequestDirections
             {
+                Query = "52.50931,13.42936:52.50274,13.43872"
+            };
+            var directions = am.GetRouteDirections(req).Result;
+            Assert.Null(directions.Error);
+            Assert.NotNull(directions.Result);
+        }
+
+        [Fact]
+        public void GetRouteDirectionsError()
+        {
+
+            var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
+            var req = new RouteRequestDirections
+            {
                 Query = "52.50931,13.42936:52.50274,13.43872",
                 VehicleEngineType = VehicleEngineType.Combustion
             };
             var directions = am.GetRouteDirections(req).Result;
-            Assert.NotNull(directions);
+            Assert.NotNull(directions.Error);
         }
 
         [Fact]

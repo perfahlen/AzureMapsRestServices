@@ -148,7 +148,7 @@ namespace AzureMapsToolkit.Common
                     return response;
                 }
             }
-            catch (Exception ex)
+            catch (AzureMapsException ex)
             {
                 return Response<T>.CreateErrorResponse(ex);
             }
@@ -174,9 +174,22 @@ namespace AzureMapsToolkit.Common
 
         async Task<T> GetData<T>(HttpClient client, string url)
         {
-            var json = await client.GetStringAsync(url);
-            var val = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(json);
-            return val;
+            var res = await client.GetAsync(url);
+            if (res.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                var json = res.Content.ReadAsStringAsync().Result;
+                var val = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(json);
+                return val;
+            }
+            else
+            {
+                string content = res.Content.ReadAsStringAsync().Result;
+
+                var ex = Newtonsoft.Json.JsonConvert.DeserializeObject<ErrorResponse>(content);
+
+                throw new AzureMapsException(ex);
+            }
+            
         }
 
     }

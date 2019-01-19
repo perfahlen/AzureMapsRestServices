@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AzureMapsToolkit.Common;
+using System;
 
 namespace AzureMapsToolkit
 {
@@ -20,7 +21,7 @@ namespace AzureMapsToolkit
             return response;
         }
         //TODO Solve HttpResponseCode
-        public static Response<T> CreateErrorResponse(Exception x){
+        public static Response<T> CreateErrorResponse(AzureMapsException x){
             var res = new Response<T>
             {
                 Error =
@@ -28,8 +29,9 @@ namespace AzureMapsToolkit
                   {
                       Error = new Error
                       {
-                          Message = x.Message
-                      }
+                          Message = x.Message,
+                          Code = x.Code
+                      },
                   }
             };
             return res;

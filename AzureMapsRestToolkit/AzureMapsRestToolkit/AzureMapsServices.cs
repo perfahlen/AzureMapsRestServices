@@ -133,7 +133,7 @@ namespace AzureMapsToolkit
 
                 return response;
             }
-            catch (Exception ex)
+            catch (AzureMapsException ex)
             {
                 return Response<byte[]>.CreateErrorResponse(ex);
             }
@@ -153,7 +153,7 @@ namespace AzureMapsToolkit
                 var response = Response<byte[]>.CreateResponse(content);
                 return response;
             }
-            catch (Exception ex)
+            catch (AzureMapsException ex)
             {
                 return Response<byte[]>.CreateErrorResponse(ex);
             }
@@ -177,7 +177,7 @@ namespace AzureMapsToolkit
                 var response = Response<byte[]>.CreateResponse(content);
                 return response;
             }
-            catch (Exception ex)
+            catch (AzureMapsException ex)
             {
                 return Response<byte[]>.CreateErrorResponse(ex);
             }
@@ -479,7 +479,7 @@ namespace AzureMapsToolkit
                     }
                 }
             }
-            catch (Exception ex)
+            catch (AzureMapsException ex)
             {
                 return Response<SearchAlongRouteResponse>.CreateErrorResponse(ex);
             }
@@ -543,7 +543,7 @@ namespace AzureMapsToolkit
                     }
                 }
             }
-            catch (Exception ex)
+            catch (AzureMapsException ex)
             {
 
                 return Response<SearchGeometryResponse>.CreateErrorResponse(ex);
@@ -663,7 +663,7 @@ namespace AzureMapsToolkit
 
                 return response;
             }
-            catch (Exception ex)
+            catch (AzureMapsException ex)
             {
                 return Response<byte[]>.CreateErrorResponse(ex);
             }
@@ -700,7 +700,7 @@ namespace AzureMapsToolkit
 
                 return response;
             }
-            catch (Exception ex)
+            catch (AzureMapsException ex)
             {
 
                 return Response<byte[]>.CreateErrorResponse(ex);
