@@ -164,7 +164,8 @@ namespace AzureMapsToolkit_Core_Test
             var req = new RouteRequestDirections
             {
                 Query = "52.50931,13.42936:52.50274,13.43872",
-                VehicleEngineType = VehicleEngineType.Combustion
+                VehicleEngineType = VehicleEngineType.Combustion,
+                InstructionsType = RouteInstructionsType.text
             };
             var directions = am.GetRouteDirections(req).Result;
             Assert.NotNull(directions.Error);
@@ -179,7 +180,6 @@ namespace AzureMapsToolkit_Core_Test
             {
                 Query = "52.50931,13.42936",
                 TimeBudgetInSec = "12000"
-
             };
             var range = am.GetRouteRange(req).Result;
             Assert.NotNull(range.Result.ReachableRange.Boundary);
