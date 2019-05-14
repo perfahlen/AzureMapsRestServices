@@ -3,16 +3,16 @@
     /// <summary>
     /// Indicates left-hand vs. right-hand side driving at the point of the maneuver.
     /// </summary>
-    public class DrivingSide
+    public enum DrivingSide
     {
         /// <summary>
         /// Left side.
         /// </summary>
-        public string LEFT { get; set; }
+        LEFT,
 
         /// <summary>
         /// Right side.
         /// </summary>
-        public string RIGHT { get; set; }
+        RIGHT
     }
 }

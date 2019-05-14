@@ -3,36 +3,36 @@
     /// <summary>
     /// Type of the instruction, e.g., turn or change of road form.
     /// </summary>
-    public class GuidanceInstructionType
+    public enum GuidanceInstructionType
     {
         /// <summary>
         /// Direction information.
         /// </summary>
-        public string DIRECTION_INFO { get; set; }
+        DIRECTION_INFO,
 
         /// <summary>
         /// Arrival location.
         /// </summary>
-        public string LOCATION_ARRIVAL { get; set; }
+        LOCATION_ARRIVAL,
 
         /// <summary>
         /// Departure location.
         /// </summary>
-        public string LOCATION_DEPARTURE { get; set; }
+        LOCATION_DEPARTURE,
 
         /// <summary>
         /// Way point location.
         /// </summary>
-        public string LOCATION_WAYPOINT { get; set; }
+        LOCATION_WAYPOINT,
 
         /// <summary>
         /// Road Change.
         /// </summary>
-        public string ROAD_CHANGE { get; set; }
+        ROAD_CHANGE,
 
         /// <summary>
         /// Turn.
         /// </summary>
-        public string TURN { get; set; }
+        TURN
     }
 }
