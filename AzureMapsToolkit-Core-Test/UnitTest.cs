@@ -3,12 +3,13 @@ using AzureMapsToolkit.Search;
 using AzureMapsToolkit.Timezone;
 using GeoJSON.Net.Geometry;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using Xunit;
 using System.Linq;
 using AzureMapsToolkit.Traffic;
 using AzureMapsToolkit.Render;
+using AzureMapsToolkit;
+using System.Threading.Tasks;
 
 namespace AzureMapsToolkit_Core_Test
 {
@@ -59,10 +60,10 @@ namespace AzureMapsToolkit_Core_Test
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
             var req = new AzureMapsToolkit.Render.CopyrightForTileRequest
             {
-               Zoom = 6,
-               X = 9,
-               Y = 22,
-               Text = "yes"
+                Zoom = 6,
+                X = 9,
+                Y = 22,
+                Text = "yes"
             };
             var resp = am.GetCopyrightForTile(req).Result;
             Assert.Equal("CAN", resp.Result.Regions[0].Country.ISO3);
@@ -84,7 +85,7 @@ namespace AzureMapsToolkit_Core_Test
             {
                 Mincoordinates = "52.41064,4.84228",
                 Maxcoordinates = "52.41072,4.84239",
-                Text ="yes"
+                Text = "yes"
             };
             var res = am.GetCopyrightFromBoundingBox(req).Result;
 
@@ -100,7 +101,7 @@ namespace AzureMapsToolkit_Core_Test
                 Format = AzureMapsToolkit.Render.RasterTileFormat.png,
                 Layer = StaticMapLayer.basic,
                 Zoom = 2,
-                Center = "62 17"
+                Center = "62,17"
             };
             var content = am.GetMapImage(req).Result;
             Assert.NotEmpty(content.Result);
@@ -134,7 +135,7 @@ namespace AzureMapsToolkit_Core_Test
                 Layer = StaticMapLayer.basic,
                 Style = MapTileStyle.main,
                 Zoom = 6,
-                X = 10, 
+                X = 10,
                 Y = 22
             };
 
@@ -164,7 +165,8 @@ namespace AzureMapsToolkit_Core_Test
             var req = new RouteRequestDirections
             {
                 Query = "52.50931,13.42936:52.50274,13.43872",
-                VehicleEngineType = VehicleEngineType.Combustion
+                VehicleEngineType = VehicleEngineType.Combustion,
+                InstructionsType = RouteInstructionsType.text
             };
             var directions = am.GetRouteDirections(req).Result;
             Assert.NotNull(directions.Error);
@@ -179,7 +181,6 @@ namespace AzureMapsToolkit_Core_Test
             {
                 Query = "52.50931,13.42936",
                 TimeBudgetInSec = "12000"
-
             };
             var range = am.GetRouteRange(req).Result;
             Assert.NotNull(range.Result.ReachableRange.Boundary);
@@ -690,6 +691,30 @@ namespace AzureMapsToolkit_Core_Test
             Assert.Null(r.Error);
 
             Assert.Equal("world", r.Result.ViewpResp.Maps);
+        }
+
+        [Fact]
+        public void GetSearchAddresstMoq()
+        {
+
+            var mock = new Moq.Mock<IAzureMapsServices>();
+            var response = new Response<SearchAddressResponse>
+            {
+                Result = new SearchAddressResponse
+                {
+                    Summary = new SearchSummary { TotalResults = 1 },
+                    Results = new SearchAddressResult[] { new SearchAddressResult
+                    {
+                        Address = new SearchResultAddress{ Country = "Sweden"}
+                    }
+                        }
+                }
+            };
+
+            var setup = mock.Setup(x => x.GetSearchAddress(new SearchAddressRequest())).Returns(Task.FromResult(response));
+
+            Assert.True(true);
+
         }
     }
 }

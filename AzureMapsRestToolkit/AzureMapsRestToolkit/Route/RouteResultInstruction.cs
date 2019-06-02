@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace AzureMapsToolkit.Common
 {
@@ -17,18 +18,21 @@ namespace AzureMapsToolkit.Common
         /// Indicates left-hand vs. right-hand side driving at the point of the maneuver.
         /// </summary>
         [JsonProperty("drivingSide")]
+        [JsonConverter(typeof(StringEnumConverter))]
         public DrivingSide DrivingSide { get; set; }
 
         /// <summary>
         /// Type of the instruction, e.g., turn or change of road form.
         /// </summary>
         [JsonProperty("instructionType")]
+        [JsonConverter(typeof(StringEnumConverter))]
         public GuidanceInstructionType instructionType { get; set; }
 
         /// <summary>
         /// A code identifying the maneuver.
         /// </summary>
         [JsonProperty("maneuver")]
+        [JsonConverter(typeof(StringEnumConverter))]
         public GuidanceManeuver Maneuver { get; set; }
 
         /// <summary>

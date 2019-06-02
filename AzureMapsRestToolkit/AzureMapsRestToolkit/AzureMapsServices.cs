@@ -75,7 +75,7 @@ namespace AzureMapsToolkit
         /// <param name="ip">The IP address. Both IPv4 and IPv6 are allowed.</param>
         /// <param name="apiVersion">Version number of Azure Maps API. Current version is 1.0</param>
         /// <returns></returns>
-        public async Task<Response<Geolocation.IpAddressToLocationResult>> GetIPToLocation(string ip, string apiVersion = "1.0")
+        public virtual async Task<Response<Geolocation.IpAddressToLocationResult>> GetIPToLocation(string ip, string apiVersion = "1.0")
         {
             var req = new IpAddressToLocationRequest { Ip = ip };
             var res = await ExecuteRequest<IpAddressToLocationResult, IpAddressToLocationRequest>
@@ -92,7 +92,7 @@ namespace AzureMapsToolkit
         /// </summary>
         /// <param name="apiVersion">Version number of Azure Maps API. Current version is 1.0</param>
         /// <returns></returns>
-        public async Task<Response<Render.CopyrightCaptionResult>> GetCopyrightCaption(string apiVersion = "1.0")
+        public virtual async Task<Response<Render.CopyrightCaptionResult>> GetCopyrightCaption(string apiVersion = "1.0")
         {
             var res = await ExecuteRequest<CopyrightCaptionResult, RequestBase>
                ("https://atlas.microsoft.com/map/copyright/caption/json", new RequestBase());
@@ -105,7 +105,7 @@ namespace AzureMapsToolkit
         /// Returns the copyright information for a given tile.To obtain the copyright information for a particular tile, the request should specify the tile's zoom level and x and y coordinates (see: Zoom Levels and Tile Grid).
         /// </summary>
         /// <returns></returns>
-        public async Task<Response<Render.CopyrightResult>> GetCopyrightForTile(CopyrightForTileRequest req)
+        public virtual async Task<Response<Render.CopyrightResult>> GetCopyrightForTile(CopyrightForTileRequest req)
         {
             var res = await ExecuteRequest<CopyrightResult, CopyrightForTileRequest>
                 ("https://atlas.microsoft.com/map/copyright/tile/json", req);
@@ -119,7 +119,7 @@ namespace AzureMapsToolkit
         /// </summary>
         /// <param name="apiVersion"></param>
         /// <returns></returns>
-        public async Task<Response<Render.CopyrightResult>> GetCopyrightForWorld(string apiVersion = "1.0")
+        public virtual async Task<Response<Render.CopyrightResult>> GetCopyrightForWorld(string apiVersion = "1.0")
         {
             var res = await ExecuteRequest<CopyrightResult, RequestBase>
                ("https://atlas.microsoft.com/map/copyright/world/json", new RequestBase());
@@ -130,7 +130,7 @@ namespace AzureMapsToolkit
         /// Returns copyright information for a given bounding box. Bounding-box requests should specify the minimum and maximum longitude and latitude (EPSG-3857) coordinates
         /// </summary>
         /// <returns></returns>
-        public async Task<Response<Render.CopyrightResult>> GetCopyrightFromBoundingBox(
+        public virtual async Task<Response<Render.CopyrightResult>> GetCopyrightFromBoundingBox(
             CopyrightFromBoundingBoxRequest req)
         {
             var res = await ExecuteRequest<CopyrightResult, CopyrightFromBoundingBoxRequest>
@@ -148,7 +148,7 @@ namespace AzureMapsToolkit
         /// Note : Either center or bbox parameter must be supplied to the API.
         /// </summary>
         /// <returns></returns>
-        public async Task<Response<byte[]>> GetMapImage(MapImageRequest req)
+        public virtual async Task<Response<byte[]>> GetMapImage(MapImageRequest req)
         {
             // TODO, check that the image is correct
             try
@@ -179,7 +179,7 @@ namespace AzureMapsToolkit
         /// This service returns a map image tile with size 256x256, given the x and y coordinates and zoom level. Zoom level ranges from 0 to 18. The current available style value is 'satellite' which provides satellite imagery alone.
         /// </summary>
         /// <returns></returns>
-        public virtual async Task<Response<byte[]>> GetMapImageryTile(MapImageryTileRequest req)
+        public virtual async Task<Response<byte[]>> GetMapImageryTile(MapImageryTileRequest req) 
         {
             try
             {
@@ -199,7 +199,7 @@ namespace AzureMapsToolkit
         /// Fetches map tiles in vector or raster format typically to be integrated into a new map control or SDK. By default, Azure uses vector map tiles for its web map control 
         /// </summary>
         /// <returns></returns>
-        public async Task<Response<byte[]>> GetMapTile(MapTileRequest req)
+        public virtual async Task<Response<byte[]>> GetMapTile(MapTileRequest req)
         {
             try
             {
@@ -231,7 +231,7 @@ namespace AzureMapsToolkit
         /// <param name="to"></param>
         /// <param name="wayPoints"></param>
         /// <returns></returns>
-        public async Task<Response<RouteDirectionsResponse>> GetRouteDirections(RouteRequestDirections routeReq)
+        public virtual async Task<Response<RouteDirectionsResponse>> GetRouteDirections(RouteRequestDirections routeReq)
         {
             var res = await ExecuteRequest<RouteDirectionsResponse, RouteRequestDirections>
                 ("https://atlas.microsoft.com/route/directions/json", routeReq);
@@ -247,7 +247,7 @@ namespace AzureMapsToolkit
         /// </summary>
         /// <param name="routeRequest"></param>
         /// <returns></returns>
-        public async Task<Response<RouteRangeResponse>> GetRouteRange(RouteRangeRequest routeRequest)
+        public virtual async Task<Response<RouteRangeResponse>> GetRouteRange(RouteRangeRequest routeRequest)
         {
             var res = await ExecuteRequest<RouteRangeResponse, RouteRangeRequest>
                 ("https://atlas.microsoft.com/route/range/json", routeRequest);
@@ -259,7 +259,7 @@ namespace AzureMapsToolkit
         /// </summary>
         /// <param name="routeRequest"></param>
         /// <returns></returns>
-        public async Task<(string ResultUrl, Exception ex)> GetRouteDirections(IEnumerable<RouteRequestDirections> routeRequestItems)
+        public virtual async Task<(string ResultUrl, Exception ex)> GetRouteDirections(IEnumerable<RouteRequestDirections> routeRequestItems)
         {
             try
             {
@@ -291,7 +291,7 @@ namespace AzureMapsToolkit
         /// <param name="coordinatesOrigins"></param>
         /// <param name="coordinatesDestinations"></param>
         /// <returns></returns>
-        public async Task<(RouteMatrixResponse matrix, Exception ex)> GetRouteMatrix(RouteMatrixRequest routeMatrixRequest, IEnumerable<Coordinate> coordinatesOrigins, IEnumerable<Coordinate> coordinatesDestinations)
+        public virtual async Task<(RouteMatrixResponse matrix, Exception ex)> GetRouteMatrix(RouteMatrixRequest routeMatrixRequest, IEnumerable<Coordinate> coordinatesOrigins, IEnumerable<Coordinate> coordinatesDestinations)
         {
             try
             {
@@ -334,7 +334,7 @@ namespace AzureMapsToolkit
         /// </summary>
         /// <param name="searchAddressRequest"></param>
         /// <returns></returns>
-        public async Task<Response<SearchAddressResponse>> GetSearchAddress(SearchAddressRequest searchAddressRequest)
+        public virtual async Task<Response<SearchAddressResponse>> GetSearchAddress(SearchAddressRequest searchAddressRequest)
         {
 
             var res = await ExecuteRequest<SearchAddressResponse, SearchAddressRequest>("https://atlas.microsoft.com/search/address/json", searchAddressRequest);
@@ -347,7 +347,7 @@ namespace AzureMapsToolkit
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public async Task<Response<SearchAddressReverseResponse>> GetSearchAddressReverse(SearchAddressReverseRequest request)
+        public virtual async Task<Response<SearchAddressReverseResponse>> GetSearchAddressReverse(SearchAddressReverseRequest request)
         {
 
             var res = await ExecuteRequest<SearchAddressReverseResponse, SearchAddressReverseRequest>("https://atlas.microsoft.com/search/address/reverse/json", request);
@@ -360,7 +360,7 @@ namespace AzureMapsToolkit
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public async Task<Response<SearchAddressReverseCrossStreetResponse>> GetSearchAddressReverseCrossStreet(SearchAddressReverseCrossStreetRequest request)
+        public virtual async Task<Response<SearchAddressReverseCrossStreetResponse>> GetSearchAddressReverseCrossStreet(SearchAddressReverseCrossStreetRequest request)
         {
 
             var res = await ExecuteRequest<SearchAddressReverseCrossStreetResponse, SearchAddressReverseCrossStreetRequest>("https://atlas.microsoft.com/search/address/reverse/crossStreet/json", request);
@@ -373,7 +373,7 @@ namespace AzureMapsToolkit
         /// </summary>
         /// <param name="req"></param>
         /// <returns></returns>
-        public async Task<Response<SearchAddressStructuredResponse>> GetSearchAddressStructured(SearchAddressStructuredRequest req)
+        public virtual async Task<Response<SearchAddressStructuredResponse>> GetSearchAddressStructured(SearchAddressStructuredRequest req)
         {
 
             var res = await ExecuteRequest<SearchAddressStructuredResponse, SearchAddressStructuredRequest>("https://atlas.microsoft.com/search/address/structured/json", req);
@@ -386,7 +386,7 @@ namespace AzureMapsToolkit
         /// </summary>
         /// <param name="req"></param>
         /// <returns></returns>
-        public async Task<Response<SearchFuzzyResponse>> GetSearchFuzzy(SearchFuzzyRequest req)
+        public virtual async Task<Response<SearchFuzzyResponse>> GetSearchFuzzy(SearchFuzzyRequest req)
         {
             var res = await ExecuteRequest<SearchFuzzyResponse, SearchFuzzyRequest>("https://atlas.microsoft.com/search/fuzzy/json", req);
             return res;
@@ -398,7 +398,7 @@ namespace AzureMapsToolkit
         /// </summary>
         /// <param name="req"></param>
         /// <returns></returns>
-        public async Task<Response<SearchNearbyResponse>> GetSearchNearby(SearchNearbyRequest req)
+        public virtual async Task<Response<SearchNearbyResponse>> GetSearchNearby(SearchNearbyRequest req)
         {
             var res = await ExecuteRequest<SearchNearbyResponse, SearchNearbyRequest>("https://atlas.microsoft.com/search/nearby/json", req);
             return res;
@@ -409,7 +409,7 @@ namespace AzureMapsToolkit
         /// </summary>
         /// <param name="req"></param>
         /// <returns></returns>
-        public async Task<Response<SearchPoiResponse>> GetSearchPoi(SearchPoiRequest req)
+        public virtual async Task<Response<SearchPoiResponse>> GetSearchPoi(SearchPoiRequest req)
         {
             var res = await ExecuteRequest<SearchPoiResponse, SearchPoiRequest>("https://atlas.microsoft.com/search/poi/json", req);
             return res;
@@ -420,7 +420,7 @@ namespace AzureMapsToolkit
         /// </summary>
         /// <param name="req"></param>
         /// <returns></returns>
-        public async Task<Response<SearchPoiCategoryResponse>> GetSearchPOICategory(SearchPoiCategoryRequest req)
+        public virtual async Task<Response<SearchPoiCategoryResponse>> GetSearchPOICategory(SearchPoiCategoryRequest req)
         {
             var res = await ExecuteRequest<SearchPoiCategoryResponse, SearchPoiCategoryRequest>("https://atlas.microsoft.com/search/poi/category/json", req);
             return res;
@@ -431,7 +431,7 @@ namespace AzureMapsToolkit
         /// </summary>
         /// <param name="req"></param>
         /// <returns></returns>
-        public async Task<(string ResultUrl, Exception ex)> GetSearchAddress(IEnumerable<SearchAddressRequest> req)
+        public virtual async Task<(string ResultUrl, Exception ex)> GetSearchAddress(IEnumerable<SearchAddressRequest> req)
         {
             try
             {
@@ -461,7 +461,7 @@ namespace AzureMapsToolkit
         /// </summary>
         /// <param name="req"></param>
         /// <returns></returns>
-        public async Task<(string ResultUrl, Exception ex)> GetSearchAddressReverse(IEnumerable<SearchAddressReverseRequest> req)
+        public virtual async Task<(string ResultUrl, Exception ex)> GetSearchAddressReverse(IEnumerable<SearchAddressReverseRequest> req)
         {
             try
             {
@@ -493,7 +493,7 @@ namespace AzureMapsToolkit
         /// <param name="req"></param>
         /// <param name="lineString"></param>
         /// <returns></returns>
-        public async Task<Response<SearchAlongRouteResponse>> GetSearchAlongRoute(SearchAlongRouteRequest req, LineString lineString)
+        public virtual async Task<Response<SearchAlongRouteResponse>> GetSearchAlongRoute(SearchAlongRouteRequest req, LineString lineString)
         {
             try
             {
@@ -527,7 +527,7 @@ namespace AzureMapsToolkit
         /// </summary>
         /// <param name="req"></param>
         /// <returns></returns>
-        public async Task<(string ResultUrl, Exception ex)> GetSearchFuzzy(IEnumerable<SearchFuzzyRequest> req)
+        public virtual async Task<(string ResultUrl, Exception ex)> GetSearchFuzzy(IEnumerable<SearchFuzzyRequest> req)
         {
             try
             {
@@ -557,7 +557,7 @@ namespace AzureMapsToolkit
         /// <param name="request"></param>
         /// <param name="geoJson"></param>
         /// <returns></returns>
-        public async Task<Response<SearchGeometryResponse>> GetSearchInsidePolygon(SearchInsidePolygonRequest request, Object geoJson)
+        public virtual async Task<Response<SearchGeometryResponse>> GetSearchInsidePolygon(SearchInsidePolygonRequest request, Object geoJson)
         {
             try
             {
@@ -596,7 +596,7 @@ namespace AzureMapsToolkit
         /// </summary>
         /// <param name="req"></param>
         /// <returns></returns>
-        public async Task<Response<TimezoneResult>> GetTimezoneByCoordinates(TimeZoneRequest req)
+        public virtual async Task<Response<TimezoneResult>> GetTimezoneByCoordinates(TimeZoneRequest req)
         {
             var res = await ExecuteRequest<TimezoneResult, TimeZoneRequest>
                 ("https://atlas.microsoft.com/timezone/byCoordinates/json", req);
@@ -608,14 +608,14 @@ namespace AzureMapsToolkit
         /// </summary>
         /// <param name="req"></param>
         /// <returns></returns>
-        public async Task<Response<TimezoneResult>> GetTimezoneById(TimeZoneRequest req)
+        public virtual async Task<Response<TimezoneResult>> GetTimezoneById(TimeZoneRequest req)
         {
             var res = await ExecuteRequest<TimezoneResult, TimeZoneRequest>
                 ("https://atlas.microsoft.com/timezone/byId/json", req);
             return res;
         }
 
-        public async Task<Response<IEnumerable<IanaId>>> GetTimezoneEnumIANA()
+        public virtual async Task<Response<IEnumerable<IanaId>>> GetTimezoneEnumIANA()
         {
             var req = new RequestBase();
             var res = await ExecuteRequest<IEnumerable<IanaId>, RequestBase>
@@ -627,7 +627,7 @@ namespace AzureMapsToolkit
         /// This API returns a full list of Windows Time Zone IDs.
         /// </summary>
         /// <returns></returns>
-        public async Task<Response<IEnumerable<TimezoneEnumWindow>>> GetTimezoneEnumWindows()
+        public virtual async Task<Response<IEnumerable<TimezoneEnumWindow>>> GetTimezoneEnumWindows()
         {
             var req = new RequestBase();
             var res = await ExecuteRequest<IEnumerable<TimezoneEnumWindow>, RequestBase>
@@ -640,7 +640,7 @@ namespace AzureMapsToolkit
         /// This API returns the current IANA version number.
         /// </summary>
         /// <returns></returns>
-        public async Task<Response<TimezoneIanaVersionResult>> GetTimezoneIANAVersion()
+        public virtual async Task<Response<TimezoneIanaVersionResult>> GetTimezoneIANAVersion()
         {
             var req = new RequestBase();
             var res = await ExecuteRequest<TimezoneIanaVersionResult, RequestBase>
@@ -655,7 +655,7 @@ namespace AzureMapsToolkit
         /// </summary>
         /// <param name="req"></param>
         /// <returns></returns>
-        public async Task<Response<IEnumerable<IanaId>>> GetTimezoneWindowsToIANA(TimezoneWindowsToIANARequest req)
+        public virtual async Task<Response<IEnumerable<IanaId>>> GetTimezoneWindowsToIANA(TimezoneWindowsToIANARequest req)
         {
             var res = await ExecuteRequest<IEnumerable<IanaId>, TimezoneWindowsToIANARequest>
                 ("https://atlas.microsoft.com/timezone/windowsToIana/json", req);
@@ -672,7 +672,7 @@ namespace AzureMapsToolkit
         /// </summary>
         /// <param name="req"></param>
         /// <returns></returns>
-        public async Task<Response<TrafficFlowSegmentResult>> GetTrafficFlowSegment(TrafficFlowSegmentRequest req)
+        public virtual async Task<Response<TrafficFlowSegmentResult>> GetTrafficFlowSegment(TrafficFlowSegmentRequest req)
         {
             var res = await ExecuteRequest<TrafficFlowSegmentResult, TrafficFlowSegmentRequest>
                 ("https://atlas.microsoft.com/traffic/flow/segment/json", req);
@@ -686,10 +686,11 @@ namespace AzureMapsToolkit
         /// <param name="req"></param>
         /// <returns></returns>
 
-        public async Task<Response<byte[]>> GetTrafficFlowTile(TrafficFlowTileRequest req)
+        public virtual async Task<Response<byte[]>> GetTrafficFlowTile(TrafficFlowTileRequest req)
         {
             try
             {
+                Url = string.Empty;
                 var baseAddress = "https://atlas.microsoft.com/traffic/flow/tile/png";
                 Url += GetQuery<TrafficFlowTileRequest>(req, true);
 
@@ -709,7 +710,7 @@ namespace AzureMapsToolkit
         /// Traffic Incident Detail This API provides information on traffic incidents inside a given bounding box, based on the current Traffic Model ID. The Traffic Model ID is available to grant synchronization of data between calls and API's. The Traffic Model ID is a key value for determining the currency of traffic incidents. It is updated every minute, and is valid for two minutes before it times out. It is used in rendering incident tiles. It can be obtained from the Viewport API.
         /// </summary>
         /// <returns></returns>
-        public async Task<Response<TrafficIncidentDetailResult>> GetTrafficIncidentDetail(TrafficIncidentDetailRequest req)
+        public virtual async Task<Response<TrafficIncidentDetailResult>> GetTrafficIncidentDetail(TrafficIncidentDetailRequest req)
         {
 
             var res = await ExecuteRequest<TrafficIncidentDetailResult, TrafficIncidentDetailRequest>
@@ -723,10 +724,11 @@ namespace AzureMapsToolkit
         /// </summary>
         /// <param name="req"></param>
         /// <returns></returns>
-        public async Task<Response<byte[]>> GetTrafficIncidentTile(TrafficIncidentTileRequest req)
+        public virtual async Task<Response<byte[]>> GetTrafficIncidentTile(TrafficIncidentTileRequest req)
         {
             try
             {
+                Url = string.Empty;
                 var baseAddress = "https://atlas.microsoft.com/traffic/incident/tile/png";
                 Url += GetQuery<TrafficIncidentTileRequest>(req, true);
 
@@ -747,7 +749,7 @@ namespace AzureMapsToolkit
         /// This API returns legal and technical information for the viewport described in the request. It should be called by client applications whenever the viewport changes (for instance, through zooming, panning, going to a location, or displaying a route). The request should contain the bounding box and zoom level of the viewport whose information is needed. The return will contain map version information, as well as the current Traffic Model ID and copyright IDs. The Traffic Model ID returned by the Viewport Description is used by other APIs to retrieve last traffic information for further processing.
         /// </summary>
         /// <returns></returns>
-        public async Task<Response<TrafficIncidentViewportResult>> GetTrafficIncidentViewport(TrafficIncidentViewportRequest req)
+        public virtual async Task<Response<TrafficIncidentViewportResult>> GetTrafficIncidentViewport(TrafficIncidentViewportRequest req)
         {
             var res = await ExecuteRequest<TrafficIncidentViewportResult, TrafficIncidentViewportRequest>
                     ("https://atlas.microsoft.com/traffic/incident/viewport/json", req);
