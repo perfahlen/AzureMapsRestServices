@@ -14,6 +14,7 @@ namespace AzureMapsToolkit_Core_Test
 {
     public class UnitTest
     {
+        //https://atlas.microsoft.com/map/tile/pbf?&language=NGT&api-version=1.0&layer=basic&style=main&zoom=7&x=19&y=44&subscription-key=
         public const string _KEY = "";
 
         [Fact]

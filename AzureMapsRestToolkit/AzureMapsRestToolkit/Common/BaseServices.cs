@@ -17,12 +17,12 @@ namespace AzureMapsToolkit.Common
             Key = key;
         }
 
-        internal async Task<HttpResponseMessage> GetHttpResponseMessage(string url, string data)
+        internal async Task<HttpResponseMessage> GetHttpResponseMessage(string url, string data, HttpMethod method)
         {
 
             using (var client = new HttpClient())
             {
-                using (var request = new HttpRequestMessage(HttpMethod.Post, url))
+                using (var request = new HttpRequestMessage(method, url))
                 {
                     using (var content = new StringContent(data, Encoding.UTF8, "application/json"))
                     {

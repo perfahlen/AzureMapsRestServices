@@ -9,12 +9,14 @@ using AzureMapsToolkit.Search;
 using AzureMapsToolkit.Timezone;
 using AzureMapsToolkit.Traffic;
 using AzureMapsToolkit.Geolocation;
+using AzureMapsToolkit.Delete;
+using System.Net.Http;
 
 namespace AzureMapsToolkit
 {
-    public class AzureMapsServices : BaseServices
+    public class AzureMapsServices : BaseServices, IAzureMapsServices
     {
-        
+
 
         string Format { get { return "json"; } }
 
@@ -29,6 +31,40 @@ namespace AzureMapsToolkit
                 throw new ArgumentException("Missing azure maps key");
             }
         }
+
+        #region Data
+
+        /// <summary>
+        /// This API allows the caller to delete a previously uploaded data content. You can use this API in a scenario like removing geofences previously uploaded using the Data Upload API for use in our Azure Maps Geofencing Service.You can also use this API to delete old/unused uploaded content and create space for new content.
+        /// </summary>
+        /// <param name="req"></param>
+        /// <returns></returns>
+        public virtual async Task<Response<object>> DeleteData(string udid)
+        {
+            try
+            {
+                var url = $"https://atlas.microsoft.com/mapData/{udid}?subscription-key={Key}&api-version=1.0";
+
+                using (var client = new HttpClient())
+                {
+                    using (var request = new HttpRequestMessage(HttpMethod.Delete, url))
+                    {
+
+                        using (var response = await client.DeleteAsync(url))
+                        {
+                            return new Response<object>();
+                        }
+
+                    }
+                }
+            }
+            catch (AzureMapsException ex)
+            {
+                return Response<object>.CreateErrorResponse(ex);
+            }
+        }
+
+        #endregion
 
 
         #region Geolocation
@@ -143,7 +179,7 @@ namespace AzureMapsToolkit
         /// This service returns a map image tile with size 256x256, given the x and y coordinates and zoom level. Zoom level ranges from 0 to 18. The current available style value is 'satellite' which provides satellite imagery alone.
         /// </summary>
         /// <returns></returns>
-        public async Task<Response<byte[]>> GetMapImageryTile(MapImageryTileRequest req) 
+        public virtual async Task<Response<byte[]>> GetMapImageryTile(MapImageryTileRequest req)
         {
             try
             {
@@ -233,7 +269,7 @@ namespace AzureMapsToolkit
                 var q = new { queries = queryCollection };
                 var queryContent = Newtonsoft.Json.JsonConvert.SerializeObject(q);
 
-                using (var responseMessage = await GetHttpResponseMessage(url, queryContent))
+                using (var responseMessage = await GetHttpResponseMessage(url, queryContent, HttpMethod.Post))
                 {
 
                     var resultUrl = responseMessage.Headers.GetValues("Location").First();
@@ -273,7 +309,7 @@ namespace AzureMapsToolkit
 
                 string data = Newtonsoft.Json.JsonConvert.SerializeObject(body);
 
-                using (var response = await GetHttpResponseMessage(url, data))
+                using (var response = await GetHttpResponseMessage(url, data, HttpMethod.Post))
                 {
                     using (var responseMessage = response.Content)
                     {
@@ -406,7 +442,7 @@ namespace AzureMapsToolkit
 
                 var queryContent = Newtonsoft.Json.JsonConvert.SerializeObject(q);
 
-                using (var responseMessage = await GetHttpResponseMessage(url, queryContent))
+                using (var responseMessage = await GetHttpResponseMessage(url, queryContent, HttpMethod.Post))
                 {
 
                     var resultUrl = responseMessage.Headers.GetValues("Location").First();
@@ -436,7 +472,7 @@ namespace AzureMapsToolkit
 
                 var queryContent = Newtonsoft.Json.JsonConvert.SerializeObject(q);
 
-                using (var responseMessage = await GetHttpResponseMessage(url, queryContent))
+                using (var responseMessage = await GetHttpResponseMessage(url, queryContent, HttpMethod.Post))
                 {
                     var resultUrl = responseMessage.Headers.GetValues("Location").First();
                     return (resultUrl, null);
@@ -469,7 +505,7 @@ namespace AzureMapsToolkit
 
                 var url = $"https://atlas.microsoft.com/search/alongRoute/json?subscription-key={Key}&api-version=1.0{args}";
 
-                using (var responseMsg = await GetHttpResponseMessage(url, queryContent))
+                using (var responseMsg = await GetHttpResponseMessage(url, queryContent, HttpMethod.Post))
                 {
                     using (var data = responseMsg.Content)
                     {
@@ -503,7 +539,7 @@ namespace AzureMapsToolkit
 
                 var queryContent = Newtonsoft.Json.JsonConvert.SerializeObject(q);
 
-                using (var responseMessage = await GetHttpResponseMessage(url, queryContent))
+                using (var responseMessage = await GetHttpResponseMessage(url, queryContent, HttpMethod.Post))
                 {
                     var resultUrl = responseMessage.Headers.GetValues("Location").First();
                     return (resultUrl, null);
@@ -533,7 +569,7 @@ namespace AzureMapsToolkit
 
                 var url = $"https://atlas.microsoft.com/search/geometry/json?subscription-key={Key}&api-version=1.0{args}";
 
-                using (var responseMsg = await GetHttpResponseMessage(url, json))
+                using (var responseMsg = await GetHttpResponseMessage(url, json, HttpMethod.Post))
                 {
                     using (var data = responseMsg.Content)
                     {
@@ -675,10 +711,10 @@ namespace AzureMapsToolkit
         /// <returns></returns>
         public async Task<Response<TrafficIncidentDetailResult>> GetTrafficIncidentDetail(TrafficIncidentDetailRequest req)
         {
-           
-                var res = await ExecuteRequest<TrafficIncidentDetailResult, TrafficIncidentDetailRequest>
-                    ("https://atlas.microsoft.com/traffic/incident/detail/json", req);
-                return res;
+
+            var res = await ExecuteRequest<TrafficIncidentDetailResult, TrafficIncidentDetailRequest>
+                ("https://atlas.microsoft.com/traffic/incident/detail/json", req);
+            return res;
         }
 
 
@@ -717,6 +753,8 @@ namespace AzureMapsToolkit
                     ("https://atlas.microsoft.com/traffic/incident/viewport/json", req);
             return res;
         }
+
+
 
         #endregion
 
