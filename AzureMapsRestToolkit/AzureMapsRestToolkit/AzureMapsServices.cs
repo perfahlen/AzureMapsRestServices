@@ -9,7 +9,7 @@ using AzureMapsToolkit.Search;
 using AzureMapsToolkit.Timezone;
 using AzureMapsToolkit.Traffic;
 using AzureMapsToolkit.Geolocation;
-using AzureMapsToolkit.Delete;
+using AzureMapsToolkit.Data;
 using System.Net.Http;
 
 namespace AzureMapsToolkit
@@ -91,6 +91,31 @@ namespace AzureMapsToolkit
             catch (AzureMapsException ex)
             {
                 return Response<object>.CreateErrorResponse(ex);
+            }
+        }
+
+        public virtual async Task<Response<MapDataListResponse>> GetList()
+        {
+            try
+            {
+                var url = $"https://atlas.microsoft.com/mapData?subscription-key={Key}&api-version=1.0";
+
+                using (var client = new HttpClient())
+                {
+                    using (var request = new HttpRequestMessage(HttpMethod.Delete, url))
+                    {
+
+                        using (var response = await client.GetAsync(url))
+                        {
+                            return new Response<MapDataListResponse>();
+                        }
+
+                    }
+                }
+            }
+            catch (AzureMapsException ex)
+            {
+                return Response<MapDataListResponse>.CreateErrorResponse(ex);
             }
         }
 

@@ -1,5 +1,5 @@
 ﻿using AzureMapsToolkit.Common;
-using AzureMapsToolkit.Delete;
+using AzureMapsToolkit.Data;
 using AzureMapsToolkit.GeoJson;
 using AzureMapsToolkit.Render;
 using AzureMapsToolkit.Search;
@@ -14,6 +14,9 @@ namespace AzureMapsToolkit
 {
     public interface IAzureMapsServices
     {
+
+        Task<Response<MapDataListResponse>> GetList();
+
         Task<Response<Object>> Download(string udid);
 
         Task<Response<Object>> DeleteData(string udid);
