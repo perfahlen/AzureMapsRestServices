@@ -14,6 +14,7 @@ namespace AzureMapsToolkit
 {
     public interface IAzureMapsServices
     {
+        Task<Response<Object>> Download(string udid);
 
         Task<Response<Object>> DeleteData(string udid);
 

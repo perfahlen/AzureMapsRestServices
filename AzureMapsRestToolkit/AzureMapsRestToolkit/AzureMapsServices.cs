@@ -39,7 +39,7 @@ namespace AzureMapsToolkit
         /// </summary>
         /// <param name="req"></param>
         /// <returns></returns>
-        public virtual async Task<Response<object>> DeleteData(string udid)
+        public virtual async Task<Response<Object>> DeleteData(string udid)
         {
             try
             {
@@ -51,6 +51,36 @@ namespace AzureMapsToolkit
                     {
 
                         using (var response = await client.DeleteAsync(url))
+                        {
+                            return new Response<object>();
+                        }
+
+                    }
+                }
+            }
+            catch (AzureMapsException ex)
+            {
+                return Response<object>.CreateErrorResponse(ex);
+            }
+        }
+
+        /// <summary>
+        /// This API allows the caller to download a previously uploaded data content. You can use this API in a scenario like downloading an existing collection of geofences uploaded previously using the Data Upload API for use in our Azure Maps Geofencing Service.
+        /// </summary>
+        /// <param name="udid"></param>
+        /// <returns></returns>
+        public virtual async Task<Response<Object>> Download(string udid)
+        {
+            try
+            {
+                var url = $"https://atlas.microsoft.com/mapData/{udid}?subscription-key={Key}&api-version=1.0";
+
+                using (var client = new HttpClient())
+                {
+                    using (var request = new HttpRequestMessage(HttpMethod.Delete, url))
+                    {
+
+                        using (var response = await client.GetAsync(url))
                         {
                             return new Response<object>();
                         }
