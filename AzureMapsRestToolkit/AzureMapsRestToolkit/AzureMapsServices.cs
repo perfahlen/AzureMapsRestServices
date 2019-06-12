@@ -94,6 +94,10 @@ namespace AzureMapsToolkit
             }
         }
 
+        /// <summary>
+        /// This API allows the caller to fetch a list of all content uploaded previously using the Data Upload API.
+        /// </summary>
+        /// <returns></returns>
         public virtual async Task<Response<MapDataListResponse>> GetList()
         {
             try
