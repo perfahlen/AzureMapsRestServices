@@ -123,6 +123,75 @@ namespace AzureMapsToolkit
             }
         }
 
+        /// <summary>
+        /// This API allows the caller to upload data content to the Azure Maps service.
+        /// </summary>
+        /// <param name="geoJson"></param>
+        /// <param name="dataFormat"></param>
+        /// <returns></returns>
+        public virtual async Task<Response<Object>> Upload(string geoJson, string dataFormat = "geojson")
+        {
+            if (dataFormat != "geojson")
+                dataFormat = "geojson";
+            try
+            {
+                var url = $"https://atlas.microsoft.com/mapData/upload?subscription-key={Key}&api-version=1.0&dataFormat={dataFormat}";
+
+                using (var client = new HttpClient())
+                {
+                    using (var request = new HttpRequestMessage(HttpMethod.Post, url))
+                    {
+                        request.Headers.Clear();
+                        request.Headers.Add("Content-Type", "application/json");
+
+                        using (var response = await client.PostAsync(url, new StringContent(geoJson)))
+                        {
+                            return new Response<object>();
+                        }
+
+                    }
+                }
+            }
+            catch (AzureMapsException ex)
+            {
+                return Response<object>.CreateErrorResponse(ex);
+            }
+        }
+
+        /// <summary>
+        /// This API allows the caller to update a previously uploaded data content.
+        /// </summary>
+        /// <param name="udid"></param>
+        /// <param name="geoJson"></param>
+        /// <returns></returns>
+        public virtual async Task<Response<Object>> Update(string udid, string geoJson)
+        {
+            try
+            {
+                var url = $"https://atlas.microsoft.com/mapData/{udid}?api-version=1.0&?subscription-key={Key}";
+
+                using (var client = new HttpClient())
+                {
+                    using (var request = new HttpRequestMessage(HttpMethod.Put, url))
+                    {
+                        request.Headers.Clear();
+                        request.Headers.Add("Content-Type", "application/json");
+
+                        using (var response = await client.PostAsync(url, new StringContent(geoJson)))
+                        {
+                            return new Response<object>();
+                        }
+
+                    }
+                }
+            }
+            catch (AzureMapsException ex)
+            {
+                return Response<object>.CreateErrorResponse(ex);
+            }
+        }
+
+
         #endregion
 
 

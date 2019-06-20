@@ -22,7 +22,7 @@ namespace AzureMapsToolkit_Core_Test
         public void InvalidIPCountry()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
-            var res = am.GetIPToLocation("83.10.0.3").Result;
+            var res = am.GetIPToLocation("83.10.0.3");
 
             Assert.NotEqual("SE", res.Result.CountryRegion.IsoCode);
 

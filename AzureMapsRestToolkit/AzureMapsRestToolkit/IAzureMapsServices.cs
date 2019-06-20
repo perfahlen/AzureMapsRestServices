@@ -15,6 +15,10 @@ namespace AzureMapsToolkit
     public interface IAzureMapsServices
     {
 
+        Task<Response<Object>> Upload(string geoJson, string dataFormat = "geojson");
+
+        Task<Response<Object>> Update(string udid, string geoJson);
+
         Task<Response<MapDataListResponse>> GetList();
 
         Task<Response<Object>> Download(string udid);
