@@ -11,6 +11,8 @@ using AzureMapsToolkit.Traffic;
 using AzureMapsToolkit.Geolocation;
 using AzureMapsToolkit.Data;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 
 namespace AzureMapsToolkit
 {
@@ -69,7 +71,7 @@ namespace AzureMapsToolkit
         /// </summary>
         /// <param name="udid"></param>
         /// <returns></returns>
-        public virtual async Task<Response<Object>> Download(string udid)
+        public virtual async Task<Response<string>> Download(string udid)
         {
             try
             {
@@ -77,12 +79,13 @@ namespace AzureMapsToolkit
 
                 using (var client = new HttpClient())
                 {
-                    using (var request = new HttpRequestMessage(HttpMethod.Delete, url))
+                    using (var request = new HttpRequestMessage(HttpMethod.Get, url))
                     {
 
                         using (var response = await client.GetAsync(url))
                         {
-                            return new Response<object>();
+                            var geojson = response.Content.ReadAsStringAsync().Result;
+                            return new Response<string> { Result = geojson };
                         }
 
                     }
@@ -90,7 +93,7 @@ namespace AzureMapsToolkit
             }
             catch (AzureMapsException ex)
             {
-                return Response<object>.CreateErrorResponse(ex);
+                return Response<string>.CreateErrorResponse(ex);
             }
         }
 
@@ -102,20 +105,10 @@ namespace AzureMapsToolkit
         {
             try
             {
-                var url = $"https://atlas.microsoft.com/mapData?subscription-key={Key}&api-version=1.0";
+                var url = $"https://atlas.microsoft.com/mapData";
+                var res = await ExecuteRequest<MapDataListResponse, RequestBase>(url, new RequestBase { ApiVersion = "1.0" });
+                return res;
 
-                using (var client = new HttpClient())
-                {
-                    using (var request = new HttpRequestMessage(HttpMethod.Delete, url))
-                    {
-
-                        using (var response = await client.GetAsync(url))
-                        {
-                            return new Response<MapDataListResponse>();
-                        }
-
-                    }
-                }
             }
             catch (AzureMapsException ex)
             {
@@ -129,7 +122,7 @@ namespace AzureMapsToolkit
         /// <param name="geoJson"></param>
         /// <param name="dataFormat"></param>
         /// <returns></returns>
-        public virtual async Task<Response<Object>> Upload(string geoJson, string dataFormat = "geojson")
+        public virtual async Task<Response<string>> Upload(string geoJson, string dataFormat = "geojson")
         {
             if (dataFormat != "geojson")
                 dataFormat = "geojson";
@@ -137,24 +130,14 @@ namespace AzureMapsToolkit
             {
                 var url = $"https://atlas.microsoft.com/mapData/upload?subscription-key={Key}&api-version=1.0&dataFormat={dataFormat}";
 
-                using (var client = new HttpClient())
-                {
-                    using (var request = new HttpRequestMessage(HttpMethod.Post, url))
-                    {
-                        request.Headers.Clear();
-                        request.Headers.Add("Content-Type", "application/json");
+                var res = await GetHttpResponseMessage(url, geoJson, HttpMethod.Post);
+                var location =  res.Headers.GetValues("Location").First();
+                return new Response<string>() { Result = location };
 
-                        using (var response = await client.PostAsync(url, new StringContent(geoJson)))
-                        {
-                            return new Response<object>();
-                        }
-
-                    }
-                }
             }
             catch (AzureMapsException ex)
             {
-                return Response<object>.CreateErrorResponse(ex);
+                return Response<string>.CreateErrorResponse(ex);
             }
         }
 

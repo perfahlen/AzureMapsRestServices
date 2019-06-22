@@ -22,17 +22,20 @@ namespace AzureMapsToolkit.Common
 
             using (var client = new HttpClient())
             {
+                client.BaseAddress = new Uri(url);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(
+                    new MediaTypeWithQualityHeaderValue("application/json"));
                 using (var request = new HttpRequestMessage(method, url))
                 {
-                    using (var content = new StringContent(data, Encoding.UTF8, "application/json"))
-                    {
-                        request.Content = content;
-                        var response = await client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead);
+                    var content = new StringContent(data); //, Encoding.UTF8, "application/json"))
 
-                        response.EnsureSuccessStatusCode();
-                        return response;
+                    content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                    request.Content = content;
+                    var response = await client.SendAsync(request); //, HttpCompletionOption.ResponseHeadersRead);
 
-                    }
+                    response.EnsureSuccessStatusCode();
+                    return response;
                 }
             }
         }
@@ -140,7 +143,8 @@ namespace AzureMapsToolkit.Common
             Url = string.Empty;
             try
             {
-                Url += GetQuery<U>(req, true);
+                if (req != null)
+                    Url += GetQuery<U>(req, true);
 
                 using (var client = GetClient(baseUrl))
                 {
@@ -173,7 +177,7 @@ namespace AzureMapsToolkit.Common
             return res;
         }
 
-        async Task<T> GetData<T>(HttpClient client, string url)
+        internal async Task<T> GetData<T>(HttpClient client, string url)
         {
             var res = await client.GetAsync(url);
             if (res.StatusCode == System.Net.HttpStatusCode.OK)
@@ -190,7 +194,7 @@ namespace AzureMapsToolkit.Common
 
                 throw new AzureMapsException(ex);
             }
-            
+
         }
 
     }

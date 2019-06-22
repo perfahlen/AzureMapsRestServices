@@ -22,7 +22,7 @@ namespace AzureMapsToolkit_Core_Test
         public void InvalidIPCountry()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
-            var res = am.GetIPToLocation("83.10.0.3");
+            var res = am.GetIPToLocation("83.10.0.3").Result;
 
             Assert.NotEqual("SE", res.Result.CountryRegion.IsoCode);
 
@@ -715,6 +715,36 @@ namespace AzureMapsToolkit_Core_Test
 
             Assert.True(true);
 
+        }
+
+        [Fact]
+        public void Upload()
+        {
+            var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
+
+            var json = "{\"type\": \"FeatureCollection\", \"features\": [{\"type\": \"Feature\",\"geometry\": {\"type\": \"Point\",\"coordinates\": [-122.126986, 47.639754]}, \"properties\": {\"geometryId\": \"001\",\"radius\": 500}}]}";
+            var res = am.Upload(json).Result;
+
+            Assert.NotNull(res.Result);
+            Assert.Null(res.Error);
+
+        }
+
+        [Fact]
+        public void ListData()
+        {
+            var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
+            var res = am.GetList().Result;
+            Assert.InRange(res.Result.MapDataList.Count(), 0, int.MaxValue);
+        }
+
+        [Fact]
+        public void DownloadData()
+        {
+            var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
+            var res = am.Download("53a5d6c4-5845-378d-8414-99599c14655e").Result;
+
+            Assert.NotNull(res.Result);
         }
     }
 }
