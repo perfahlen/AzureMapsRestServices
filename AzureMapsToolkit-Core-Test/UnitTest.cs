@@ -743,6 +743,15 @@ namespace AzureMapsToolkit_Core_Test
         }
 
         [Fact]
+        public void DeleteData()
+        {
+            var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
+            var res = am.DeleteData(System.Guid.Parse("191b6251-9b8a-b7a2-6fc9-4a6cf6a71e85")).Result;
+
+            Assert.True(res.Result);
+        }
+
+        [Fact]
         public void ListData()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);

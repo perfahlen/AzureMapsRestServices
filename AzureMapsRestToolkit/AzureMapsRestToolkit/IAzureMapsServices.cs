@@ -23,7 +23,7 @@ namespace AzureMapsToolkit
 
         Task<Response<string>> Download(string udid);
 
-        Task<Response<Object>> DeleteData(string udid);
+        Task<Response<bool>> DeleteData(Guid udid);
 
         Task<Response<Geolocation.IpAddressToLocationResult>> GetIPToLocation(string ip, string apiVersion = "1.0");
 

@@ -41,28 +41,29 @@ namespace AzureMapsToolkit
         /// </summary>
         /// <param name="req"></param>
         /// <returns></returns>
-        public virtual async Task<Response<Object>> DeleteData(string udid)
+        public virtual async Task<Response<bool>> DeleteData(Guid udid)
         {
             try
             {
-                var url = $"https://atlas.microsoft.com/mapData/{udid}?subscription-key={Key}&api-version=1.0";
+                var url = $"https://atlas.microsoft.com/mapData/{udid.ToString()}?subscription-key={Key}&api-version=1.0";
 
                 using (var client = new HttpClient())
                 {
                     using (var request = new HttpRequestMessage(HttpMethod.Delete, url))
                     {
 
-                        using (var response = await client.DeleteAsync(url))
-                        {
-                            return new Response<object>();
-                        }
 
+                        var response = client.DeleteAsync(url).Result;
+
+                        if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
+                            return new Response<bool> { Result = true };
+                        throw new AzureMapsException(new ErrorResponse { Error = new Error() { Message = $"Didn't recieve 204 statuscode, recieved {response.StatusCode.ToString()}" } });
                     }
                 }
             }
             catch (AzureMapsException ex)
             {
-                return Response<object>.CreateErrorResponse(ex);
+                return Response<bool>.CreateErrorResponse(ex);
             }
         }
 
@@ -137,7 +138,7 @@ namespace AzureMapsToolkit
                 string udid = GetUdidFromLocation(udidUrl);
                 var uploadResult = Newtonsoft.Json.JsonConvert.DeserializeObject<UploadResult>(udid);
                 return new Response<UploadResult> { Result = new UploadResult { Udid = uploadResult.Udid } };
-            
+
             }
             catch (AzureMapsException ex)
             {
@@ -145,7 +146,7 @@ namespace AzureMapsToolkit
             }
         }
 
-       
+
 
         /// <summary>
         /// This API allows the caller to update a previously uploaded data content.
