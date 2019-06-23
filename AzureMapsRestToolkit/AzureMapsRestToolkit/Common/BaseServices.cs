@@ -198,5 +198,32 @@ namespace AzureMapsToolkit.Common
 
         }
 
+        internal string GetUdidFromUrl(string location)
+        {
+            using (var client = GetClient(location))
+            {
+                var tries = 0;
+                while (tries < 20)
+                {
+                    var result = client.GetAsync(location).Result;
+                    if (result.StatusCode == System.Net.HttpStatusCode.Created)
+                    {
+                        var data = result.Content.ReadAsStringAsync().Result;
+                        return data;
+                    }
+                    else if (result.StatusCode == System.Net.HttpStatusCode.Accepted)
+                    {
+                        System.Threading.Thread.Sleep(100);
+                    }
+                    else
+                    {
+                        throw new Exception($"Error, the document location is {location}");
+                    }
+                    tries += 1;
+                }
+            }
+            throw new Exception($"Error, the document location is {location}");
+        }
+
     }
 }
