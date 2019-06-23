@@ -198,7 +198,7 @@ namespace AzureMapsToolkit.Common
 
         }
 
-        internal string GetUdidFromUrl(string location)
+        internal string GetUdidFromLocation(string location)
         {
             using (var client = GetClient(location))
             {

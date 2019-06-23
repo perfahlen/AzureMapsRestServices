@@ -17,7 +17,7 @@ namespace AzureMapsToolkit
 
         Task<Response<UploadResult>> Upload(string geoJson, string dataFormat = "geojson");
 
-        Task<Response<Object>> Update(string udid, string geoJson);
+        Task<Response<UpdateResult>> Update(Guid udid, string geoJson);
 
         Task<Response<MapDataListResponse>> GetList();
 

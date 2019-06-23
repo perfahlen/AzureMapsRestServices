@@ -730,6 +730,19 @@ namespace AzureMapsToolkit_Core_Test
         }
 
         [Fact]
+        public void Update()
+        {
+            var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
+
+            var json = "{\"type\": \"FeatureCollection\", \"features\": [{\"type\": \"Feature\",\"geometry\": {\"type\": \"Point\",\"coordinates\": [-122.126986, 47.639754]}, \"properties\": {\"geometryId\": \"001\",\"radius\": 500}}]}";
+            var res = am.Update(System.Guid.Parse("191b6251-9b8a-b7a2-6fc9-4a6cf6a71e85"), json).Result;
+
+            Assert.NotNull(res.Result);
+            Assert.Null(res.Error);
+
+        }
+
+        [Fact]
         public void ListData()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);

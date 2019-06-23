@@ -134,7 +134,7 @@ namespace AzureMapsToolkit
 
                 // make another request and wait for the request is processed by the service
                 var udidUrl = $"{location}&subscription-key={this.Key}";
-                string udid = GetUdidFromUrl(udidUrl);
+                string udid = GetUdidFromLocation(udidUrl);
                 var uploadResult = Newtonsoft.Json.JsonConvert.DeserializeObject<UploadResult>(udid);
                 return new Response<UploadResult> { Result = new UploadResult { Udid = uploadResult.Udid } };
             
@@ -153,20 +153,27 @@ namespace AzureMapsToolkit
         /// <param name="udid"></param>
         /// <param name="geoJson"></param>
         /// <returns></returns>
-        public virtual async Task<Response<Object>> Update(string udid, string geoJson)
+        public virtual async Task<Response<UpdateResult>> Update(Guid udid, string geoJson)
         {
             try
             {
-                var url = $"https://atlas.microsoft.com/mapData/{udid}?api-version=1.0&?subscription-key={Key}";
+                if (string.IsNullOrEmpty(geoJson))
+                {
+                    throw new ArgumentException("GeoJson paramater cannot be empty or null");
+                }
+
+                var url = $"https://atlas.microsoft.com/mapData/{udid.ToString()}?api-version=1.0&subscription-key={Key}";
 
                 var res = await GetHttpResponseMessage(url, geoJson, HttpMethod.Put);
                 var location = res.Headers.GetValues("Location").First();
-                return null;
-                //return new Response<string>() { Result = location };
+                var udidUrl = $"{location}&subscription-key={this.Key}";
+                string sUdid = GetUdidFromLocation(udidUrl);
+                var updateResult = Newtonsoft.Json.JsonConvert.DeserializeObject<UploadResult>(sUdid);
+                return new Response<UpdateResult> { Result = new UpdateResult { Udid = updateResult.Udid } };
             }
             catch (AzureMapsException ex)
             {
-                return Response<object>.CreateErrorResponse(ex);
+                return Response<UpdateResult>.CreateErrorResponse(ex);
             }
         }
 
