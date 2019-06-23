@@ -122,23 +122,54 @@ namespace AzureMapsToolkit
         /// <param name="geoJson"></param>
         /// <param name="dataFormat"></param>
         /// <returns></returns>
-        public virtual async Task<Response<string>> Upload(string geoJson, string dataFormat = "geojson")
+        public virtual async Task<Response<UploadResult>> Upload(string geoJson, string dataFormat = "geojson")
         {
             if (dataFormat != "geojson")
                 dataFormat = "geojson";
             try
             {
                 var url = $"https://atlas.microsoft.com/mapData/upload?subscription-key={Key}&api-version=1.0&dataFormat={dataFormat}";
-
                 var res = await GetHttpResponseMessage(url, geoJson, HttpMethod.Post);
-                var location =  res.Headers.GetValues("Location").First();
-                return new Response<string>() { Result = location };
+                var location = res.Headers.GetValues("Location").First();
 
+                // make another request and wait for the request is processed by the service
+                var udidUrl = $"{location}&subscription-key={this.Key}";
+                string udid = GetUdidFromUrl(udidUrl);
+                var uploadResult = Newtonsoft.Json.JsonConvert.DeserializeObject<UploadResult>(udid);
+                return new Response<UploadResult> { Result = new UploadResult { Udid = uploadResult.Udid } };
+            
             }
             catch (AzureMapsException ex)
             {
-                return Response<string>.CreateErrorResponse(ex);
+                return Response<UploadResult>.CreateErrorResponse(ex);
             }
+        }
+
+        private string GetUdidFromUrl(string location)
+        {
+            using (var client = GetClient(location))
+            {
+                var tries = 0;
+                while (tries < 20)
+                {
+                    var result = client.GetAsync(location).Result;
+                    if (result.StatusCode == System.Net.HttpStatusCode.Created)
+                    {
+                        var data = result.Content.ReadAsStringAsync().Result;
+                        return data; 
+                    }
+                    else if (result.StatusCode == System.Net.HttpStatusCode.Accepted)
+                    {
+                        System.Threading.Thread.Sleep(100);
+                    }
+                    else
+                    {
+                        throw new Exception($"Error, the document location is {location}");
+                    }
+                    tries += 1;
+                }
+            }
+            throw new Exception($"Error, the document location is {location}");
         }
 
         /// <summary>
@@ -153,20 +184,10 @@ namespace AzureMapsToolkit
             {
                 var url = $"https://atlas.microsoft.com/mapData/{udid}?api-version=1.0&?subscription-key={Key}";
 
-                using (var client = new HttpClient())
-                {
-                    using (var request = new HttpRequestMessage(HttpMethod.Put, url))
-                    {
-                        request.Headers.Clear();
-                        request.Headers.Add("Content-Type", "application/json");
-
-                        using (var response = await client.PostAsync(url, new StringContent(geoJson)))
-                        {
-                            return new Response<object>();
-                        }
-
-                    }
-                }
+                var res = await GetHttpResponseMessage(url, geoJson, HttpMethod.Put);
+                var location = res.Headers.GetValues("Location").First();
+                return null;
+                //return new Response<string>() { Result = location };
             }
             catch (AzureMapsException ex)
             {
@@ -290,7 +311,7 @@ namespace AzureMapsToolkit
         /// This service returns a map image tile with size 256x256, given the x and y coordinates and zoom level. Zoom level ranges from 0 to 18. The current available style value is 'satellite' which provides satellite imagery alone.
         /// </summary>
         /// <returns></returns>
-        public virtual async Task<Response<byte[]>> GetMapImageryTile(MapImageryTileRequest req) 
+        public virtual async Task<Response<byte[]>> GetMapImageryTile(MapImageryTileRequest req)
         {
             try
             {

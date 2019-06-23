@@ -159,10 +159,11 @@ namespace AzureMapsToolkit.Common
             }
         }
 
-        HttpClient GetClient(string baseAddress)
+        internal HttpClient GetClient(string baseAddress)
         {
             var client = new HttpClient();
-            client.BaseAddress = new Uri(baseAddress);
+            if (!string.IsNullOrEmpty(baseAddress))
+                client.BaseAddress = new Uri(baseAddress);
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             return client;
