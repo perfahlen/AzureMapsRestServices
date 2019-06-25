@@ -181,7 +181,6 @@ namespace AzureMapsToolkit
 
         #endregion
 
-
         #region Geolocation
 
         /// <summary>

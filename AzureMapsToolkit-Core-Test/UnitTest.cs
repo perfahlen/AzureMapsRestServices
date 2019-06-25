@@ -746,8 +746,9 @@ namespace AzureMapsToolkit_Core_Test
         public void DeleteData()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
-            var res = am.DeleteData(System.Guid.Parse("191b6251-9b8a-b7a2-6fc9-4a6cf6a71e85")).Result;
+            var res = am.DeleteData(System.Guid.Parse("")).Result;
 
+            Assert.Null(res.Error);
             Assert.True(res.Result);
         }
 
@@ -763,8 +764,8 @@ namespace AzureMapsToolkit_Core_Test
         public void DownloadData()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
-            var res = am.Download("53a5d6c4-5845-378d-8414-99599c14655e").Result;
-
+            var res = am.Download("").Result;
+            Assert.Null(res.Error);
             Assert.NotNull(res.Result);
         }
     }
