@@ -13,6 +13,7 @@ using AzureMapsToolkit.Data;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using AzureMapsToolkit.Spatial;
 
 namespace AzureMapsToolkit
 {
@@ -33,6 +34,21 @@ namespace AzureMapsToolkit
                 throw new ArgumentException("Missing azure maps key");
             }
         }
+
+        #region
+
+        /// <summary>
+        /// This API returns a FeatureCollection where each Feature is a buffer around the corresponding indexed Feature of the input. The buffer could be either on the outside or the inside of the provided Feature, depending on the distance provided in the input. There must be either one distance provided per Feature in the FeatureCollection input, or if only one distance is provided, then that distance is applied to every Feature in the collection. The positive (or negative) buffer of a geometry is defined as the Minkowski sum (or difference) of the geometry with a circle of radius equal to the absolute value of the buffer distance. The buffer API always returns a polygonal result. The negative or zero-distance buffer of lines and points is always an empty polygon. The input features are provided by a GeoJSON file which is uploaded via Data Upload API and referenced by a unique udid. The GeoJSON file may contain a collection of Point, MultiPoint, Polygon, MultiPolygon, LineString and MultiLineString. GeometryCollection will be ignored if provided.
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="format"></param>
+        /// <returns></returns>
+        public async Task<Response<GetBufferResponse>> GetBuffer(GetBufferRequest request, string format = "json")
+        {
+            var res = await ExecuteRequest<GetBufferResponse, GetBufferRequest>($"https://atlas.microsoft.com/spatial/buffer/{format}", request);
+            return res;
+        }
+        #endregion
 
         #region Data
 
@@ -154,7 +170,7 @@ namespace AzureMapsToolkit
         /// <param name="udid"></param>
         /// <param name="geoJson"></param>
         /// <returns></returns>
-        public virtual async Task<Response<UpdateResult>> Update(Guid udid, string geoJson)
+        public virtual async Task<Response<UpdateResult>> Update(Guid udid, string geoJson = "geojson")
         {
             try
             {

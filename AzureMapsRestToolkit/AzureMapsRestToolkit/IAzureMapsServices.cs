@@ -3,6 +3,7 @@ using AzureMapsToolkit.Data;
 using AzureMapsToolkit.GeoJson;
 using AzureMapsToolkit.Render;
 using AzureMapsToolkit.Search;
+using AzureMapsToolkit.Spatial;
 using AzureMapsToolkit.Timezone;
 using AzureMapsToolkit.Traffic;
 using System;
@@ -15,9 +16,10 @@ namespace AzureMapsToolkit
     public interface IAzureMapsServices
     {
 
+        Task<Response<GetBufferResponse>> GetBuffer(GetBufferRequest requests, string format);
         Task<Response<UploadResult>> Upload(string geoJson, string dataFormat = "geojson");
 
-        Task<Response<UpdateResult>> Update(Guid udid, string geoJson);
+        Task<Response<UpdateResult>> Update(Guid udid, string geoJson = "geojson");
 
         Task<Response<MapDataListResponse>> GetList();
 
