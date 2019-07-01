@@ -7,10 +7,14 @@ namespace AzureMapsToolkit.Spatial
 {
     public class GetBufferResponse
     {
-        [JsonProperty("results")]
+        [JsonProperty("result")]
         public object Result { get; set; }
+
+        [JsonProperty("results")]
+        public object Results { get; set; }
 
         [JsonProperty("summary")]
         public Summary Summary { get; set; }
     }
+
 }

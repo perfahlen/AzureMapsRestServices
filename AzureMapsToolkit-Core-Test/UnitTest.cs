@@ -768,5 +768,23 @@ namespace AzureMapsToolkit_Core_Test
             Assert.Null(res.Error);
             Assert.NotNull(res.Result);
         }
+
+        [Fact]
+
+        public void GetBuffer()
+        {
+            var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
+            var res = am.GetBuffer(new AzureMapsToolkit.Spatial.GetBufferRequest
+            {
+                Udid = System.Guid.Parse(""),
+                Distances = 100.ToString()
+            }).Result;
+
+            Assert.Null(res.Error);
+
+            Assert.NotNull(res.Result.Summary);
+
+
+        }
     }
 }
