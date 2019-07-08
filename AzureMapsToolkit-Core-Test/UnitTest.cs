@@ -3,18 +3,19 @@ using AzureMapsToolkit.Search;
 using AzureMapsToolkit.Timezone;
 using GeoJSON.Net.Geometry;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using Xunit;
 using System.Linq;
 using AzureMapsToolkit.Traffic;
 using AzureMapsToolkit.Render;
+using AzureMapsToolkit;
+using System.Threading.Tasks;
 
 namespace AzureMapsToolkit_Core_Test
 {
     public class UnitTest
     {
-        public const string _KEY = "fyPo4BWO5PvgFLPL6myK9wVWJrrxGcMjOi39FBGORh0";
+        public const string _KEY = "";
 
         [Fact]
         public void InvalidIPCountry()
@@ -58,10 +59,10 @@ namespace AzureMapsToolkit_Core_Test
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
             var req = new AzureMapsToolkit.Render.CopyrightForTileRequest
             {
-               Zoom = 6,
-               X = 9,
-               Y = 22,
-               Text = "yes"
+                Zoom = 6,
+                X = 9,
+                Y = 22,
+                Text = "yes"
             };
             var resp = am.GetCopyrightForTile(req).Result;
             Assert.Equal("CAN", resp.Result.Regions[0].Country.ISO3);
@@ -83,7 +84,7 @@ namespace AzureMapsToolkit_Core_Test
             {
                 Mincoordinates = "52.41064,4.84228",
                 Maxcoordinates = "52.41072,4.84239",
-                Text ="yes"
+                Text = "yes"
             };
             var res = am.GetCopyrightFromBoundingBox(req).Result;
 
@@ -99,7 +100,7 @@ namespace AzureMapsToolkit_Core_Test
                 Format = AzureMapsToolkit.Render.RasterTileFormat.png,
                 Layer = StaticMapLayer.basic,
                 Zoom = 2,
-                Center = "62 17"
+                Center = "62,17"
             };
             var content = am.GetMapImage(req).Result;
             Assert.NotEmpty(content.Result);
@@ -133,7 +134,7 @@ namespace AzureMapsToolkit_Core_Test
                 Layer = StaticMapLayer.basic,
                 Style = MapTileStyle.main,
                 Zoom = 6,
-                X = 10, 
+                X = 10,
                 Y = 22
             };
 
@@ -148,11 +149,26 @@ namespace AzureMapsToolkit_Core_Test
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
             var req = new RouteRequestDirections
             {
-                Query = "52.50931,13.42936:52.50274,13.43872",
-                VehicleEngineType = VehicleEngineType.Combustion
+                Query = "52.50931,13.42936:52.50274,13.43872"
             };
             var directions = am.GetRouteDirections(req).Result;
-            Assert.NotNull(directions);
+            Assert.Null(directions.Error);
+            Assert.NotNull(directions.Result);
+        }
+
+        [Fact]
+        public void GetRouteDirectionsError()
+        {
+
+            var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
+            var req = new RouteRequestDirections
+            {
+                Query = "52.50931,13.42936:52.50274,13.43872",
+                VehicleEngineType = VehicleEngineType.Combustion,
+                InstructionsType = RouteInstructionsType.text
+            };
+            var directions = am.GetRouteDirections(req).Result;
+            Assert.NotNull(directions.Error);
         }
 
         [Fact]
@@ -164,7 +180,6 @@ namespace AzureMapsToolkit_Core_Test
             {
                 Query = "52.50931,13.42936",
                 TimeBudgetInSec = "12000"
-
             };
             var range = am.GetRouteRange(req).Result;
             Assert.NotNull(range.Result.ReachableRange.Boundary);
@@ -585,7 +600,7 @@ namespace AzureMapsToolkit_Core_Test
 
             Assert.Null(r.Error);
 
-            Assert.Equal(5, r.Result.Count());
+            Assert.Equal(6, r.Result.Count());
         }
 
         [Fact]
@@ -675,6 +690,101 @@ namespace AzureMapsToolkit_Core_Test
             Assert.Null(r.Error);
 
             Assert.Equal("world", r.Result.ViewpResp.Maps);
+        }
+
+        [Fact]
+        public void GetSearchAddresstMoq()
+        {
+
+            var mock = new Moq.Mock<IAzureMapsServices>();
+            var response = new Response<SearchAddressResponse>
+            {
+                Result = new SearchAddressResponse
+                {
+                    Summary = new SearchSummary { TotalResults = 1 },
+                    Results = new SearchAddressResult[] { new SearchAddressResult
+                    {
+                        Address = new SearchResultAddress{ Country = "Sweden"}
+                    }
+                        }
+                }
+            };
+
+            var setup = mock.Setup(x => x.GetSearchAddress(new SearchAddressRequest())).Returns(Task.FromResult(response));
+
+            Assert.True(true);
+
+        }
+
+        [Fact]
+        public void Upload()
+        {
+            var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
+
+            var json = "{\"type\": \"FeatureCollection\", \"features\": [{\"type\": \"Feature\",\"geometry\": {\"type\": \"Point\",\"coordinates\": [-122.126986, 47.639754]}, \"properties\": {\"geometryId\": \"001\",\"radius\": 500}}]}";
+            var res = am.Upload(json).Result;
+
+            Assert.NotNull(res.Result);
+            Assert.Null(res.Error);
+
+        }
+
+        [Fact]
+        public void Update()
+        {
+            var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
+
+            var json = "{\"type\": \"FeatureCollection\", \"features\": [{\"type\": \"Feature\",\"geometry\": {\"type\": \"Point\",\"coordinates\": [-122.126986, 47.639754]}, \"properties\": {\"geometryId\": \"001\",\"radius\": 500}}]}";
+            var res = am.Update(System.Guid.Parse("191b6251-9b8a-b7a2-6fc9-4a6cf6a71e85"), json).Result;
+
+            Assert.NotNull(res.Result);
+            Assert.Null(res.Error);
+
+        }
+
+        [Fact]
+        public void DeleteData()
+        {
+            var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
+            var res = am.DeleteData(System.Guid.Parse("")).Result;
+
+            Assert.Null(res.Error);
+            Assert.True(res.Result);
+        }
+
+        [Fact]
+        public void ListData()
+        {
+            var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
+            var res = am.GetList().Result;
+            Assert.InRange(res.Result.MapDataList.Count(), 0, int.MaxValue);
+        }
+
+        [Fact]
+        public void DownloadData()
+        {
+            var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
+            var res = am.Download("").Result;
+            Assert.Null(res.Error);
+            Assert.NotNull(res.Result);
+        }
+
+        [Fact]
+
+        public void GetBuffer()
+        {
+            var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
+            var res = am.GetBuffer(new AzureMapsToolkit.Spatial.GetBufferRequest
+            {
+                Udid = System.Guid.Parse(""),
+                Distances = 100.ToString()
+            }).Result;
+
+            Assert.Null(res.Error);
+
+            Assert.NotNull(res.Result.Summary);
+
+
         }
     }
 }

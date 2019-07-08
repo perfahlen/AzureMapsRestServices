@@ -95,7 +95,7 @@ namespace AzureMapsToolkit.Search
         /// number of routes
         /// </summary>
         [JsonProperty("routeNumbers")]
-        public int[] RouteNumbers { get; set; }
+        public string[] RouteNumbers { get; set; }
 
         /// <summary>
         /// Street property

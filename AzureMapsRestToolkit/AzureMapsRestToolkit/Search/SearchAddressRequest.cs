@@ -5,17 +5,17 @@
         /// <summary>
         /// Boolean. If the typeahead flag is set, the query will be interpreted as a partial input and the search will enter predictive modes
         /// </summary>
-        public bool Typeahead { get; set; }
+        public bool? Typeahead { get; set; }
 
         /// <summary>
         /// Maximum number of responses that will be returned. Default: 10, minimum: 1 and maximum: 100
         /// </summary>
-        public int Limit { get; set; }
+        public int? Limit { get; set; }
 
         /// <summary>
         /// Starting offset of the returned results within the full result set.
         /// </summary>
-        public int Ofs { get; set; }
+        public int? Ofs { get; set; }
 
         /// <summary>
         /// Comma separated string of country codes, e.g. FR, ES. This will limit the search to the specified countries
@@ -25,12 +25,12 @@
         /// <summary>
         /// Latitude where results should be biased. E.g. 37.337
         /// </summary>
-        public double Lat { get; set; }
+        public double? Lat { get; set; }
 
         /// <summary>
         /// Longitude where results should be biased.E.g. -121.89
         /// </summary>
-        public double Lon { get; set; }
+        public double? Lon { get; set; }
 
         /// <summary>
         /// Top left position of the bounding box. E.g. 37.553,-122.453
