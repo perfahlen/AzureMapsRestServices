@@ -2,7 +2,7 @@
 
 namespace AzureMapsToolkit.Spatial
 {
-    public class GetClosestPoint: SpatialRequestBase
+    public class GetClosestPointRequest: SpatialRequestBase
     {
         /// <summary>
         /// The base point latitude of the location being passed. Example: 47.622942.

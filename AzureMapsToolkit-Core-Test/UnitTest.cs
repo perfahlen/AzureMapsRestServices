@@ -10,6 +10,7 @@ using AzureMapsToolkit.Traffic;
 using AzureMapsToolkit.Render;
 using AzureMapsToolkit;
 using System.Threading.Tasks;
+using System;
 
 namespace AzureMapsToolkit_Core_Test
 {
@@ -721,7 +722,8 @@ namespace AzureMapsToolkit_Core_Test
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
 
-            var json = "{\"type\": \"FeatureCollection\", \"features\": [{\"type\": \"Feature\",\"geometry\": {\"type\": \"Point\",\"coordinates\": [-122.126986, 47.639754]}, \"properties\": {\"geometryId\": \"001\",\"radius\": 500}}]}";
+            //var json = "{\"type\": \"FeatureCollection\", \"features\": [{\"type\": \"Feature\",\"geometry\": {\"type\": \"Point\",\"coordinates\": [-122.126986, 47.639754]}, \"properties\": {\"geometryId\": \"001\",\"radius\": 500}}]}";
+            var json = "{\"type\":\"FeatureCollection\",\"features\":[{\"type\":\"Feature\",\"properties\":{\"geometryId\":1001},\"geometry\":{\"type\":\"Point\",\"coordinates\":[-105.02860293715861,40.516153406773952]}},{\"type\":\"Feature\",\"properties\":{\"geometryId\":1002},\"geometry\":{\"type\":\"Point\",\"coordinates\":[-105.02860381672178,40.515990990037309]}},{\"type\":\"Feature\",\"properties\":{\"geometryId\":1003},\"geometry\":{\"type\":\"Point\",\"coordinates\":[-105.02812292879467,40.516058678088562]}}]}";
             var res = am.Upload(json).Result;
 
             Assert.NotNull(res.Result);
@@ -784,7 +786,21 @@ namespace AzureMapsToolkit_Core_Test
 
             Assert.NotNull(res.Result.Summary);
 
+        }
 
+        [Fact]
+        public void GetClosestPoint()
+        {
+            var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
+            var res = am.GetClosestPoint(new AzureMapsToolkit.Spatial.GetClosestPointRequest
+            {
+                Lon = -105.05860381672178,
+                Lat = 40.516153406773952,
+                Udid = Guid.Parse(""),
+                NumberOfClosestPoints = 2
+            }).Result;
+
+            Assert.Null(res.Error);
         }
     }
 }

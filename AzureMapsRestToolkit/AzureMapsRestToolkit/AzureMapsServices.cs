@@ -9,7 +9,11 @@ using AzureMapsToolkit.Search;
 using AzureMapsToolkit.Timezone;
 using AzureMapsToolkit.Traffic;
 using AzureMapsToolkit.Geolocation;
-using AzureMapsRestToolkit.Common;
+using AzureMapsToolkit.Spatial;
+using System.Net.Http;
+using AzureMapsToolkit.Data;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace AzureMapsToolkit
 {
@@ -29,9 +33,17 @@ namespace AzureMapsToolkit
             {
                 throw new ArgumentException("Missing azure maps key");
             }
+
+            JsonConvert.DefaultSettings = () =>
+                new JsonSerializerSettings
+                {
+                    ContractResolver = new CamelCasePropertyNamesContractResolver()
+                };
         }
 
-        #region
+
+
+        #region Spatial
 
         /// <summary>
         /// This API returns a FeatureCollection where each Feature is a buffer around the corresponding indexed Feature of the input. The buffer could be either on the outside or the inside of the provided Feature, depending on the distance provided in the input. There must be either one distance provided per Feature in the FeatureCollection input, or if only one distance is provided, then that distance is applied to every Feature in the collection. The positive (or negative) buffer of a geometry is defined as the Minkowski sum (or difference) of the geometry with a circle of radius equal to the absolute value of the buffer distance. The buffer API always returns a polygonal result. The negative or zero-distance buffer of lines and points is always an empty polygon. The input features are provided by a GeoJSON file which is uploaded via Data Upload API and referenced by a unique udid. The GeoJSON file may contain a collection of Point, MultiPoint, Polygon, MultiPolygon, LineString and MultiLineString. GeometryCollection will be ignored if provided.
@@ -44,6 +56,19 @@ namespace AzureMapsToolkit
             var res = await ExecuteRequest<GetBufferResponse, GetBufferRequest>($"https://atlas.microsoft.com/spatial/buffer/{format}", request);
             return res;
         }
+
+        /// <summary>
+        /// This API returns the closest point between a base point and a given set of points in the user uploaded data set identified by udid. The set of target points is provided by a GeoJSON file which is uploaded via Data Upload API and referenced by a unique udid. The GeoJSON file may only contain a collection of Point geometry. MultiPoint or other geometries will be ignored if provided. The maximum number of points accepted is 100,000. The algorithm does not take into account routing or traffic. Information returned includes closest point latitude, longitude, and distance in meters from the closest point.
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public async Task<Response<GetClosestPointResponse>> GetClosestPoint(GetClosestPointRequest request)
+        {
+            var res = await ExecuteRequest<GetClosestPointResponse, GetClosestPointRequest>($"https://atlas.microsoft.com/spatial/closestPoint/json", request);
+            return res;
+        }
+
+
         #endregion
 
         #region Data
@@ -65,7 +90,7 @@ namespace AzureMapsToolkit
                     {
 
 
-                        var response = client.DeleteAsync(url).Result;
+                        var response = await client.DeleteAsync(url);
 
                         if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
                             return new Response<bool> { Result = true };
@@ -417,7 +442,7 @@ namespace AzureMapsToolkit
         /// <param name="coordinatesOrigins"></param>
         /// <param name="coordinatesDestinations"></param>
         /// <returns></returns>
-        public virtual async Task<(RouteMatrixResponse matrix, Exception ex)> GetRouteMatrix(RouteMatrixRequest routeMatrixRequest, IEnumerable<Coordinate> coordinatesOrigins, IEnumerable<Coordinate> coordinatesDestinations)
+        public virtual async Task<(RouteMatrixResponse matrix, Exception ex)> GetRouteMatrix(RouteMatrixRequest routeMatrixRequest, IEnumerable<Common.Coordinate> coordinatesOrigins, IEnumerable<Common.Coordinate> coordinatesDestinations)
         {
             try
             {

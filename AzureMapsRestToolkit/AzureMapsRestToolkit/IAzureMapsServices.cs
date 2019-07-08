@@ -16,7 +16,10 @@ namespace AzureMapsToolkit
     public interface IAzureMapsServices
     {
 
+        Task<Response<GetClosestPointResponse>> GetClosestPoint(GetClosestPointRequest request);
+
         Task<Response<GetBufferResponse>> GetBuffer(GetBufferRequest requests, string format);
+
         Task<Response<UploadResult>> Upload(string geoJson, string dataFormat = "geojson");
 
         Task<Response<UpdateResult>> Update(Guid udid, string geoJson = "geojson");
@@ -49,7 +52,7 @@ namespace AzureMapsToolkit
 
         Task<(string ResultUrl, Exception ex)> GetRouteDirections(IEnumerable<RouteRequestDirections> routeRequestItems);
 
-        Task<(RouteMatrixResponse matrix, Exception ex)> GetRouteMatrix(RouteMatrixRequest routeMatrixRequest, IEnumerable<Coordinate> coordinatesOrigins, IEnumerable<Coordinate> coordinatesDestinations);
+        Task<(RouteMatrixResponse matrix, Exception ex)> GetRouteMatrix(RouteMatrixRequest routeMatrixRequest, IEnumerable<Common.Coordinate> coordinatesOrigins, IEnumerable<Common.Coordinate> coordinatesDestinations);
 
         Task<Response<SearchAddressResponse>> GetSearchAddress(SearchAddressRequest searchAddressRequest);
 

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Linq;
 using System.Net.Http.Headers;
+using System.Globalization;
 
 namespace AzureMapsToolkit.Common
 {
@@ -53,6 +54,7 @@ namespace AzureMapsToolkit.Common
                 _url = value;
             }
         }
+
 
         internal MultiPoint GetMultipPoint(IEnumerable<Coordinate> coordinates)
         {
@@ -102,6 +104,7 @@ namespace AzureMapsToolkit.Common
                     {
                         argumentName = Char.ToLower(propertyInfo.Name[0]) + propertyInfo.Name.Substring(1);
                         argumentValue = (propertyInfo.GetValue(request).GetType().GetMember(propertyInfo.GetValue(request).ToString())?.FirstOrDefault().GetCustomAttributes(typeof(NameArgument), false).FirstOrDefault() as NameArgument).Name;
+
                     }
                     else
                     {
@@ -115,7 +118,20 @@ namespace AzureMapsToolkit.Common
 
 
                         if (string.IsNullOrEmpty(argumentValue))
+                        {
                             argumentValue = propertyInfo.GetValue(request).ToString();
+
+                            if (int.TryParse(argumentValue, out int i))
+                            {
+                                argumentValue = ((int)propertyInfo.GetValue(request)).ToString(CultureInfo.InvariantCulture);
+                                continue;
+                            }
+
+                            if (double.TryParse(argumentValue, out double d))
+                            {
+                                argumentValue = ((double)propertyInfo.GetValue(request)).ToString(CultureInfo.InvariantCulture);
+                            }
+                        }
                     }
 
                     arguments += $"{firstChar}{argumentName}={argumentValue}";
