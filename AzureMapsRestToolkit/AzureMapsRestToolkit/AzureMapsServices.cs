@@ -46,6 +46,17 @@ namespace AzureMapsToolkit
         #region Spatial
 
         /// <summary>
+        /// The Geofence Get API allows you to retrieve the proximity of a coordinate to a geofence that has been uploaded to the Data service. You can use the Data Upload API to upload a geofence or set of fences. See Geofencing GeoJSON data for more details on the geofence data format. To query the proximity of a coordinate, you supply the location of the object you are tracking as well as the ID for the fence or set of fences, and the response will contain information about the distance from the outer edge of the geofence. A negative value signifies that the coordinate is inside of the fence while a positive value means that it is outside of the fence.
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public async Task<Response<GetGeofenceResponse>> GetGeofence(GetGeofenceRequest request)
+        {
+            var res = await ExecuteRequest<GetGeofenceResponse, GetGeofenceRequest>($"https://atlas.microsoft.com/spatial/geofence/json", request);
+            return res;
+        }
+
+        /// <summary>
         /// This API returns a FeatureCollection where each Feature is a buffer around the corresponding indexed Feature of the input. The buffer could be either on the outside or the inside of the provided Feature, depending on the distance provided in the input. There must be either one distance provided per Feature in the FeatureCollection input, or if only one distance is provided, then that distance is applied to every Feature in the collection. The positive (or negative) buffer of a geometry is defined as the Minkowski sum (or difference) of the geometry with a circle of radius equal to the absolute value of the buffer distance. The buffer API always returns a polygonal result. The negative or zero-distance buffer of lines and points is always an empty polygon. The input features are provided by a GeoJSON file which is uploaded via Data Upload API and referenced by a unique udid. The GeoJSON file may contain a collection of Point, MultiPoint, Polygon, MultiPolygon, LineString and MultiLineString. GeometryCollection will be ignored if provided.
         /// </summary>
         /// <param name="request"></param>

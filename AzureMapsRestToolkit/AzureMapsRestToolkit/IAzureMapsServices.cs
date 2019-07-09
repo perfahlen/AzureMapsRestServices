@@ -15,7 +15,7 @@ namespace AzureMapsToolkit
 {
     public interface IAzureMapsServices
     {
-        Task<Response<object>> GetGeofence();
+        Task<Response<GetGeofenceResponse>> GetGeofence(GetGeofenceRequest req);
 
         Task<Response<GetClosestPointResponse>> GetClosestPoint(GetClosestPointRequest request);
 
