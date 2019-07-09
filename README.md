@@ -6,6 +6,7 @@
 
 # .Net Standard 2.0 library to access AzureMaps Services
 This library covers 36 Azure Maps services including the following services
+- Data services
 - Geolocation services
 - Render services
 - Route services
