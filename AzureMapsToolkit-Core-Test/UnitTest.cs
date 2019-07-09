@@ -16,7 +16,7 @@ namespace AzureMapsToolkit_Core_Test
 {
     public class UnitTest
     {
-        public const string _KEY = "tTk1JVEaeNvDkxxnxHm9cYaCvqlOq1u-fXTvyXn2XkA";
+        public const string _KEY = "";
 
         [Fact]
         public void InvalidIPCountry()
@@ -723,7 +723,8 @@ namespace AzureMapsToolkit_Core_Test
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
 
             //var json = "{\"type\": \"FeatureCollection\", \"features\": [{\"type\": \"Feature\",\"geometry\": {\"type\": \"Point\",\"coordinates\": [-122.126986, 47.639754]}, \"properties\": {\"geometryId\": \"001\",\"radius\": 500}}]}";
-            var json = "{\"type\":\"FeatureCollection\",\"features\":[{\"type\":\"Feature\",\"properties\":{\"geometryId\":1001},\"geometry\":{\"type\":\"Point\",\"coordinates\":[-105.02860293715861,40.516153406773952]}},{\"type\":\"Feature\",\"properties\":{\"geometryId\":1002},\"geometry\":{\"type\":\"Point\",\"coordinates\":[-105.02860381672178,40.515990990037309]}},{\"type\":\"Feature\",\"properties\":{\"geometryId\":1003},\"geometry\":{\"type\":\"Point\",\"coordinates\":[-105.02812292879467,40.516058678088562]}}]}";
+            //var json = "{\"type\":\"FeatureCollection\",\"features\":[{\"type\":\"Feature\",\"properties\":{\"geometryId\":1001},\"geometry\":{\"type\":\"Point\",\"coordinates\":[-105.02860293715861,40.516153406773952]}},{\"type\":\"Feature\",\"properties\":{\"geometryId\":1002},\"geometry\":{\"type\":\"Point\",\"coordinates\":[-105.02860381672178,40.515990990037309]}},{\"type\":\"Feature\",\"properties\":{\"geometryId\":1003},\"geometry\":{\"type\":\"Point\",\"coordinates\":[-105.02812292879467,40.516058678088562]}}]}";
+            var json = "{\"type\": \"FeatureCollection\",\"features\": [{\"type\": \"Feature\",\"geometry\": {\"type\": \"Polygon\",\"coordinates\": [[[-122.13241226662022,47.617011400917221],[-122.12810106940353,47.6169969269402],[-122.12824948956276,47.619076837513489],[-122.12833297981392,47.621929787055336],[-122.12971398040168,47.62184100705295],[-122.1318413862121,47.62195364373008],[-122.13231034769727,47.617163326181213],[-122.13241226662022,47.617011400917221]]]},\"properties\": {\"geometryId\": \"2\",\"name\": \"Crossroad Mall\"}},{\"type\": \"Feature\",\"geometry\": {\"type\": \"Polygon\",\"coordinates\": [[[-122.15342205632391,47.609818185466253],[-122.153451623509,47.606287331460038],[-122.14971782206638,47.606250040787046],[-122.14817354810637,47.606391046012305],[-122.14827351288071,47.609833167963558],[-122.15225500989803,47.609826136787518],[-122.15342205632391,47.609818185466253]]]},\"properties\": {\"geometryId\": \"1\",\"name\": \"Sammamish High school\"}}]}";
             var res = am.Upload(json).Result;
 
             Assert.NotNull(res.Result);
@@ -737,7 +738,7 @@ namespace AzureMapsToolkit_Core_Test
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
 
             var json = "{\"type\": \"FeatureCollection\", \"features\": [{\"type\": \"Feature\",\"geometry\": {\"type\": \"Point\",\"coordinates\": [-122.126986, 47.639754]}, \"properties\": {\"geometryId\": \"001\",\"radius\": 500}}]}";
-            var res = am.Update(System.Guid.Parse("191b6251-9b8a-b7a2-6fc9-4a6cf6a71e85"), json).Result;
+            var res = am.Update(System.Guid.Parse(""), json).Result;
 
             Assert.NotNull(res.Result);
             Assert.Null(res.Error);
@@ -801,6 +802,21 @@ namespace AzureMapsToolkit_Core_Test
             }).Result;
 
             Assert.Null(res.Error);
+        }
+
+        [Fact]
+        public void GetGeofence()
+        {
+            var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
+            var res = am.GetGeofence(new AzureMapsToolkit.Spatial.GetGeofenceRequest
+            {
+                UdId = Guid.Parse(""),
+                Lat = 47.609826136787518,
+                Lon = -122.15225500989803,
+                DeviceId = "1"
+            }).Result;
+
+
         }
     }
 }

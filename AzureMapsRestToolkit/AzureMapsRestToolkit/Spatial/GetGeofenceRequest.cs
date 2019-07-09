@@ -7,11 +7,6 @@ namespace AzureMapsToolkit.Spatial
     public class GetGeofenceRequest : SpatialRequestBase
     {
         /// <summary>
-        /// Desired format of the response. Only json format is supported.
-        /// </summary>
-        public string Format { get; } = "json";
-
-        /// <summary>
         /// ID of the device
         /// </summary>
         public string DeviceId { get; set; }
@@ -19,7 +14,7 @@ namespace AzureMapsToolkit.Spatial
         /// <summary>
         /// The unique id returned from Data Upload API after uploading a valid GeoJSON FeatureCollection object. Please refer to RFC 7946 for details. All the feature's properties should contain geometryId, which is used for identifying the geometry and is case-sensitive.
         /// </summary>
-        public string UdId { get; set; }
+        public Guid UdId { get; set; }
 
         /// <summary>
         /// The latitude of the location being passed. Example: 48.36.

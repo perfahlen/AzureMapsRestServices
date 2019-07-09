@@ -121,13 +121,13 @@ namespace AzureMapsToolkit.Common
                         {
                             argumentValue = propertyInfo.GetValue(request).ToString();
 
-                            if (int.TryParse(argumentValue, out int i))
+                            if (propertyInfo.PropertyType == typeof(int) && int.TryParse(argumentValue, out int i))
                             {
                                 argumentValue = ((int)propertyInfo.GetValue(request)).ToString(CultureInfo.InvariantCulture);
                                 continue;
                             }
 
-                            if (double.TryParse(argumentValue, out double d))
+                            if (propertyInfo.PropertyType == typeof(double) && double.TryParse(argumentValue, out double d))
                             {
                                 argumentValue = ((double)propertyInfo.GetValue(request)).ToString(CultureInfo.InvariantCulture);
                             }
