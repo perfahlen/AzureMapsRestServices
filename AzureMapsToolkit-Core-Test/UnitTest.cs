@@ -816,7 +816,41 @@ namespace AzureMapsToolkit_Core_Test
                 DeviceId = "1"
             }).Result;
 
+            Assert.NotNull(res);
 
+            Assert.Null(res.Error);
         }
+
+        [Fact]
+
+        public void GetGreatCircleDistance()
+        {
+            var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
+            var res = am.GetGreatCircleDistance(new AzureMapsToolkit.Spatial.GreatCircleDistanceRequest
+            {
+                Query = "47.622942,-122.316456:47.610378,-122.200676"
+            }).Result;
+
+            Assert.Null(res.Error);
+
+            Assert.Equal(8797.62, res.Result.Result.DistanceInMeters);
+        }
+
+
+        [Fact]
+        public void GetGreatCircleDistance2()
+        {
+            var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
+            var res = am.GetGreatCircleDistance(new AzureMapsToolkit.Spatial.GreatCircleDistanceRequest
+            {
+                Start = new AzureMapsToolkit.Spatial.Coordinate {  Lat = 47.622942, Lon = -122.316456},
+                End = new AzureMapsToolkit.Spatial.Coordinate {  Lat = 47.610378, Lon = -122.200676 }
+            }).Result;
+
+            Assert.Null(res.Error);
+
+            Assert.Equal(8797.62, res.Result.Result.DistanceInMeters);
+        }
+        
     }
 }

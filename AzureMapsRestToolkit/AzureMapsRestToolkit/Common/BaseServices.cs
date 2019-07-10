@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Globalization;
+using AzureMapsToolkit.Spatial;
 
 namespace AzureMapsToolkit.Common
 {
@@ -71,6 +72,7 @@ namespace AzureMapsToolkit.Common
             return multiPoint;
 
         }
+
 
         internal IEnumerable<string> GetSearchQuery<T>(IEnumerable<T> req) where T : RequestBase
         {

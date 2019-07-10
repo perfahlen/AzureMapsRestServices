@@ -14,6 +14,7 @@ using System.Net.Http;
 using AzureMapsToolkit.Data;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using System.Globalization;
 
 namespace AzureMapsToolkit
 {
@@ -44,6 +45,26 @@ namespace AzureMapsToolkit
 
 
         #region Spatial
+
+        /// <summary>
+        /// This API will return the great-circle or shortest distance between two points on the surface of a sphere, measured along the surface of the sphere. This differs from calculating a straight line through the sphere's interior. This method is helpful for estimating travel distances for airplanes by calculating the shortest distance between airports.
+        /// </summary>
+        /// <param name="req"></param>
+        /// <returns></returns>
+        public async Task<Response<GreatCircleDistanceResponse>> GetGreatCircleDistance(GreatCircleDistanceRequest request)
+        {
+            // check if start and end is set instead of query object
+            if (request.Start != null && request.End != null)
+            {
+                request.Query = $"{request.End.Lat.ToString(CultureInfo.InvariantCulture)},{request.End.Lon.ToString(CultureInfo.InvariantCulture)}";
+                request.Query += $":{request.Start.Lat.ToString(CultureInfo.InvariantCulture)},{request.Start.Lon.ToString(CultureInfo.InvariantCulture)}";
+            }
+
+            var res = await ExecuteRequest<GreatCircleDistanceResponse, GreatCircleDistanceRequest>($"https://atlas.microsoft.com/spatial/greatCircleDistance/json", request);
+
+            return res;
+
+        }
 
         /// <summary>
         /// The Geofence Get API allows you to retrieve the proximity of a coordinate to a geofence that has been uploaded to the Data service. You can use the Data Upload API to upload a geofence or set of fences. See Geofencing GeoJSON data for more details on the geofence data format. To query the proximity of a coordinate, you supply the location of the object you are tracking as well as the ID for the fence or set of fences, and the response will contain information about the distance from the outer edge of the geofence. A negative value signifies that the coordinate is inside of the fence while a positive value means that it is outside of the fence.

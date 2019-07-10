@@ -15,6 +15,8 @@ namespace AzureMapsToolkit
 {
     public interface IAzureMapsServices
     {
+        Task<Response<GreatCircleDistanceResponse>> GetGreatCircleDistance(GreatCircleDistanceRequest req);
+
         Task<Response<GetGeofenceResponse>> GetGeofence(GetGeofenceRequest req);
 
         Task<Response<GetClosestPointResponse>> GetClosestPoint(GetClosestPointRequest request);
