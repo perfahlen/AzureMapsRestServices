@@ -47,6 +47,18 @@ namespace AzureMapsToolkit
         #region Spatial
 
         /// <summary>
+        /// This API returns a boolean value indicating whether a point is inside a set of polygons. The set of polygons is provided by a GeoJSON file which is uploaded via Data Upload API and referenced by a unique udid. The GeoJSON file may contain Polygon and MultiPolygon geometries, other geometries will be ignored if provided. If the point is inside or on the boundary of one of these polygons, the value returned is true. In all other cases, the value returned is false. When the point is inside multiple polygons, the result will give intersecting geometries section to show all valid geometries(referenced by geometryId) in user data. The maximum number of vertices accepted to form a Polygon is 10,000.
+        /// </summary>
+        /// <param name="req"></param>
+        /// <returns></returns>
+        public async Task<Response<PointInPolygonResponse>> GetPointInPolygon(PointInPolygonRequest request)
+        {
+            var res = await ExecuteRequest<PointInPolygonResponse, PointInPolygonRequest>($"https://atlas.microsoft.com/spatial/pointInPolygon/json", request);
+
+            return res;
+        }
+
+        /// <summary>
         /// This API will return the great-circle or shortest distance between two points on the surface of a sphere, measured along the surface of the sphere. This differs from calculating a straight line through the sphere's interior. This method is helpful for estimating travel distances for airplanes by calculating the shortest distance between airports.
         /// </summary>
         /// <param name="req"></param>

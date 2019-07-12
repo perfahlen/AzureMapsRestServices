@@ -15,6 +15,9 @@ namespace AzureMapsToolkit
 {
     public interface IAzureMapsServices
     {
+
+        Task<Response<PointInPolygonResponse>> GetPointInPolygon(PointInPolygonRequest req);
+
         Task<Response<GreatCircleDistanceResponse>> GetGreatCircleDistance(GreatCircleDistanceRequest req);
 
         Task<Response<GetGeofenceResponse>> GetGeofence(GetGeofenceRequest req);
