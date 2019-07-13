@@ -787,6 +787,15 @@ namespace AzureMapsToolkit_Core_Test
         }
 
         [Fact]
+        public void PostBuffer()
+        {
+            var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
+            var buffer = am.PostBuffer("{ \"geometries\": { \"type\": \"FeatureCollection\", \"features\": [ { \"type\": \"Feature\", \"properties\": { \"geometryId\": \"ExampleId\" }, \"geometry\": { \"type\": \"Point\", \"coordinates\": [ -111.9267386, 33.5362475 ] } } ] }, \"distances\": [ 176.3 ] }").Result;
+            Assert.Null(buffer.Error);
+
+        }
+
+        [Fact]
         public void GetClosestPoint()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);

@@ -16,6 +16,8 @@ namespace AzureMapsToolkit
     public interface IAzureMapsServices
     {
 
+        Task<Response<GetBufferResponse>> PostBuffer(string json);
+
         Task<Response<PointInPolygonResponse>> GetPointInPolygon(PointInPolygonRequest req);
 
         Task<Response<GreatCircleDistanceResponse>> GetGreatCircleDistance(GreatCircleDistanceRequest req);

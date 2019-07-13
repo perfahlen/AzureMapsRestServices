@@ -47,6 +47,28 @@ namespace AzureMapsToolkit
         #region Spatial
 
         /// <summary>
+        /// This API returns a FeatureCollection where each Feature is a buffer around the corresponding indexed Feature of the input. The buffer could be either on the outside or the inside of the provided Feature, depending on the distance provided in the input. There must be either one distance provided per Feature in the FeatureCollection input, or if only one distance is provided, then that distance is applied to every Feature in the collection. The positive (or negative) buffer of a geometry is defined as the Minkowski sum (or difference) of the geometry with a circle of radius equal to the absolute value of the buffer distance. The buffer API always returns a polygonal result. The negative or zero-distance buffer of lines and points is always an empty polygon. The input may contain a collection of Point, MultiPoint, Polygon, MultiPolygon, LineString and MultiLineString. GeometryCollection will be ignored if provided.
+        /// </summary>
+        /// <param name="json"></param>
+        /// <returns></returns>
+        public async Task<Response<GetBufferResponse>> PostBuffer(string json)
+        {
+            try
+            {
+                var url = $"https://atlas.microsoft.com/spatial/buffer/json?subscription-key={Key}&api-version=1.0";
+                var res = await GetHttpResponseMessage(url, json, HttpMethod.Post);
+                return new Response<GetBufferResponse> { Result = new GetBufferResponse { Result = res.Content.ReadAsStringAsync().Result } };
+
+            }
+            catch (AzureMapsException ex)
+            {
+                return Response<GetBufferResponse>.CreateErrorResponse(ex);
+            }
+            return null;
+        }
+
+
+        /// <summary>
         /// This API returns a boolean value indicating whether a point is inside a set of polygons. The set of polygons is provided by a GeoJSON file which is uploaded via Data Upload API and referenced by a unique udid. The GeoJSON file may contain Polygon and MultiPolygon geometries, other geometries will be ignored if provided. If the point is inside or on the boundary of one of these polygons, the value returned is true. In all other cases, the value returned is false. When the point is inside multiple polygons, the result will give intersecting geometries section to show all valid geometries(referenced by geometryId) in user data. The maximum number of vertices accepted to form a Polygon is 10,000.
         /// </summary>
         /// <param name="req"></param>
