@@ -10,7 +10,7 @@ namespace AzureMapsToolkit.Spatial
         /// <summary>
         /// Point In Polygon Result Object
         /// </summary>
-        [JsonProperty("pointInPolygonResult")]
+        [JsonProperty("result")]
         public PointInPolygonResult Result { get; set; }
 
         /// <summary>
