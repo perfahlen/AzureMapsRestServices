@@ -872,5 +872,20 @@ namespace AzureMapsToolkit_Core_Test
                 ).Result;
             Assert.Null(res.Error);
         }
+
+        [Fact]
+        public void PostClosestPoint()
+        {
+            var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
+            var res = am.PostClosestPoint(new AzureMapsToolkit.Spatial.PostClosestPointRequest
+            {
+                Lon = -122.316456,
+                Lat = 47.62294,
+                NumberOfClosestPoints = 2
+            }, "{ \"type\": \"FeatureCollection\", \"features\": [ { \"type\": \"Feature\", \"properties\": { \"geometryId\": 1001 }, \"geometry\": { \"type\": \"Point\", \"coordinates\": [ -105.02860293715861, 40.516153406773952 ] } }, { \"type\": \"Feature\", \"properties\": { \"geometryId\": 1002 }, \"geometry\": { \"type\": \"Point\", \"coordinates\": [ -105.02860381672178, 40.515990990037309 ] } }, { \"type\": \"Feature\", \"properties\": { \"geometryId\": 1003 }, \"geometry\": { \"type\": \"Point\", \"coordinates\": [ -105.02812292879467, 40.516058678088562 ] } } ] }")
+            .Result;
+
+            Assert.Null(res.Error);
+        }
     }
 }

@@ -16,6 +16,8 @@ namespace AzureMapsToolkit
     public interface IAzureMapsServices
     {
 
+        Task<Response<ClosestPointResponse>> PostClosestPoint(PostClosestPointRequest req, string geoJson);
+
         Task<Response<GetBufferResponse>> PostBuffer(string json);
 
         Task<Response<PointInPolygonResponse>> GetPointInPolygon(PointInPolygonRequest req);
@@ -24,7 +26,7 @@ namespace AzureMapsToolkit
 
         Task<Response<GetGeofenceResponse>> GetGeofence(GetGeofenceRequest req);
 
-        Task<Response<GetClosestPointResponse>> GetClosestPoint(GetClosestPointRequest request);
+        Task<Response<ClosestPointResponse>> GetClosestPoint(GetClosestPointRequest request);
 
         Task<Response<GetBufferResponse>> GetBuffer(GetBufferRequest requests, string format);
 

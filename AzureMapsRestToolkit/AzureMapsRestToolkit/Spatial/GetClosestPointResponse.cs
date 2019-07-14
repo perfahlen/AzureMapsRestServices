@@ -8,7 +8,7 @@ namespace AzureMapsToolkit.Spatial
     /// <summary>
     /// This object is returned from a successful Get Spatial Closest Point call
     /// </summary>
-    public class GetClosestPointResponse
+    public class ClosestPointResponse
     {
         /// <summary>
         /// Closest Point Result Array
@@ -22,6 +22,6 @@ namespace AzureMapsToolkit.Spatial
         /// Get Closest Point Summary object
         /// </summary>
         [JsonProperty("summary")]
-        public GetClosestPointSummary Summary { get; set; }
+        public ClosestPointSummary Summary { get; set; }
     }
 }

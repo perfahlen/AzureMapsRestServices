@@ -46,6 +46,32 @@ namespace AzureMapsToolkit
 
         #region Spatial
 
+        public async Task<Response<ClosestPointResponse>> PostClosestPoint(PostClosestPointRequest req, string geoJson)
+        {
+            try
+            {
+                string lat = req.Lat.ToString(CultureInfo.InvariantCulture);
+                string lon = req.Lon.ToString(CultureInfo.InvariantCulture);
+                var url = $"https://atlas.microsoft.com/spatial/closestPoint/json?subscription-key={base.Key}&api-version=1.0&lat={lat}&lon={lon}&numberOfClosestPoints={req.NumberOfClosestPoints}";
+
+                using (var response = await GetHttpResponseMessage(url, geoJson, HttpMethod.Post))
+                {
+                    using (var responseMessage = response.Content)
+                    {
+                        var responseData = await responseMessage.ReadAsStringAsync();
+                        var res = Newtonsoft.Json.JsonConvert.DeserializeObject<ClosestPointResponse>(responseData);
+                        return new Response<ClosestPointResponse> { Result = res };
+                    }
+                }
+
+            }
+            catch (AzureMapsException ex)
+            {
+                return Response<ClosestPointResponse>.CreateErrorResponse(ex);
+            }
+
+        }
+
         /// <summary>
         /// This API returns a FeatureCollection where each Feature is a buffer around the corresponding indexed Feature of the input. The buffer could be either on the outside or the inside of the provided Feature, depending on the distance provided in the input. There must be either one distance provided per Feature in the FeatureCollection input, or if only one distance is provided, then that distance is applied to every Feature in the collection. The positive (or negative) buffer of a geometry is defined as the Minkowski sum (or difference) of the geometry with a circle of radius equal to the absolute value of the buffer distance. The buffer API always returns a polygonal result. The negative or zero-distance buffer of lines and points is always an empty polygon. The input may contain a collection of Point, MultiPoint, Polygon, MultiPolygon, LineString and MultiLineString. GeometryCollection will be ignored if provided.
         /// </summary>
@@ -64,7 +90,6 @@ namespace AzureMapsToolkit
             {
                 return Response<GetBufferResponse>.CreateErrorResponse(ex);
             }
-            return null;
         }
 
 
@@ -128,9 +153,9 @@ namespace AzureMapsToolkit
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public async Task<Response<GetClosestPointResponse>> GetClosestPoint(GetClosestPointRequest request)
+        public async Task<Response<ClosestPointResponse>> GetClosestPoint(GetClosestPointRequest request)
         {
-            var res = await ExecuteRequest<GetClosestPointResponse, GetClosestPointRequest>($"https://atlas.microsoft.com/spatial/closestPoint/json", request);
+            var res = await ExecuteRequest<ClosestPointResponse, GetClosestPointRequest>($"https://atlas.microsoft.com/spatial/closestPoint/json", request);
             return res;
         }
 
