@@ -3,16 +3,16 @@
     /// <summary>
     /// Mode of the geofencing async event mechanism.
     /// </summary>
-    public class Mode
+    public enum Mode
     {
         /// <summary>
         /// Publish all the query results to Azure Maps account event subscription.
         /// </summary>
-        public string All { get; set; }
+        All,
 
         /// <summary>
         /// Only publish result when user location is considered as crossing geofencing boarder.
         /// </summary>
-        public string EnterAndExit { get; set; }
+        EnterAndExit
     }
 }

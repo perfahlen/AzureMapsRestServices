@@ -1,15 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using AzureMapsToolkit.Common;
+using System;
+using System.ComponentModel;
 
 namespace AzureMapsToolkit.Spatial
 {
-    public class GetGeofenceRequest : SpatialRequestBase
+    public class PostGeofenceRequest : RequestBase
     {
         /// <summary>
         /// ID of the device
         /// </summary>
         public string DeviceId { get; set; }
+
 
         /// <summary>
         /// The latitude of the location being passed. Example: 48.36.
@@ -29,7 +30,7 @@ namespace AzureMapsToolkit.Spatial
         /// <summary>
         /// The radius of the buffer around the geofence in meters that defines how far to search inside and outside the border of the fence against the coordinate that was provided when calculating the result. The minimum value is 0, and the maximum is 500. The default value is 50.
         /// </summary>
-        public double SearchBuffer { get; set; }
+        public double SearchBuffer { get; set; } = 50;
 
         /// <summary>
         /// If true, the request will use async event mechanism; if false, the request will be synchronized and do not trigger any event. The default value is false.

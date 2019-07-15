@@ -5,7 +5,7 @@ namespace AzureMapsToolkit.Spatial
     /// <summary>
     /// This object is returned from a geofence proximity call.
     /// </summary>
-    public class GetGeofenceResponse
+    public class GeofenceResponse
     {
         /// <summary>
         /// Lists of the geometry ID of the geofence which is expired relative to the user time in the request.

@@ -15,6 +15,7 @@ namespace AzureMapsToolkit
 {
     public interface IAzureMapsServices
     {
+        Task<Response<GeofenceResponse>> PostGeofence(PostGeofenceRequest req, string geoJson);
 
         Task<Response<ClosestPointResponse>> PostClosestPoint(PostClosestPointRequest req, string geoJson);
 
@@ -24,7 +25,7 @@ namespace AzureMapsToolkit
 
         Task<Response<GreatCircleDistanceResponse>> GetGreatCircleDistance(GreatCircleDistanceRequest req);
 
-        Task<Response<GetGeofenceResponse>> GetGeofence(GetGeofenceRequest req);
+        Task<Response<GeofenceResponse>> GetGeofence(GetGeofenceRequest req);
 
         Task<Response<ClosestPointResponse>> GetClosestPoint(GetClosestPointRequest request);
 

@@ -46,6 +46,33 @@ namespace AzureMapsToolkit
 
         #region Spatial
 
+        public async Task<Response<GeofenceResponse>> PostGeofence(PostGeofenceRequest req, string geoJson)
+        {
+            try
+            {
+                string lat = req.Lat.ToString(CultureInfo.InvariantCulture);
+                string lon = req.Lon.ToString(CultureInfo.InvariantCulture);
+                var query = base.GetQuery<PostGeofenceRequest>(req, true);
+
+                var url = $"https://atlas.microsoft.com/spatial/geofence/json?subscription-key={base.Key}{query}";
+               
+                using (var response = await GetHttpResponseMessage(url, geoJson, HttpMethod.Post))
+                {
+                    using (var responseMessage = response.Content)
+                    {
+                        var responseData = await responseMessage.ReadAsStringAsync();
+                        var res = Newtonsoft.Json.JsonConvert.DeserializeObject<GeofenceResponse>(responseData);
+                        return new Response<GeofenceResponse> { Result = res };
+                    }
+                }
+
+            }
+            catch (AzureMapsException ex)
+            {
+                return Response<GeofenceResponse>.CreateErrorResponse(ex);
+            }
+        }
+
         public async Task<Response<ClosestPointResponse>> PostClosestPoint(PostClosestPointRequest req, string geoJson)
         {
             try
@@ -130,9 +157,9 @@ namespace AzureMapsToolkit
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public async Task<Response<GetGeofenceResponse>> GetGeofence(GetGeofenceRequest request)
+        public async Task<Response<GeofenceResponse>> GetGeofence(GetGeofenceRequest request)
         {
-            var res = await ExecuteRequest<GetGeofenceResponse, GetGeofenceRequest>($"https://atlas.microsoft.com/spatial/geofence/json", request);
+            var res = await ExecuteRequest<GeofenceResponse, GetGeofenceRequest>($"https://atlas.microsoft.com/spatial/geofence/json", request);
             return res;
         }
 
