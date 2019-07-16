@@ -11,6 +11,7 @@ This library covers 36 Azure Maps services including the following services
 - Render services
 - Route services
 - Search services
+- Spatial services
 - TimeZone services
 - Traffic services
 
