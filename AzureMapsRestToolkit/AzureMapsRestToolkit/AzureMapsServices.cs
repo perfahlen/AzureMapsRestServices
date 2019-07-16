@@ -46,12 +46,35 @@ namespace AzureMapsToolkit
 
         #region Spatial
 
+        public async Task<Response<PostPointInPolygonResponse>> PostPointInPolygon(PostPointInPolygonRequest req, string geoJson)
+        {
+            try
+            {
+                var query = base.GetQuery<PostPointInPolygonRequest>(req, true);
+
+                var url = $"https://atlas.microsoft.com/spatial/pointInPolygon/json?subscription-key={base.Key}{query}";
+
+                using (var response = await GetHttpResponseMessage(url, geoJson, HttpMethod.Post))
+                {
+                    using (var responseMessage = response.Content)
+                    {
+                        var responseData = await responseMessage.ReadAsStringAsync();
+                        var res = Newtonsoft.Json.JsonConvert.DeserializeObject<PostPointInPolygonResponse>(responseData);
+                        return new Response<PostPointInPolygonResponse> { Result = res };
+                    }
+                }
+
+            }
+            catch (AzureMapsException ex)
+            {
+                return Response<PostPointInPolygonResponse>.CreateErrorResponse(ex);
+            }
+        }
+
         public async Task<Response<GeofenceResponse>> PostGeofence(PostGeofenceRequest req, string geoJson)
         {
             try
             {
-                string lat = req.Lat.ToString(CultureInfo.InvariantCulture);
-                string lon = req.Lon.ToString(CultureInfo.InvariantCulture);
                 var query = base.GetQuery<PostGeofenceRequest>(req, true);
 
                 var url = $"https://atlas.microsoft.com/spatial/geofence/json?subscription-key={base.Key}{query}";
@@ -77,9 +100,8 @@ namespace AzureMapsToolkit
         {
             try
             {
-                string lat = req.Lat.ToString(CultureInfo.InvariantCulture);
-                string lon = req.Lon.ToString(CultureInfo.InvariantCulture);
-                var url = $"https://atlas.microsoft.com/spatial/closestPoint/json?subscription-key={base.Key}&api-version=1.0&lat={lat}&lon={lon}&numberOfClosestPoints={req.NumberOfClosestPoints}";
+                var query = base.GetQuery<PostClosestPointRequest>(req, true);
+                var url = $"https://atlas.microsoft.com/spatial/closestPoint/json?subscription-key={base.Key}{query}";
 
                 using (var response = await GetHttpResponseMessage(url, geoJson, HttpMethod.Post))
                 {

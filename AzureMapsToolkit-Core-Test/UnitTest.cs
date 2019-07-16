@@ -906,5 +906,14 @@ namespace AzureMapsToolkit_Core_Test
 
             Assert.Null(res.Error);
         }
+
+        [Fact]
+        public void PostPointInPolygon()
+        {
+            var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
+            var json = "{ \"type\": \"FeatureCollection\", \"features\": [ { \"type\": \"Feature\", \"properties\": { \"geometryId\": 1001 }, \"geometry\": { \"type\": \"Polygon\", \"coordinates\": [ [ [ -111.9267386, 33.5362475 ], [ -111.9627875, 33.5104882 ], [ -111.9027061, 33.5004686 ], [ -111.9267386, 33.5362475 ] ] ] } } ] }";
+            var res = am.PostPointInPolygon(new AzureMapsToolkit.Spatial.PostPointInPolygonRequest { Lat = 33.5362475, Lon = -111.9267386 }, json).Result;
+            Assert.Null(res.Error);
+        }
     }
 }
