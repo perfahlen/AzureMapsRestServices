@@ -16,7 +16,7 @@ This library covers 50 Azure Maps services including the following services
 - Traffic services
 
 ## Exceptions
-Exception is captures by the library and if any exceptions captured it will be return in the __Error__ proprty in the returned object. See example below.
+Exception is captures by the library and if any exceptions captured it will be return in the __Error__ property in the returned object. See example below.
 
 ## Example
 Search address example
