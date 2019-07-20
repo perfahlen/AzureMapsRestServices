@@ -5,17 +5,18 @@
 
 
 # .Net Standard 2.0 library to access AzureMaps Services
-This library covers 36 Azure Maps services including the following services
+This library covers 50 Azure Maps services including the following services
 - Data services
 - Geolocation services
 - Render services
 - Route services
 - Search services
+- Spatial services
 - TimeZone services
 - Traffic services
 
 ## Exceptions
-Exception is captures by the library and if any exceptions captured it will be return in the __Error__ proprty in the returned object. See example below.
+Exception is captures by the library and if any exceptions captured it will be return in the __Error__ property in the returned object. See example below.
 
 ## Example
 Search address example
