@@ -15,6 +15,7 @@ using AzureMapsToolkit.Data;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System.Globalization;
+using AzureMapsToolkit.Mobility;
 
 namespace AzureMapsToolkit
 {
@@ -42,7 +43,14 @@ namespace AzureMapsToolkit
                 };
         }
 
+        #region Mobility
+        public async Task<Response<GetCarShareInfoResponse>> GetCarShareInfo(GetCarShareInfoRequest req)
+        {
+            var res = await ExecuteRequest<GetCarShareInfoResponse, GetCarShareInfoRequest>($"https://atlas.microsoft.com/mobility/transit/carShare/json", req);
 
+            return res;
+        }
+        #endregion
 
         #region Spatial
 

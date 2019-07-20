@@ -1,6 +1,7 @@
 ﻿using AzureMapsToolkit.Common;
 using AzureMapsToolkit.Data;
 using AzureMapsToolkit.GeoJson;
+using AzureMapsToolkit.Mobility;
 using AzureMapsToolkit.Render;
 using AzureMapsToolkit.Search;
 using AzureMapsToolkit.Spatial;
@@ -8,13 +9,15 @@ using AzureMapsToolkit.Timezone;
 using AzureMapsToolkit.Traffic;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace AzureMapsToolkit
 {
     public interface IAzureMapsServices
     {
+
+        Task<Response<GetCarShareInfoResponse>> GetCarShareInfo(GetCarShareInfoRequest req);
+
         Task<Response<PostPointInPolygonResponse>> PostPointInPolygon(PostPointInPolygonRequest req, string geoJson);
 
         Task<Response<GeofenceResponse>> PostGeofence(PostGeofenceRequest req, string geoJson);

@@ -11,13 +11,15 @@ using AzureMapsToolkit.Render;
 using AzureMapsToolkit;
 using System.Threading.Tasks;
 using System;
+using System.IO;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace AzureMapsToolkit_Core_Test
 {
     public class UnitTest
     {
         public const string _KEY = "";
-        
+
 
         [Fact]
         public void InvalidIPCountry()
@@ -850,15 +852,15 @@ namespace AzureMapsToolkit_Core_Test
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
             var res = am.GetGreatCircleDistance(new AzureMapsToolkit.Spatial.GreatCircleDistanceRequest
             {
-                Start = new AzureMapsToolkit.Spatial.Coordinate {  Lat = 47.622942, Lon = -122.316456},
-                End = new AzureMapsToolkit.Spatial.Coordinate {  Lat = 47.610378, Lon = -122.200676 }
+                Start = new AzureMapsToolkit.Spatial.Coordinate { Lat = 47.622942, Lon = -122.316456 },
+                End = new AzureMapsToolkit.Spatial.Coordinate { Lat = 47.610378, Lon = -122.200676 }
             }).Result;
 
             Assert.Null(res.Error);
 
             Assert.Equal(8797.62, res.Result.Result.DistanceInMeters);
         }
-        
+
         [Fact]
         public void GetPointInPolygon()
         {
@@ -913,6 +915,19 @@ namespace AzureMapsToolkit_Core_Test
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
             var json = "{ \"type\": \"FeatureCollection\", \"features\": [ { \"type\": \"Feature\", \"properties\": { \"geometryId\": 1001 }, \"geometry\": { \"type\": \"Polygon\", \"coordinates\": [ [ [ -111.9267386, 33.5362475 ], [ -111.9627875, 33.5104882 ], [ -111.9027061, 33.5004686 ], [ -111.9267386, 33.5362475 ] ] ] } } ] }";
             var res = am.PostPointInPolygon(new AzureMapsToolkit.Spatial.PostPointInPolygonRequest { Lat = 33.5362475, Lon = -111.9267386 }, json).Result;
+            Assert.Null(res.Error);
+        }
+
+        // not sure how to test this service, it seems it requires a vehicleId, but which?
+        [Fact]
+        public void GetCarShareInfo()
+        {
+            var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
+            var res = am.GetCarShareInfo(new AzureMapsToolkit.Mobility.GetCarShareInfoRequest
+            {
+                Query = ""
+            }).Result;
+
             Assert.Null(res.Error);
         }
     }
