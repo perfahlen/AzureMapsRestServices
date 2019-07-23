@@ -930,5 +930,20 @@ namespace AzureMapsToolkit_Core_Test
 
             Assert.Null(res.Error);
         }
+
+        [Fact]
+        public void GetMetroAreaInfo()
+        {
+            var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
+            var res = am.GetMetroAreaInfo(new AzureMapsToolkit.Mobility.GetMetroAreaInfoRequest
+            {
+                Query = "121",
+                DetailType = $"{AzureMapsToolkit.Mobility.DetailType.AGENCIES}"
+            }).Result;
+
+            Assert.Null(res.Error);
+
+            Assert.Equal("NICE bus", res.Result.Agencies.First().AgencyName);
+        }
     }
 }

@@ -16,6 +16,8 @@ namespace AzureMapsToolkit
     public interface IAzureMapsServices
     {
 
+        Task<Response<GetMetroAreaInfoResponse>> GetMetroAreaInfo(GetMetroAreaInfoRequest req);
+
         Task<Response<GetCarShareInfoResponse>> GetCarShareInfo(GetCarShareInfoRequest req);
 
         Task<Response<PostPointInPolygonResponse>> PostPointInPolygon(PostPointInPolygonRequest req, string geoJson);
