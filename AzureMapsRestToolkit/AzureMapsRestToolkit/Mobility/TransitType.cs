@@ -1,6 +1,6 @@
 ﻿namespace AzureMapsToolkit.Mobility
 {
-    public enum TransitType
+    public enum TransitType : byte
     {
         Tram,
         Subway,

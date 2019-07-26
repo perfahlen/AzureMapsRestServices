@@ -16,6 +16,8 @@ namespace AzureMapsToolkit
     public interface IAzureMapsServices
     {
 
+        Task<Response<GetMetroAreaResponse>> GetMetroArea(GetMetroAreaRequest req);
+
         Task<Response<GetMetroAreaInfoResponse>> GetMetroAreaInfo(GetMetroAreaInfoRequest req);
 
         Task<Response<GetCarShareInfoResponse>> GetCarShareInfo(GetCarShareInfoRequest req);

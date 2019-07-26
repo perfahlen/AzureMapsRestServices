@@ -100,12 +100,13 @@ namespace AzureMapsToolkit.Common
                     var argumentName = string.Empty;
                     var argumentValue = string.Empty;
 
-                    var underLayingtype = Nullable.GetUnderlyingType(propertyInfo.PropertyType);
+                    //var underLayingtype = Nullable.GetUnderlyingType(propertyInfo.PropertyType);
 
-                    if (underLayingtype != null && underLayingtype.IsEnum)
+                    if (propertyInfo != null && propertyInfo.PropertyType.IsEnum)
                     {
                         argumentName = Char.ToLower(propertyInfo.Name[0]) + propertyInfo.Name.Substring(1);
-                        argumentValue = (propertyInfo.GetValue(request).GetType().GetMember(propertyInfo.GetValue(request).ToString())?.FirstOrDefault().GetCustomAttributes(typeof(NameArgument), false).FirstOrDefault() as NameArgument).Name;
+                        var enumVal = propertyInfo.GetValue(request).ToString();
+                        argumentValue = Char.ToLower(enumVal[0]) + enumVal.Substring(1);
 
                     }
                     else

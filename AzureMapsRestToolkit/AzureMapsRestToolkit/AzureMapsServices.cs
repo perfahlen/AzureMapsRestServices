@@ -45,6 +45,12 @@ namespace AzureMapsToolkit
 
         #region Mobility
 
+        public async Task<Response<GetMetroAreaResponse>> GetMetroArea(GetMetroAreaRequest req)
+        {
+            var res = await ExecuteRequest<GetMetroAreaResponse, GetMetroAreaRequest>("https://atlas.microsoft.com/mobility/metroArea/id/json", req);
+            return res;
+        }
+
         public async Task<Response<GetMetroAreaInfoResponse>> GetMetroAreaInfo(GetMetroAreaInfoRequest req)
         {
             var res = await ExecuteRequest<GetMetroAreaInfoResponse, GetMetroAreaInfoRequest>($"https://atlas.microsoft.com/mobility/metroArea/info/json", req);
