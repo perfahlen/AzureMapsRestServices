@@ -988,5 +988,18 @@ namespace AzureMapsToolkit_Core_Test
 
             Assert.Null(res.Error);
         }
+
+        [Fact]
+        public void GetRealTimeArrivals()
+        {
+            var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
+            var res = am.GetRealTimeArrivals(new AzureMapsToolkit.Mobility.RealTimeArrivalsRequest
+            {
+                MetroId = 121,
+                Query = "297867"
+            }).Result;
+
+            Assert.Null(res.Error);
+        }
     }
 }

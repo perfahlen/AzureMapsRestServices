@@ -15,6 +15,8 @@ namespace AzureMapsToolkit
 {
     public interface IAzureMapsServices
     {
+        Task<Response<RealTimeArrivalsResponse>> GetRealTimeArrivals(RealTimeArrivalsRequest req);
+
         Task<Response<NearbyTransitResponse>> GetNearbyTransit(NearbyTransitRequest req);
 
         Task<Response<GetMetroAreaResponse>> GetMetroArea(GetMetroAreaRequest req);

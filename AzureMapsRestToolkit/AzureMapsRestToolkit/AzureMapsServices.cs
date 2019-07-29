@@ -45,6 +45,12 @@ namespace AzureMapsToolkit
 
         #region Mobility
 
+        public async Task<Response<RealTimeArrivalsResponse>> GetRealTimeArrivals(RealTimeArrivalsRequest req)
+        {
+            var res = await ExecuteRequest<RealTimeArrivalsResponse, RealTimeArrivalsRequest>("https://atlas.microsoft.com/mobility/realtime/arrivals/json", req);
+            return res;
+        }
+
         /// <summary>
         /// Get Nearby Transit service allows you to search transit objects, for example, public transit stops ans shared bikes around a given location returning the transit object details. Service allows users to search for specific object types and within a given radius returning a set of transit object with object details. Additional information such as transit operator information is returned depending on the options selected. The returned information can be used for further processing such as requesting real-time arrivals for the stop or transit stop details such as main transit type of most lines stopping for a given public, active service alerts or main transport agency.
         /// </summary>
