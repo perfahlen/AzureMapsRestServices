@@ -15,6 +15,7 @@ namespace AzureMapsToolkit
 {
     public interface IAzureMapsServices
     {
+        Task<Response<NearbyTransitResponse>> GetNearbyTransit(NearbyTransitRequest req);
 
         Task<Response<GetMetroAreaResponse>> GetMetroArea(GetMetroAreaRequest req);
 

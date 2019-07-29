@@ -971,5 +971,22 @@ namespace AzureMapsToolkit_Core_Test
             Assert.Equal(121, res.Result.Results[0].MetroId);
 
         }
+
+        [Fact]
+        public void GetNearbyTransit()
+        {
+            var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
+            var res = am.GetNearbyTransit(new AzureMapsToolkit.Mobility.NearbyTransitRequest
+            {
+                MetroId = 121,
+                Query = "40.693393,-73.988310",
+                Limit = 5,
+                Radius = 300,
+                ObjectType = AzureMapsToolkit.Mobility.ObjectType.Stop
+
+            }).Result;
+
+            Assert.Null(res.Error);
+        }
     }
 }
