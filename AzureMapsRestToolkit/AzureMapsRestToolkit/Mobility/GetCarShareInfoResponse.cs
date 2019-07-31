@@ -5,7 +5,7 @@ using System.Text;
 
 namespace AzureMapsToolkit.Mobility
 {
-    public class GetCarShareInfoResponse
+    public class CarShareInfoResponse
     {
         /// <summary>
         /// Percentage of fuel indicating the fuel level, 100 being full, 0 empty.

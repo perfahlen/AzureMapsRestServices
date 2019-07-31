@@ -5,7 +5,7 @@ using System.Text;
 
 namespace AzureMapsToolkit.Mobility
 {
-    public class GetCarShareInfoRequest : RequestBase
+    public class CarShareInfoRequest : RequestBase
     {
         /// <summary>
         /// vehicleId. The unique identifier of the car share vehicle. For example, "29B8C4AFC062D681E050007F01004F07". Can be requested by using Nearby Transit API.

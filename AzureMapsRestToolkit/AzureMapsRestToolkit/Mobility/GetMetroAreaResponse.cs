@@ -2,7 +2,7 @@
 
 namespace AzureMapsToolkit.Mobility
 {
-    public class GetMetroAreaResponse
+    public class MetroAreaResponse
     {
         [JsonProperty("results")]
         public MetroAreaResult[] Results { get; set; }

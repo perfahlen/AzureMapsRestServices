@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace AzureMapsToolkit.Mobility
 {
-    public class GetMetroAreaInfoRequest : RequestBase
+    public class MetroAreaInfoRequest : RequestBase
     {
         /// <summary>
         /// metroId. The unique id of the metro area. Required parameter specifying the required metro area to search in. Can be retrieved via Get Metro Area API.

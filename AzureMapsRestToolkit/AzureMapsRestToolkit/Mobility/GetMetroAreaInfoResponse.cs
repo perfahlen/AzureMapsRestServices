@@ -2,7 +2,7 @@
 
 namespace AzureMapsToolkit.Mobility
 {
-    public class GetMetroAreaInfoResponse
+    public class MetroAreaInfoResponse
     {
         /// <summary>
         /// Details of the agency.

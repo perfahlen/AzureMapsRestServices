@@ -2,7 +2,7 @@
 
 namespace AzureMapsToolkit.Mobility
 {
-    public class GetMetroAreaRequest : RequestBase
+    public class MetroAreaRequest : RequestBase
     {
         /// <summary>
         /// The applicable location input. Can be position (specified as a comma separated string composed by latitude followed by longitude e.g. "47.641268,-122.125679") or countryCode (2-character ISO country code).

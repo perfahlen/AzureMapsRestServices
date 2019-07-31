@@ -15,15 +15,16 @@ namespace AzureMapsToolkit
 {
     public interface IAzureMapsServices
     {
+        //Task<Response<TransitI>>
         Task<Response<RealTimeArrivalsResponse>> GetRealTimeArrivals(RealTimeArrivalsRequest req);
 
         Task<Response<NearbyTransitResponse>> GetNearbyTransit(NearbyTransitRequest req);
 
-        Task<Response<GetMetroAreaResponse>> GetMetroArea(GetMetroAreaRequest req);
+        Task<Response<MetroAreaResponse>> GetMetroArea(MetroAreaRequest req);
 
-        Task<Response<GetMetroAreaInfoResponse>> GetMetroAreaInfo(GetMetroAreaInfoRequest req);
+        Task<Response<MetroAreaInfoResponse>> GetMetroAreaInfo(MetroAreaInfoRequest req);
 
-        Task<Response<GetCarShareInfoResponse>> GetCarShareInfo(GetCarShareInfoRequest req);
+        Task<Response<CarShareInfoResponse>> GetCarShareInfo(CarShareInfoRequest req);
 
         Task<Response<PostPointInPolygonResponse>> PostPointInPolygon(PostPointInPolygonRequest req, string geoJson);
 
@@ -31,17 +32,17 @@ namespace AzureMapsToolkit
 
         Task<Response<ClosestPointResponse>> PostClosestPoint(PostClosestPointRequest req, string geoJson);
 
-        Task<Response<GetBufferResponse>> PostBuffer(string json);
+        Task<Response<BufferResponse>> PostBuffer(string json);
 
         Task<Response<PointInPolygonResponse>> GetPointInPolygon(PointInPolygonRequest req);
 
         Task<Response<GreatCircleDistanceResponse>> GetGreatCircleDistance(GreatCircleDistanceRequest req);
 
-        Task<Response<GeofenceResponse>> GetGeofence(GetGeofenceRequest req);
+        Task<Response<GeofenceResponse>> GetGeofence(GeofenceRequest req);
 
-        Task<Response<ClosestPointResponse>> GetClosestPoint(GetClosestPointRequest request);
+        Task<Response<ClosestPointResponse>> GetClosestPoint(ClosestPointRequest request);
 
-        Task<Response<GetBufferResponse>> GetBuffer(GetBufferRequest requests, string format);
+        Task<Response<BufferResponse>> GetBuffer(BufferRequest requests, string format);
 
         Task<Response<UploadResult>> Upload(string geoJson, string dataFormat = "geojson");
 

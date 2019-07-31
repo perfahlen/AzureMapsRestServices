@@ -781,7 +781,7 @@ namespace AzureMapsToolkit_Core_Test
         {
             return;
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
-            var res = am.GetBuffer(new AzureMapsToolkit.Spatial.GetBufferRequest
+            var res = am.GetBuffer(new AzureMapsToolkit.Spatial.BufferRequest
             {
                 Udid = System.Guid.Parse(""),
                 Distances = 100.ToString()
@@ -807,7 +807,7 @@ namespace AzureMapsToolkit_Core_Test
         {
             return;
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
-            var res = am.GetClosestPoint(new AzureMapsToolkit.Spatial.GetClosestPointRequest
+            var res = am.GetClosestPoint(new AzureMapsToolkit.Spatial.ClosestPointRequest
             {
                 Lon = -105.05860381672178,
                 Lat = 40.516153406773952,
@@ -823,7 +823,7 @@ namespace AzureMapsToolkit_Core_Test
         {
             return;
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
-            var res = am.GetGeofence(new AzureMapsToolkit.Spatial.GetGeofenceRequest
+            var res = am.GetGeofence(new AzureMapsToolkit.Spatial.GeofenceRequest
             {
                 Udid = Guid.Parse(""),
                 Lat = 47.609826136787518,
@@ -931,7 +931,7 @@ namespace AzureMapsToolkit_Core_Test
         {
             return;
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
-            var res = am.GetCarShareInfo(new AzureMapsToolkit.Mobility.GetCarShareInfoRequest
+            var res = am.GetCarShareInfo(new AzureMapsToolkit.Mobility.CarShareInfoRequest
             {
                 Query = ""
             }).Result;
@@ -943,7 +943,7 @@ namespace AzureMapsToolkit_Core_Test
         public void GetMetroAreaInfo()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
-            var res = am.GetMetroAreaInfo(new AzureMapsToolkit.Mobility.GetMetroAreaInfoRequest
+            var res = am.GetMetroAreaInfo(new AzureMapsToolkit.Mobility.MetroAreaInfoRequest
             {
                 Query = "121",
                 DetailType = $"{AzureMapsToolkit.Mobility.DetailType.AGENCIES}"
@@ -958,7 +958,7 @@ namespace AzureMapsToolkit_Core_Test
         public void GetMetroArea()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
-            var res = am.GetMetroArea(new AzureMapsToolkit.Mobility.GetMetroAreaRequest
+            var res = am.GetMetroArea(new AzureMapsToolkit.Mobility.MetroAreaRequest
             {
                 Query = "40.648677,-74.010535",
                 QueryType = AzureMapsToolkit.Mobility.QueryType.Position

@@ -62,23 +62,23 @@ namespace AzureMapsToolkit
             return res;
         }
 
-        public async Task<Response<GetMetroAreaResponse>> GetMetroArea(GetMetroAreaRequest req)
+        public async Task<Response<MetroAreaResponse>> GetMetroArea(MetroAreaRequest req)
         {
-            var res = await ExecuteRequest<GetMetroAreaResponse, GetMetroAreaRequest>("https://atlas.microsoft.com/mobility/metroArea/id/json", req);
+            var res = await ExecuteRequest<MetroAreaResponse, MetroAreaRequest>("https://atlas.microsoft.com/mobility/metroArea/id/json", req);
             return res;
         }
 
-        public async Task<Response<GetMetroAreaInfoResponse>> GetMetroAreaInfo(GetMetroAreaInfoRequest req)
+        public async Task<Response<MetroAreaInfoResponse>> GetMetroAreaInfo(MetroAreaInfoRequest req)
         {
-            var res = await ExecuteRequest<GetMetroAreaInfoResponse, GetMetroAreaInfoRequest>($"https://atlas.microsoft.com/mobility/metroArea/info/json", req);
+            var res = await ExecuteRequest<MetroAreaInfoResponse, MetroAreaInfoRequest>($"https://atlas.microsoft.com/mobility/metroArea/info/json", req);
 
             return res;
 
         }
 
-        public async Task<Response<GetCarShareInfoResponse>> GetCarShareInfo(GetCarShareInfoRequest req)
+        public async Task<Response<CarShareInfoResponse>> GetCarShareInfo(CarShareInfoRequest req)
         {
-            var res = await ExecuteRequest<GetCarShareInfoResponse, GetCarShareInfoRequest>($"https://atlas.microsoft.com/mobility/transit/carShare/json", req);
+            var res = await ExecuteRequest<CarShareInfoResponse, CarShareInfoRequest>($"https://atlas.microsoft.com/mobility/transit/carShare/json", req);
 
             return res;
         }
@@ -166,18 +166,18 @@ namespace AzureMapsToolkit
         /// </summary>
         /// <param name="json"></param>
         /// <returns></returns>
-        public async Task<Response<GetBufferResponse>> PostBuffer(string json)
+        public async Task<Response<BufferResponse>> PostBuffer(string json)
         {
             try
             {
                 var url = $"https://atlas.microsoft.com/spatial/buffer/json?subscription-key={Key}&api-version=1.0";
                 var res = await GetHttpResponseMessage(url, json, HttpMethod.Post);
-                return new Response<GetBufferResponse> { Result = new GetBufferResponse { Result = res.Content.ReadAsStringAsync().Result } };
+                return new Response<BufferResponse> { Result = new BufferResponse { Result = res.Content.ReadAsStringAsync().Result } };
 
             }
             catch (AzureMapsException ex)
             {
-                return Response<GetBufferResponse>.CreateErrorResponse(ex);
+                return Response<BufferResponse>.CreateErrorResponse(ex);
             }
         }
 
@@ -219,9 +219,9 @@ namespace AzureMapsToolkit
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public async Task<Response<GeofenceResponse>> GetGeofence(GetGeofenceRequest request)
+        public async Task<Response<GeofenceResponse>> GetGeofence(GeofenceRequest request)
         {
-            var res = await ExecuteRequest<GeofenceResponse, GetGeofenceRequest>($"https://atlas.microsoft.com/spatial/geofence/json", request);
+            var res = await ExecuteRequest<GeofenceResponse, GeofenceRequest>($"https://atlas.microsoft.com/spatial/geofence/json", request);
             return res;
         }
 
@@ -231,9 +231,9 @@ namespace AzureMapsToolkit
         /// <param name="request"></param>
         /// <param name="format"></param>
         /// <returns></returns>
-        public async Task<Response<GetBufferResponse>> GetBuffer(GetBufferRequest request, string format = "json")
+        public async Task<Response<BufferResponse>> GetBuffer(BufferRequest request, string format = "json")
         {
-            var res = await ExecuteRequest<GetBufferResponse, GetBufferRequest>($"https://atlas.microsoft.com/spatial/buffer/{format}", request);
+            var res = await ExecuteRequest<BufferResponse, BufferRequest>($"https://atlas.microsoft.com/spatial/buffer/{format}", request);
             return res;
         }
 
@@ -242,9 +242,9 @@ namespace AzureMapsToolkit
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public async Task<Response<ClosestPointResponse>> GetClosestPoint(GetClosestPointRequest request)
+        public async Task<Response<ClosestPointResponse>> GetClosestPoint(ClosestPointRequest request)
         {
-            var res = await ExecuteRequest<ClosestPointResponse, GetClosestPointRequest>($"https://atlas.microsoft.com/spatial/closestPoint/json", request);
+            var res = await ExecuteRequest<ClosestPointResponse, ClosestPointRequest>($"https://atlas.microsoft.com/spatial/closestPoint/json", request);
             return res;
         }
 
