@@ -18,7 +18,8 @@ namespace AzureMapsToolkit_Core_Test
 {
     public class UnitTest
     {
-        public const string _KEY = "";
+
+        const string _KEY = AzureMapsKey._KEY;
 
 
         [Fact]
