@@ -15,7 +15,8 @@ namespace AzureMapsToolkit
 {
     public interface IAzureMapsServices
     {
-        Task<Response<TransitItineraryResponse>> GetTransitItinerary(TransitItineraryRequest req);
+        //Task<Response<TransitItineraryResponse>> GetTransitItinerary(TransitItineraryRequest req);
+
         Task<Response<RealTimeArrivalsResponse>> GetRealTimeArrivals(RealTimeArrivalsRequest req);
 
         Task<Response<NearbyTransitResponse>> GetNearbyTransit(NearbyTransitRequest req);
