@@ -22,7 +22,7 @@ namespace AzureMapsToolkit.Search
         /// Comma separated string of country codes, e.g. FR, ES. This will limit the search to the specified countries
         /// </summary>
         [JsonProperty("countrySet")]
-        public int? CountrySet { get; set; }
+        public string CountrySet { get; set; }
 
         /// <summary>
         /// The radius in meters to for the results to be constrained to the defined area, Min value is 1, Max Value is 50000.
