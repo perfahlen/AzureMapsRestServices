@@ -46,7 +46,7 @@ namespace AzureMapsToolkit.Search
         /// <summary>
         /// Comma separated string of country codes, e.g. FR, ES. This will limit the search to the specified countries
         /// </summary>
-        public string[] CountrySet { get; set; }
+        public string CountrySet { get; set; }
 
         /// <summary>
         /// Boolean. If the typeahead flag is set, the query will be interpreted as a partial input and the search will enter predictive mode

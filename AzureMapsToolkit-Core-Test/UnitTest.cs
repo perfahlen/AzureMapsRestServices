@@ -249,13 +249,26 @@ namespace AzureMapsToolkit_Core_Test
             var searchAddressRequest = new SearchAddressRequest
             {
                 Query = "15127 NE 24th Street,Redmond, WA 98052",
+                CountrySet = "US",
                 Limit = 10
             };
             var resp = am.GetSearchAddress(searchAddressRequest).Result;
 
             Assert.Null(resp.Error);
 
-            Assert.Equal(14.15, resp.Result.Results[0].Score);
+            Assert.Equal(14.15, Math.Round(resp.Result.Results[0].Score, 2));
+
+            var searchAddressWrongCountryCodeRequest = new SearchAddressRequest
+            {
+                Query = "15127 NE 24th Street,Redmond, WA 98052",
+                CountrySet = "CA",
+                Limit = 10
+            };
+            resp = am.GetSearchAddress(searchAddressWrongCountryCodeRequest).Result;
+
+            Assert.Null(resp.Error);
+
+            Assert.Empty(resp.Result.Results);
 
         }
 
@@ -321,6 +334,7 @@ namespace AzureMapsToolkit_Core_Test
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
             var req = new SearchFuzzyRequest
             {
+                CountrySet = "US",
                 Query = "seattle"
             };
             var res = am.GetSearchFuzzy(req).Result;
@@ -336,6 +350,7 @@ namespace AzureMapsToolkit_Core_Test
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
             var req = new SearchNearbyRequest
             {
+                CountrySet = "US",
                 Lat = "40.70627",
                 Lon = "-74.011454",
                 Limit = 10,
@@ -355,6 +370,7 @@ namespace AzureMapsToolkit_Core_Test
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
             var req = new SearchPoiRequest
             {
+                CountrySet = "US",
                 Query = "juice bars",
                 Limit = 5,
                 Lat = "47.606038",
@@ -374,6 +390,7 @@ namespace AzureMapsToolkit_Core_Test
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
             var req = new SearchPoiCategoryRequest
             {
+                CountrySet = "US",
                 Query = "atm",
                 Limit = 3,
                 Lat = "40.758953",

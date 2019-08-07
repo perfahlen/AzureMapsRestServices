@@ -20,7 +20,7 @@
         /// <summary>
         /// Comma separated string of country codes, e.g. FR, ES. This will limit the search to the specified countries
         /// </summary>
-        public string countrySet { get; set; }
+        public string CountrySet { get; set; }
 
         /// <summary>
         /// Latitude where results should be biased. E.g. 37.337
