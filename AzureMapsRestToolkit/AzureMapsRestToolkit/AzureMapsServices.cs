@@ -45,6 +45,23 @@ namespace AzureMapsToolkit
 
         #region Mobility
 
+        /// <summary>
+        /// Get Transit Dock Info API allows to request static and real-time information for a given bike or scooter docking station. Response includes availability and vacancy information and operator details. The service supplements Nearby Transit API that allows you to search nearby bike and scooter docking stations.
+        /// </summary>
+        /// <param name="req"></param>
+        /// <returns></returns>
+        public async Task<Response<TransitDockInfoResponse>> GetTransitDockInfo(TransitDockInfoRequest req)
+        {
+            var res = await ExecuteRequest<TransitDockInfoResponse, TransitDockInfoRequest>("https://atlas.microsoft.com/mobility/transit/dock/json", req);
+            return res;
+        }
+
+
+        /// <summary>
+        /// Get Real Time Arrivals API returns for a given a stop, line or location the requested number of real-time arrivals. Endpoint support different modes to request real-time arrivals such as number of live arrivals for all lines arriving at the specified stop or all arrivals of a line to stops near the user’s location. The API supports parameters to request one or multiple public transit types such as bus, tram and subway, maximum number if arrivals, and prefer a specific transit agency operating in the area. In some cases real-time arrivals may not be available, for example, if arrival is too far in the future or transit vehicle does not have capability to share the real-time location. This is symbolized in a scheduleType field present in all responses.
+        /// </summary>
+        /// <param name="req"></param>
+        /// <returns></returns>
         public async Task<Response<RealTimeArrivalsResponse>> GetRealTimeArrivals(RealTimeArrivalsRequest req)
         {
             var res = await ExecuteRequest<RealTimeArrivalsResponse, RealTimeArrivalsRequest>("https://atlas.microsoft.com/mobility/realtime/arrivals/json", req);
@@ -62,12 +79,22 @@ namespace AzureMapsToolkit
             return res;
         }
 
+        /// <summary>
+        /// Service allows to request metro areas in which the Azure Maps Mobility Service is available. The service supports filtering results by country or coordinate location. Information returned includes Metro Area details such as metro Id, name and a representation of the metro area geometry in GeoJSON format.
+        /// </summary>
+        /// <param name="req"></param>
+        /// <returns></returns>
         public async Task<Response<MetroAreaResponse>> GetMetroArea(MetroAreaRequest req)
         {
             var res = await ExecuteRequest<MetroAreaResponse, MetroAreaRequest>("https://atlas.microsoft.com/mobility/metroArea/id/json", req);
             return res;
         }
 
+        /// <summary>
+        /// Service allows to request additional information for metro areas in which the Azure Maps Mobility Service is available. Information such as supported transit types, transit agencies and active alerts is available, depending on the options selected.
+        /// </summary>
+        /// <param name="req"></param>
+        /// <returns></returns>
         public async Task<Response<MetroAreaInfoResponse>> GetMetroAreaInfo(MetroAreaInfoRequest req)
         {
             var res = await ExecuteRequest<MetroAreaInfoResponse, MetroAreaInfoRequest>($"https://atlas.microsoft.com/mobility/metroArea/info/json", req);
@@ -76,6 +103,11 @@ namespace AzureMapsToolkit
 
         }
 
+        /// <summary>
+        /// Service allows to request static and real-time information for a given car share vehicle. Response contains details such as availability and vacancy information and operator details. The service supplements Nearby Transit API.
+        /// </summary>
+        /// <param name="req"></param>
+        /// <returns></returns>
         public async Task<Response<CarShareInfoResponse>> GetCarShareInfo(CarShareInfoRequest req)
         {
             var res = await ExecuteRequest<CarShareInfoResponse, CarShareInfoRequest>($"https://atlas.microsoft.com/mobility/transit/carShare/json", req);

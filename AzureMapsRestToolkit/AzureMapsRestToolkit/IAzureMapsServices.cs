@@ -17,6 +17,8 @@ namespace AzureMapsToolkit
     {
         //Task<Response<TransitItineraryResponse>> GetTransitItinerary(TransitItineraryRequest req);
 
+        Task<Response<TransitDockInfoResponse>> GetTransitDockInfo(TransitDockInfoRequest req);    
+
         Task<Response<RealTimeArrivalsResponse>> GetRealTimeArrivals(RealTimeArrivalsRequest req);
 
         Task<Response<NearbyTransitResponse>> GetNearbyTransit(NearbyTransitRequest req);
