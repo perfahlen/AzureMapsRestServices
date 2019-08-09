@@ -1014,5 +1014,15 @@ namespace AzureMapsToolkit_Core_Test
 
             Assert.Null(res.Error);
         }
+
+        [Fact]
+        public void GetTransitItenary()
+        {
+            var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
+
+            var res = am.GetTransitItinerary(new AzureMapsToolkit.Mobility.TransitItineraryRequest
+            {
+            }).Result;
+        }
     }
 }

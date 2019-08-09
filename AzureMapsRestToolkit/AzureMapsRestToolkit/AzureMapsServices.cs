@@ -45,6 +45,14 @@ namespace AzureMapsToolkit
 
         #region Mobility
 
+        public async Task<Response<TransitItineraryResponse>> GetTransitItinerary(TransitItineraryRequest req)
+        {
+            var res = await ExecuteRequest<TransitItineraryResponse, TransitItineraryRequest>("https://atlas.microsoft.com/mobility/transit/itinerary/json", req);
+            return res;
+        }
+    
+
+
         /// <summary>
         /// Get Transit Dock Info API allows to request static and real-time information for a given bike or scooter docking station. Response includes availability and vacancy information and operator details. The service supplements Nearby Transit API that allows you to search nearby bike and scooter docking stations.
         /// </summary>
