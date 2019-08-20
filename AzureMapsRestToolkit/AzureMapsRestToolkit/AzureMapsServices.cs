@@ -45,6 +45,17 @@ namespace AzureMapsToolkit
 
         #region Mobility
 
+        public async Task<Response<TransitLineInfoResponse>> GetTransitLineInfo(TransitLineInfoRequest req)
+        {
+            var res = await ExecuteRequest<TransitLineInfoResponse, TransitLineInfoRequest>("https://atlas.microsoft.com/mobility/transit/line/json", req);
+            return res;
+        }
+
+        /// <summary>
+        /// Returns data according to an itinerary Id previously returned by Transit Route API. The basic info contains data as to the various legs comprising the itinerary, including the locations, public transit lines, start and end times. User can request additional routing information such as the shape of the itinerary and detailed itinerary schedules is also available, depending on the options selected. An itinerary is available up to 24 hours following a search request.
+        /// </summary>
+        /// <param name="req"></param>
+        /// <returns></returns>
         public async Task<Response<TransitItineraryResponse>> GetTransitItinerary(TransitItineraryRequest req)
         {
             var res = await ExecuteRequest<TransitItineraryResponse, TransitItineraryRequest>("https://atlas.microsoft.com/mobility/transit/itinerary/json", req);

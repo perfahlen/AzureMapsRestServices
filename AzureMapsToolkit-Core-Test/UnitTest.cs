@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using System;
 using System.IO;
 using static System.Net.Mime.MediaTypeNames;
+using AzureMapsToolkit.Mobility;
 
 namespace AzureMapsToolkit_Core_Test
 {
@@ -1023,6 +1024,18 @@ namespace AzureMapsToolkit_Core_Test
             var res = am.GetTransitItinerary(new AzureMapsToolkit.Mobility.TransitItineraryRequest
             {
             }).Result;
+        }
+
+        [Fact]
+        public void GetTransitLineInfo()
+        {
+            var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
+            var res = am.GetTransitLineInfo(new AzureMapsToolkit.Mobility.TransitLineInfoRequest
+            {
+                MetroId = 121,
+                Query = "373411"
+            }).Result;
+            Assert.Null(res.Error);
         }
     }
 }
