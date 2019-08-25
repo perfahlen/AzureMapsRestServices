@@ -1,5 +1,8 @@
 ﻿namespace AzureMapsToolkit.Mobility
 {
+    /// <summary>
+    /// This object is returned from a successful Transit Line Info call.
+    /// </summary>
     public class TransitLineInfoResponse
     {
         /// <summary>

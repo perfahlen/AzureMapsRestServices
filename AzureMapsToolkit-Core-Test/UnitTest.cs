@@ -1033,7 +1033,8 @@ namespace AzureMapsToolkit_Core_Test
             var res = am.GetTransitLineInfo(new AzureMapsToolkit.Mobility.TransitLineInfoRequest
             {
                 MetroId = 121,
-                Query = "373411"
+                Query = "373411",
+                DetailType = TransitLineDetailType.Stops | TransitLineDetailType.Schedule | TransitLineDetailType.Stops
             }).Result;
             Assert.Null(res.Error);
         }

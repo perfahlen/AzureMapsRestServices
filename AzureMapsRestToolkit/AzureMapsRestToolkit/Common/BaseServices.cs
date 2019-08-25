@@ -105,9 +105,23 @@ namespace AzureMapsToolkit.Common
                     if (propertyInfo != null && propertyInfo.PropertyType.IsEnum)
                     {
                         argumentName = Char.ToLower(propertyInfo.Name[0]) + propertyInfo.Name.Substring(1);
-                        var enumVal = propertyInfo.GetValue(request).ToString();
-                        argumentValue = Char.ToLower(enumVal[0]) + enumVal.Substring(1);
 
+                        var enumVal = propertyInfo.GetValue(request).ToString().ToCamlCase();
+                        
+                        //enumVal.ToCamlCase();
+
+                        
+                        //var _a =  (propertyInfo.GetValue(request) as Enum).ToCamleCase();
+
+                        //var enumArguments = enumVal.Split(',');
+
+                        //enumArguments.ArrayArgumentsToCamleCase();
+
+
+                        //var enumValues = enumArguments.Select(x => Char.ToLowerInvariant(x[0]) + x.Substring(1));
+                        //argumentValue = String.Join(",", enumValues);
+
+                        //argumentValue = Char.ToLowerInvariant(enumVal[0]) + enumVal.Substring(1).Replace(" ", string.Empty);
                     }
                     else
                     {
