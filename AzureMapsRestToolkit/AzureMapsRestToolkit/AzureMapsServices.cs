@@ -45,6 +45,22 @@ namespace AzureMapsToolkit
 
         #region Mobility
 
+        /// <summary>
+        /// Get Transit Route API will allow trip planning returning the best possible route options between an origin and destination by using multi-modal search. Service provides a variety of travel modes, including walk, bike, and public transit. The API supports parameters to request one or multiple public transit types such as bus, tram and subway, and focus on certain types of bikes, and prefer a specific transit agency operating in the area. Also, service provides options to choose optimal route with least walk or transfers and specify arrival or departure times when user need to be at a specific destination by a certain time.
+        /// </summary>
+        /// <param name="req"></param>
+        /// <returns></returns>
+        public async Task<Response<TransitRouteResponse>> GetTransitRoute(TransitRouteRequest req)
+        {
+            var res = await ExecuteRequest< TransitRouteResponse, TransitRouteRequest> ("https://atlas.microsoft.com/mobility/transit/route/json", req);
+            return res;
+        }
+
+        /// <summary>
+        /// Your scenario might require requesting transit line specific data such as stops and line geometry. Transit Line Info service allows you to request line group by line group id returning a line group comprised a set of lines. Additional information such as 24 hours static schedule, active alerts for the line group and line patterns is also available, depending on the options selected. Mobility services uses a parallel data model for public transit lines and line groups. Usually line group contains 2 lines, one going from A to B, and the other returning from B to A, both operating by the same Public Transport Agency having the same line number. We recommend you review our guidance article to understand the concepts of lines and line groups.
+        /// </summary>
+        /// <param name="req"></param>
+        /// <returns></returns>
         public async Task<Response<TransitLineInfoResponse>> GetTransitLineInfo(TransitLineInfoRequest req)
         {
             var res = await ExecuteRequest<TransitLineInfoResponse, TransitLineInfoRequest>("https://atlas.microsoft.com/mobility/transit/line/json", req);
