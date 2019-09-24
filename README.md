@@ -28,7 +28,7 @@ var searchAddressRequest = new SearchAddressRequest
    Limit = 10
 };
 var resp = am.GetSearchAddress(searchAddressRequest).Result;
-if (resp.Error == null)
+if (resp.Error != null)
 {
    //Handle error
 }
