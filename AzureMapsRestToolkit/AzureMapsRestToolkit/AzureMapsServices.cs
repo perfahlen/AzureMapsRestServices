@@ -45,6 +45,12 @@ namespace AzureMapsToolkit
 
         #region Mobility
 
+        public async Task<Response<TransitStopResponse>> GetTransitStop(TransitStopRequest req)
+        {
+            var res = await ExecuteRequest< TransitStopResponse, TransitStopRequest>("https://atlas.microsoft.com/mobility/transit/route/json", req);
+            return res;
+        }
+
         /// <summary>
         /// Get Transit Route API will allow trip planning returning the best possible route options between an origin and destination by using multi-modal search. Service provides a variety of travel modes, including walk, bike, and public transit. The API supports parameters to request one or multiple public transit types such as bus, tram and subway, and focus on certain types of bikes, and prefer a specific transit agency operating in the area. Also, service provides options to choose optimal route with least walk or transfers and specify arrival or departure times when user need to be at a specific destination by a certain time.
         /// </summary>
