@@ -15,6 +15,7 @@ using AzureMapsToolkit.Data;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System.Globalization;
+using AzureMapsToolkit.Mobility;
 
 namespace AzureMapsToolkit
 {
@@ -42,7 +43,119 @@ namespace AzureMapsToolkit
                 };
         }
 
+        #region Mobility
 
+        public async Task<Response<TransitStopInfoResponse>> GetTransitStop(TransitStopRequest req)
+        {
+            var res = await ExecuteRequest<TransitStopInfoResponse, TransitStopRequest>("https://atlas.microsoft.com/mobility/transit/route/json", req);
+            return res;
+        }
+
+        /// <summary>
+        /// Get Transit Route API will allow trip planning returning the best possible route options between an origin and destination by using multi-modal search. Service provides a variety of travel modes, including walk, bike, and public transit. The API supports parameters to request one or multiple public transit types such as bus, tram and subway, and focus on certain types of bikes, and prefer a specific transit agency operating in the area. Also, service provides options to choose optimal route with least walk or transfers and specify arrival or departure times when user need to be at a specific destination by a certain time.
+        /// </summary>
+        /// <param name="req"></param>
+        /// <returns></returns>
+        public async Task<Response<TransitRouteResponse>> GetTransitRoute(TransitRouteRequest req)
+        {
+            var res = await ExecuteRequest< TransitRouteResponse, TransitRouteRequest> ("https://atlas.microsoft.com/mobility/transit/route/json", req);
+            return res;
+        }
+
+        /// <summary>
+        /// Your scenario might require requesting transit line specific data such as stops and line geometry. Transit Line Info service allows you to request line group by line group id returning a line group comprised a set of lines. Additional information such as 24 hours static schedule, active alerts for the line group and line patterns is also available, depending on the options selected. Mobility services uses a parallel data model for public transit lines and line groups. Usually line group contains 2 lines, one going from A to B, and the other returning from B to A, both operating by the same Public Transport Agency having the same line number. We recommend you review our guidance article to understand the concepts of lines and line groups.
+        /// </summary>
+        /// <param name="req"></param>
+        /// <returns></returns>
+        public async Task<Response<TransitLineInfoResponse>> GetTransitLineInfo(TransitLineInfoRequest req)
+        {
+            var res = await ExecuteRequest<TransitLineInfoResponse, TransitLineInfoRequest>("https://atlas.microsoft.com/mobility/transit/line/json", req);
+            return res;
+        }
+
+        /// <summary>
+        /// Returns data according to an itinerary Id previously returned by Transit Route API. The basic info contains data as to the various legs comprising the itinerary, including the locations, public transit lines, start and end times. User can request additional routing information such as the shape of the itinerary and detailed itinerary schedules is also available, depending on the options selected. An itinerary is available up to 24 hours following a search request.
+        /// </summary>
+        /// <param name="req"></param>
+        /// <returns></returns>
+        public async Task<Response<TransitItineraryResponse>> GetTransitItinerary(TransitItineraryRequest req)
+        {
+            var res = await ExecuteRequest<TransitItineraryResponse, TransitItineraryRequest>("https://atlas.microsoft.com/mobility/transit/itinerary/json", req);
+            return res;
+        }
+    
+
+
+        /// <summary>
+        /// Get Transit Dock Info API allows to request static and real-time information for a given bike or scooter docking station. Response includes availability and vacancy information and operator details. The service supplements Nearby Transit API that allows you to search nearby bike and scooter docking stations.
+        /// </summary>
+        /// <param name="req"></param>
+        /// <returns></returns>
+        public async Task<Response<TransitDockInfoResponse>> GetTransitDockInfo(TransitDockInfoRequest req)
+        {
+            var res = await ExecuteRequest<TransitDockInfoResponse, TransitDockInfoRequest>("https://atlas.microsoft.com/mobility/transit/dock/json", req);
+            return res;
+        }
+
+
+        /// <summary>
+        /// Get Real Time Arrivals API returns for a given a stop, line or location the requested number of real-time arrivals. Endpoint support different modes to request real-time arrivals such as number of live arrivals for all lines arriving at the specified stop or all arrivals of a line to stops near the user’s location. The API supports parameters to request one or multiple public transit types such as bus, tram and subway, maximum number if arrivals, and prefer a specific transit agency operating in the area. In some cases real-time arrivals may not be available, for example, if arrival is too far in the future or transit vehicle does not have capability to share the real-time location. This is symbolized in a scheduleType field present in all responses.
+        /// </summary>
+        /// <param name="req"></param>
+        /// <returns></returns>
+        public async Task<Response<RealTimeArrivalsResponse>> GetRealTimeArrivals(RealTimeArrivalsRequest req)
+        {
+            var res = await ExecuteRequest<RealTimeArrivalsResponse, RealTimeArrivalsRequest>("https://atlas.microsoft.com/mobility/realtime/arrivals/json", req);
+            return res;
+        }
+
+        /// <summary>
+        /// Get Nearby Transit service allows you to search transit objects, for example, public transit stops ans shared bikes around a given location returning the transit object details. Service allows users to search for specific object types and within a given radius returning a set of transit object with object details. Additional information such as transit operator information is returned depending on the options selected. The returned information can be used for further processing such as requesting real-time arrivals for the stop or transit stop details such as main transit type of most lines stopping for a given public, active service alerts or main transport agency.
+        /// </summary>
+        /// <param name="req"></param>
+        /// <returns></returns>
+        public async Task<Response<NearbyTransitResponse>> GetNearbyTransit(NearbyTransitRequest req)
+        {
+            var res = await ExecuteRequest<NearbyTransitResponse, NearbyTransitRequest>("https://atlas.microsoft.com/mobility/transit/nearby/json", req);
+            return res;
+        }
+
+        /// <summary>
+        /// Service allows to request metro areas in which the Azure Maps Mobility Service is available. The service supports filtering results by country or coordinate location. Information returned includes Metro Area details such as metro Id, name and a representation of the metro area geometry in GeoJSON format.
+        /// </summary>
+        /// <param name="req"></param>
+        /// <returns></returns>
+        public async Task<Response<MetroAreaResponse>> GetMetroArea(MetroAreaRequest req)
+        {
+            var res = await ExecuteRequest<MetroAreaResponse, MetroAreaRequest>("https://atlas.microsoft.com/mobility/metroArea/id/json", req);
+            return res;
+        }
+
+        /// <summary>
+        /// Service allows to request additional information for metro areas in which the Azure Maps Mobility Service is available. Information such as supported transit types, transit agencies and active alerts is available, depending on the options selected.
+        /// </summary>
+        /// <param name="req"></param>
+        /// <returns></returns>
+        public async Task<Response<MetroAreaInfoResponse>> GetMetroAreaInfo(MetroAreaInfoRequest req)
+        {
+            var res = await ExecuteRequest<MetroAreaInfoResponse, MetroAreaInfoRequest>($"https://atlas.microsoft.com/mobility/metroArea/info/json", req);
+
+            return res;
+
+        }
+
+        /// <summary>
+        /// Service allows to request static and real-time information for a given car share vehicle. Response contains details such as availability and vacancy information and operator details. The service supplements Nearby Transit API.
+        /// </summary>
+        /// <param name="req"></param>
+        /// <returns></returns>
+        public async Task<Response<CarShareInfoResponse>> GetCarShareInfo(CarShareInfoRequest req)
+        {
+            var res = await ExecuteRequest<CarShareInfoResponse, CarShareInfoRequest>($"https://atlas.microsoft.com/mobility/transit/carShare/json", req);
+
+            return res;
+        }
+        #endregion
 
         #region Spatial
 
@@ -126,18 +239,18 @@ namespace AzureMapsToolkit
         /// </summary>
         /// <param name="json"></param>
         /// <returns></returns>
-        public async Task<Response<GetBufferResponse>> PostBuffer(string json)
+        public async Task<Response<BufferResponse>> PostBuffer(string json)
         {
             try
             {
                 var url = $"https://atlas.microsoft.com/spatial/buffer/json?subscription-key={Key}&api-version=1.0";
                 var res = await GetHttpResponseMessage(url, json, HttpMethod.Post);
-                return new Response<GetBufferResponse> { Result = new GetBufferResponse { Result = res.Content.ReadAsStringAsync().Result } };
+                return new Response<BufferResponse> { Result = new BufferResponse { Result = res.Content.ReadAsStringAsync().Result } };
 
             }
             catch (AzureMapsException ex)
             {
-                return Response<GetBufferResponse>.CreateErrorResponse(ex);
+                return Response<BufferResponse>.CreateErrorResponse(ex);
             }
         }
 
@@ -179,9 +292,9 @@ namespace AzureMapsToolkit
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public async Task<Response<GeofenceResponse>> GetGeofence(GetGeofenceRequest request)
+        public async Task<Response<GeofenceResponse>> GetGeofence(GeofenceRequest request)
         {
-            var res = await ExecuteRequest<GeofenceResponse, GetGeofenceRequest>($"https://atlas.microsoft.com/spatial/geofence/json", request);
+            var res = await ExecuteRequest<GeofenceResponse, GeofenceRequest>($"https://atlas.microsoft.com/spatial/geofence/json", request);
             return res;
         }
 
@@ -191,9 +304,9 @@ namespace AzureMapsToolkit
         /// <param name="request"></param>
         /// <param name="format"></param>
         /// <returns></returns>
-        public async Task<Response<GetBufferResponse>> GetBuffer(GetBufferRequest request, string format = "json")
+        public async Task<Response<BufferResponse>> GetBuffer(BufferRequest request, string format = "json")
         {
-            var res = await ExecuteRequest<GetBufferResponse, GetBufferRequest>($"https://atlas.microsoft.com/spatial/buffer/{format}", request);
+            var res = await ExecuteRequest<BufferResponse, BufferRequest>($"https://atlas.microsoft.com/spatial/buffer/{format}", request);
             return res;
         }
 
@@ -202,9 +315,9 @@ namespace AzureMapsToolkit
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public async Task<Response<ClosestPointResponse>> GetClosestPoint(GetClosestPointRequest request)
+        public async Task<Response<ClosestPointResponse>> GetClosestPoint(ClosestPointRequest request)
         {
-            var res = await ExecuteRequest<ClosestPointResponse, GetClosestPointRequest>($"https://atlas.microsoft.com/spatial/closestPoint/json", request);
+            var res = await ExecuteRequest<ClosestPointResponse, ClosestPointRequest>($"https://atlas.microsoft.com/spatial/closestPoint/json", request);
             return res;
         }
 

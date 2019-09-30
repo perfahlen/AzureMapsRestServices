@@ -5,7 +5,7 @@ using System.Text;
 
 namespace AzureMapsToolkit.Spatial
 {
-    public class GetBufferResponse
+    public class BufferResponse
     {
         [JsonProperty("result")]
         public object Result { get; set; }

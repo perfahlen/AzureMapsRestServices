@@ -3,7 +3,7 @@ using System;
 
 namespace AzureMapsToolkit.Spatial
 {
-    public class GetBufferRequest : SpatialRequestBase
+    public class BufferRequest : SpatialRequestBase
     {
    
         /// <summary>

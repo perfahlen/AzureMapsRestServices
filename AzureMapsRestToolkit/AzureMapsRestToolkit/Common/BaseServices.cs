@@ -100,13 +100,14 @@ namespace AzureMapsToolkit.Common
                     var argumentName = string.Empty;
                     var argumentValue = string.Empty;
 
-                    var underLayingtype = Nullable.GetUnderlyingType(propertyInfo.PropertyType);
+                    //var underLayingtype = Nullable.GetUnderlyingType(propertyInfo.PropertyType);
 
-                    if (underLayingtype != null && underLayingtype.IsEnum)
+                    if (propertyInfo != null && propertyInfo.PropertyType.IsEnum)
                     {
                         argumentName = Char.ToLower(propertyInfo.Name[0]) + propertyInfo.Name.Substring(1);
-                        argumentValue = (propertyInfo.GetValue(request).GetType().GetMember(propertyInfo.GetValue(request).ToString())?.FirstOrDefault().GetCustomAttributes(typeof(NameArgument), false).FirstOrDefault() as NameArgument).Name;
 
+                        var enumVal = propertyInfo.GetValue(request).ToString().ToCamlCase();
+                        
                     }
                     else
                     {
@@ -126,7 +127,6 @@ namespace AzureMapsToolkit.Common
                             if (propertyInfo.PropertyType == typeof(int) && int.TryParse(argumentValue, out int i))
                             {
                                 argumentValue = ((int)propertyInfo.GetValue(request)).ToString(CultureInfo.InvariantCulture);
-                                continue;
                             }
 
                             if (propertyInfo.PropertyType == typeof(double) && double.TryParse(argumentValue, out double d))

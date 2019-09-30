@@ -1,6 +1,7 @@
 ﻿using AzureMapsToolkit.Common;
 using AzureMapsToolkit.Data;
 using AzureMapsToolkit.GeoJson;
+using AzureMapsToolkit.Mobility;
 using AzureMapsToolkit.Render;
 using AzureMapsToolkit.Search;
 using AzureMapsToolkit.Spatial;
@@ -8,30 +9,46 @@ using AzureMapsToolkit.Timezone;
 using AzureMapsToolkit.Traffic;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace AzureMapsToolkit
 {
     public interface IAzureMapsServices
     {
+        Task<Response<TransitStopInfoResponse>> GetTransitStop(TransitStopRequest req);
+        Task<Response<TransitRouteResponse>> GetTransitRoute(TransitRouteRequest req);
+        Task<Response<TransitLineInfoResponse>> GetTransitLineInfo(TransitLineInfoRequest req);
+        Task<Response<TransitItineraryResponse>> GetTransitItinerary(TransitItineraryRequest req);
+
+        Task<Response<TransitDockInfoResponse>> GetTransitDockInfo(TransitDockInfoRequest req);    
+
+        Task<Response<RealTimeArrivalsResponse>> GetRealTimeArrivals(RealTimeArrivalsRequest req);
+
+        Task<Response<NearbyTransitResponse>> GetNearbyTransit(NearbyTransitRequest req);
+
+        Task<Response<MetroAreaResponse>> GetMetroArea(MetroAreaRequest req);
+
+        Task<Response<MetroAreaInfoResponse>> GetMetroAreaInfo(MetroAreaInfoRequest req);
+
+        Task<Response<CarShareInfoResponse>> GetCarShareInfo(CarShareInfoRequest req);
+
         Task<Response<PostPointInPolygonResponse>> PostPointInPolygon(PostPointInPolygonRequest req, string geoJson);
 
         Task<Response<GeofenceResponse>> PostGeofence(PostGeofenceRequest req, string geoJson);
 
         Task<Response<ClosestPointResponse>> PostClosestPoint(PostClosestPointRequest req, string geoJson);
 
-        Task<Response<GetBufferResponse>> PostBuffer(string json);
+        Task<Response<BufferResponse>> PostBuffer(string json);
 
         Task<Response<PointInPolygonResponse>> GetPointInPolygon(PointInPolygonRequest req);
 
         Task<Response<GreatCircleDistanceResponse>> GetGreatCircleDistance(GreatCircleDistanceRequest req);
 
-        Task<Response<GeofenceResponse>> GetGeofence(GetGeofenceRequest req);
+        Task<Response<GeofenceResponse>> GetGeofence(GeofenceRequest req);
 
-        Task<Response<ClosestPointResponse>> GetClosestPoint(GetClosestPointRequest request);
+        Task<Response<ClosestPointResponse>> GetClosestPoint(ClosestPointRequest request);
 
-        Task<Response<GetBufferResponse>> GetBuffer(GetBufferRequest requests, string format);
+        Task<Response<BufferResponse>> GetBuffer(BufferRequest requests, string format);
 
         Task<Response<UploadResult>> Upload(string geoJson, string dataFormat = "geojson");
 

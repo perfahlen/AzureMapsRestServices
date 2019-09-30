@@ -2,7 +2,7 @@
 
 namespace AzureMapsToolkit.Spatial
 {
-    public class PostClosestPointRequest : GetClosestPointRequest
+    public class PostClosestPointRequest : ClosestPointRequest
     {
         /// <summary>
         /// intentionally hidden

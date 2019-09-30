@@ -4,7 +4,7 @@ using System.Text;
 
 namespace AzureMapsToolkit.Spatial
 {
-    public class GetGeofenceRequest : SpatialRequestBase
+    public class GeofenceRequest : SpatialRequestBase
     {
         /// <summary>
         /// ID of the device
