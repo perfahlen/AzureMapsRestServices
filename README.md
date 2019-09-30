@@ -14,6 +14,7 @@ This library covers 50 Azure Maps services including the following services
 - Spatial services
 - TimeZone services
 - Traffic services
+- Mobility services
 
 ## Exceptions
 Exception is captures by the library and if any exceptions captured it will be return in the __Error__ property in the returned object. See example below.
