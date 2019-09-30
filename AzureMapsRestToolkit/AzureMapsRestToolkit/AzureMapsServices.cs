@@ -45,9 +45,9 @@ namespace AzureMapsToolkit
 
         #region Mobility
 
-        public async Task<Response<TransitStopResponse>> GetTransitStop(TransitStopRequest req)
+        public async Task<Response<TransitStopInfoResponse>> GetTransitStop(TransitStopRequest req)
         {
-            var res = await ExecuteRequest< TransitStopResponse, TransitStopRequest>("https://atlas.microsoft.com/mobility/transit/route/json", req);
+            var res = await ExecuteRequest<TransitStopInfoResponse, TransitStopRequest>("https://atlas.microsoft.com/mobility/transit/route/json", req);
             return res;
         }
 
