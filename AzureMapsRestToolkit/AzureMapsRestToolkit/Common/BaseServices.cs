@@ -129,7 +129,8 @@ namespace AzureMapsToolkit.Common
                                 argumentValue = ((int)propertyInfo.GetValue(request)).ToString(CultureInfo.InvariantCulture);
                             }
 
-                            if (propertyInfo.PropertyType == typeof(double) && double.TryParse(argumentValue, out double d))
+                            if (propertyInfo.PropertyType == typeof(double) || propertyInfo.PropertyType == typeof(double?) 
+                                && double.TryParse(argumentValue, out double d))
                             {
                                 argumentValue = ((double)propertyInfo.GetValue(request)).ToString(CultureInfo.InvariantCulture);
                             }

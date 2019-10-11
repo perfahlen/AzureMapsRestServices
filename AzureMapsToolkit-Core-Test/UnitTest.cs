@@ -250,11 +250,19 @@ namespace AzureMapsToolkit_Core_Test
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
 
+            //var searchAddressRequest = new SearchAddressRequest
+            //{
+            //    Query = "15127 NE 24th Street,Redmond, WA 98052",
+            //    CountrySet = "US",
+            //    Limit = 10
+            //};
+
             var searchAddressRequest = new SearchAddressRequest
             {
-                Query = "15127 NE 24th Street,Redmond, WA 98052",
-                CountrySet = "US",
-                Limit = 10
+                Query = "test",
+                Lat = 51.3,
+                Lon = 12.3,
+                Language = "de-DE"
             };
             var resp = am.GetSearchAddress(searchAddressRequest).Result;
 

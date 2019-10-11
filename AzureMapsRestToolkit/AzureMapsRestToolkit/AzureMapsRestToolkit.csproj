@@ -9,10 +9,10 @@
     <RepositoryUrl>https://github.com/perfahlen/AzureMapsRestServices</RepositoryUrl>
     <RepositoryType>GIT</RepositoryType>
     <PackageTags>Azure Maps REST Toolkit</PackageTags>
-    <Version>4.1.0</Version>
-    <AssemblyVersion>4.1.0.0</AssemblyVersion>
+    <Version>4.1.1</Version>
+    <AssemblyVersion>4.1.0.1</AssemblyVersion>
     <RootNamespace>AzureMapsToolkit</RootNamespace>
-    <FileVersion>4.1.0.0</FileVersion>
+    <FileVersion>4.1.0.1</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
