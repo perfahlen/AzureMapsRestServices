@@ -1,6 +1,6 @@
 # Azure Maps REST Services
 
-[![NuGet](https://img.shields.io/badge/NuGet-4.0.2-blue.svg)](https://www.nuget.org/packages/AzureMapsRestToolkit/)
+[![NuGet](https://img.shields.io/badge/NuGet-4.1.0-blue.svg)](https://www.nuget.org/packages/AzureMapsRestToolkit/)
 [![license](https://img.shields.io/badge/license-MIT-yellow.svg)](https://github.com/perfahlen/AzureMapsRestServices/blob/master/LICENSE)
 
 
@@ -14,6 +14,7 @@ This library covers 50 Azure Maps services including the following services
 - Spatial services
 - TimeZone services
 - Traffic services
+- Mobility services
 
 ## Exceptions
 Exception is captures by the library and if any exceptions captured it will be return in the __Error__ property in the returned object. See example below.
