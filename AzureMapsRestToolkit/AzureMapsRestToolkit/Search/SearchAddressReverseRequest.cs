@@ -7,12 +7,12 @@ namespace AzureMapsToolkit.Search
         /// <summary>
         /// Boolean. To enable return of the posted speedlimit
         /// </summary>
-        public bool ReturnSpeedLimit { get; set; }
+        public bool? ReturnSpeedLimit { get; set; }
 
         /// <summary>
         /// The directional heading of the vehicle in degrees, for travel along a segment of roadway. 0 is North, 90 is East and so on, values range from -360 to 360. The precision can include upto one decimal place
         /// </summary>
-        public double Heading { get; set; }
+        public double? Heading { get; set; }
 
         /// <summary>
         /// If a number is sent in along with the request, the response may include the side of the street (Left/Right) and also an offset position for that number
@@ -22,7 +22,7 @@ namespace AzureMapsToolkit.Search
         /// <summary>
         /// Boolean. To enable return of the road use array for reversegeocodes at street level
         /// </summary>
-        public bool ReturnRoadUse { get; set; }
+        public bool? ReturnRoadUse { get; set; }
 
         /// <summary>
         /// To restrict reversegeocodes to a certain type of roaduse.The road use array for reversegeocodes can be one or more of LimitedAccess, Arterial, Terminal, Ramp, Rotary, LocalStreet
@@ -33,7 +33,7 @@ namespace AzureMapsToolkit.Search
         /// Format of newlines in the formatted address.
         /// If true, the address will contain newlines. If false, newlines will be converted to commas.
         /// </summary>
-        public bool AllowFreeformNewline { get; set; }
+        public bool? AllowFreeformNewline { get; set; }
 
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace AzureMapsToolkit.Search
         /// <summary>
         /// Include information on the type of match the geocoder achieved in the response.
         /// </summary>
-        public bool ReturnMatchType { get; set; }
+        public bool? ReturnMatchType { get; set; }
 
         /// <summary>
         /// The radius in meters to for the results to be constrained to the defined area
@@ -58,6 +58,7 @@ namespace AzureMapsToolkit.Search
         /// Limit property
         /// </summary>
         public int Limit { get; set; }
+
 
     }
 }
