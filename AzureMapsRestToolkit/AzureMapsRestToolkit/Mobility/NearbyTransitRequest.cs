@@ -19,12 +19,12 @@ namespace AzureMapsToolkit.Mobility
         /// <summary>
         /// Maximum number of responses that will be returned. Default is 3, minimum 1 and maximum 100. Sort order is based on distance from input location.
         /// </summary>
-        public int Limit { get; set; }
+        public int? Limit { get; set; }
 
         /// <summary>
         /// Specifies the search area to constrain a search. The radius in meters to for the results to be constrained to the defined area. Default value is 30 meters, minimum 1 meter and maximum 5000 meters (5km).
         /// </summary>
-        public int Radius { get; set; }
+        public int? Radius { get; set; }
 
         /// <summary>
         /// Comma separated list of transit object types. By default, objectType is set to stop. Use constants in ObjectType

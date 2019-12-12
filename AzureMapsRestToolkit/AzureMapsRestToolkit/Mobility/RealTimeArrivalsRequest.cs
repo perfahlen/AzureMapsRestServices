@@ -52,7 +52,7 @@ namespace AzureMapsToolkit.Mobility
         /// <summary>
         /// Time in seconds within which if the provider doesn’t respond, end point will return static data.
         /// </summary>
-        public string TimeoutInSeconds { get; set; }
+        public int? TimeoutInSeconds { get; set; }
 
         /// <summary>
         /// Language in which search results will be returned. Only NGT is supported. Please refer to Supported languages for details.

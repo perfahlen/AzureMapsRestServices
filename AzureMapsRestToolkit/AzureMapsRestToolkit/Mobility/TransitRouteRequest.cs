@@ -67,7 +67,7 @@ namespace AzureMapsToolkit.Mobility
         /// <summary>
         /// 
         /// </summary>
-        public DestinationType DestinationType { get; set; }
+        public DestinationType? DestinationType { get; set; }
 
         /// <summary>
         /// Language in which search results will be returned. Only NGT is supported. Please refer to Supported languages for details.
