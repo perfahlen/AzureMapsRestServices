@@ -18,7 +18,7 @@ namespace AzureMapsToolkit.Traffic
         /// <summary>
         /// Unit of speed in KMPH or MPH
         /// </summary>
-        public SpeedUnit Unit { get; set; }
+        public SpeedUnit? Unit { get; set; }
 
         /// <summary>
         /// The segment width multiplier. Default: 10, minimum: 1 and maximum: 20
