@@ -10,6 +10,6 @@
         /// <summary>
         /// Boolean. If the typeahead flag is set, the query will be interpreted as a partial input and the search will enter predictive mode
         /// </summary>
-        public bool Typeahead { get; set; }
+        public bool? Typeahead { get; set; }
     }
 }

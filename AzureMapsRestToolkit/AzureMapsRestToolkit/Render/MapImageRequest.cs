@@ -33,7 +33,7 @@ namespace AzureMapsToolkit.Render
         /// <summary>
         /// Desired zoom level of the map. Zoom value must be in the range: 0-20 (inclusive). Default value is 12.
         /// </summary>
-        public int Zoom { get; set; } = 12;
+        public int? Zoom { get; set; } = 12;
 
         /// <summary>
         /// Height of the resulting image in pixels. Range is 1 to 8192. Default is 512. It shouldn’t be used with bbox.

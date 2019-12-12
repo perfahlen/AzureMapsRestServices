@@ -4,9 +4,7 @@ namespace AzureMapsToolkit.Search
 {
     public class SearchAddressReverseRequest : SearchRequestBase
     {
-        /// <summary>
-        /// Boolean. To enable return of the posted speedlimit
-        /// </summary>
+
         public bool? ReturnSpeedLimit { get; set; }
 
         /// <summary>
@@ -57,7 +55,7 @@ namespace AzureMapsToolkit.Search
         /// <summary>
         /// Limit property
         /// </summary>
-        public int Limit { get; set; }
+        public int? Limit { get; set; }
 
 
     }

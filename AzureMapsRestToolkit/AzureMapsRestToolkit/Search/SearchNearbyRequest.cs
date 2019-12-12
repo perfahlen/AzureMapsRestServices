@@ -8,7 +8,7 @@ namespace AzureMapsToolkit.Search
         /// Latitude where results should be biased. E.g. 37.337.
         /// </summary>
         [JsonProperty("lat")]
-        public string Lat
+        public double Lat
         { get; set; }
 
 
@@ -16,7 +16,7 @@ namespace AzureMapsToolkit.Search
         /// Longitude where results should be biased. E.g. -121.89.
         /// </summary>
         [JsonProperty("lon")]
-        public string Lon { get; set; }
+        public double Lon { get; set; }
 
         /// <summary>
         /// Comma separated string of country codes, e.g. FR, ES. This will limit the search to the specified countries

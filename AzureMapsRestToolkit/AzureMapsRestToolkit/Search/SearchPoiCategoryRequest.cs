@@ -26,8 +26,5 @@ namespace AzureMapsToolkit.Search
         /// </summary>
         public string BtmRight { get; set; }
 
-
-        // hack - hide 
-        private new int Offset { get; set; }
     }
 }
