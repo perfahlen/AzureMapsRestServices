@@ -17,6 +17,6 @@ namespace AzureMapsToolkit.Spatial
         /// <summary>
         /// The number of closest points expected from response. Default: 1, minimum: 1 and maximum: 50
         /// </summary>
-        public int NumberOfClosestPoints { get; set; }
+        public int? NumberOfClosestPoints { get; set; }
     }
 }
