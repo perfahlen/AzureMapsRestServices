@@ -351,8 +351,8 @@ namespace AzureMapsToolkit_Core_Test
             var req = new SearchNearbyRequest
             {
                 CountrySet = "US",
-                Lat = "40.70627",
-                Lon = "-74.011454",
+                Lat = 40.70627,
+                Lon = -74.011454,
                 Limit = 10,
                 Radius = 8046
             };
@@ -373,8 +373,8 @@ namespace AzureMapsToolkit_Core_Test
                 CountrySet = "US",
                 Query = "juice bars",
                 Limit = 5,
-                Lat = "47.606038",
-                Lon = "-122.333345",
+                Lat = 47.606038,
+                Lon = -122.333345,
                 Radius = 8074
             };
 
@@ -393,8 +393,8 @@ namespace AzureMapsToolkit_Core_Test
                 CountrySet = "US",
                 Query = "atm",
                 Limit = 3,
-                Lat = "40.758953",
-                Lon = "-73.985263",
+                Lat = 40.758953,
+                Lon = -73.985263,
                 Radius = 3200
             };
 
