@@ -25,16 +25,21 @@ namespace AzureMapsToolkit
 
         string Format { get { return "json"; } }
 
+        private readonly string baseDomain;
+
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="key"></param>
-        public AzureMapsServices(string key) : base(key)
+        public AzureMapsServices(string key, string baseDomain = "https://atlas.microsoft.com") : base(key)
         {
             if (string.IsNullOrEmpty(key))
             {
                 throw new ArgumentException("Missing azure maps key");
             }
+
+            this.baseDomain = baseDomain;
 
             JsonConvert.DefaultSettings = () =>
                 new JsonSerializerSettings
@@ -47,7 +52,7 @@ namespace AzureMapsToolkit
 
         public async Task<Response<TransitStopInfoResponse>> GetTransitStop(TransitStopRequest req)
         {
-            var res = await ExecuteRequest<TransitStopInfoResponse, TransitStopRequest>("https://atlas.microsoft.com/mobility/transit/route/json", req);
+            var res = await ExecuteRequest<TransitStopInfoResponse, TransitStopRequest>($"{baseDomain}/mobility/transit/route/json", req);
             return res;
         }
 
@@ -58,7 +63,7 @@ namespace AzureMapsToolkit
         /// <returns></returns>
         public async Task<Response<TransitRouteResponse>> GetTransitRoute(TransitRouteRequest req)
         {
-            var res = await ExecuteRequest< TransitRouteResponse, TransitRouteRequest> ("https://atlas.microsoft.com/mobility/transit/route/json", req);
+            var res = await ExecuteRequest< TransitRouteResponse, TransitRouteRequest> ($"{baseDomain}/mobility/transit/route/json", req);
             return res;
         }
 
@@ -69,7 +74,7 @@ namespace AzureMapsToolkit
         /// <returns></returns>
         public async Task<Response<TransitLineInfoResponse>> GetTransitLineInfo(TransitLineInfoRequest req)
         {
-            var res = await ExecuteRequest<TransitLineInfoResponse, TransitLineInfoRequest>("https://atlas.microsoft.com/mobility/transit/line/json", req);
+            var res = await ExecuteRequest<TransitLineInfoResponse, TransitLineInfoRequest>($"{baseDomain}/mobility/transit/line/json", req);
             return res;
         }
 
@@ -80,7 +85,7 @@ namespace AzureMapsToolkit
         /// <returns></returns>
         public async Task<Response<TransitItineraryResponse>> GetTransitItinerary(TransitItineraryRequest req)
         {
-            var res = await ExecuteRequest<TransitItineraryResponse, TransitItineraryRequest>("https://atlas.microsoft.com/mobility/transit/itinerary/json", req);
+            var res = await ExecuteRequest<TransitItineraryResponse, TransitItineraryRequest>($"{baseDomain}/mobility/transit/itinerary/json", req);
             return res;
         }
     
@@ -93,7 +98,7 @@ namespace AzureMapsToolkit
         /// <returns></returns>
         public async Task<Response<TransitDockInfoResponse>> GetTransitDockInfo(TransitDockInfoRequest req)
         {
-            var res = await ExecuteRequest<TransitDockInfoResponse, TransitDockInfoRequest>("https://atlas.microsoft.com/mobility/transit/dock/json", req);
+            var res = await ExecuteRequest<TransitDockInfoResponse, TransitDockInfoRequest>($"{baseDomain}/mobility/transit/dock/json", req);
             return res;
         }
 
@@ -105,7 +110,7 @@ namespace AzureMapsToolkit
         /// <returns></returns>
         public async Task<Response<RealTimeArrivalsResponse>> GetRealTimeArrivals(RealTimeArrivalsRequest req)
         {
-            var res = await ExecuteRequest<RealTimeArrivalsResponse, RealTimeArrivalsRequest>("https://atlas.microsoft.com/mobility/realtime/arrivals/json", req);
+            var res = await ExecuteRequest<RealTimeArrivalsResponse, RealTimeArrivalsRequest>($"{baseDomain}/mobility/realtime/arrivals/json", req);
             return res;
         }
 
@@ -116,7 +121,7 @@ namespace AzureMapsToolkit
         /// <returns></returns>
         public async Task<Response<NearbyTransitResponse>> GetNearbyTransit(NearbyTransitRequest req)
         {
-            var res = await ExecuteRequest<NearbyTransitResponse, NearbyTransitRequest>("https://atlas.microsoft.com/mobility/transit/nearby/json", req);
+            var res = await ExecuteRequest<NearbyTransitResponse, NearbyTransitRequest>($"{baseDomain}/mobility/transit/nearby/json", req);
             return res;
         }
 
@@ -127,7 +132,7 @@ namespace AzureMapsToolkit
         /// <returns></returns>
         public async Task<Response<MetroAreaResponse>> GetMetroArea(MetroAreaRequest req)
         {
-            var res = await ExecuteRequest<MetroAreaResponse, MetroAreaRequest>("https://atlas.microsoft.com/mobility/metroArea/id/json", req);
+            var res = await ExecuteRequest<MetroAreaResponse, MetroAreaRequest>($"{baseDomain}/mobility/metroArea/id/json", req);
             return res;
         }
 
@@ -138,7 +143,7 @@ namespace AzureMapsToolkit
         /// <returns></returns>
         public async Task<Response<MetroAreaInfoResponse>> GetMetroAreaInfo(MetroAreaInfoRequest req)
         {
-            var res = await ExecuteRequest<MetroAreaInfoResponse, MetroAreaInfoRequest>($"https://atlas.microsoft.com/mobility/metroArea/info/json", req);
+            var res = await ExecuteRequest<MetroAreaInfoResponse, MetroAreaInfoRequest>($"{baseDomain}/mobility/metroArea/info/json", req);
 
             return res;
 
@@ -151,7 +156,7 @@ namespace AzureMapsToolkit
         /// <returns></returns>
         public async Task<Response<CarShareInfoResponse>> GetCarShareInfo(CarShareInfoRequest req)
         {
-            var res = await ExecuteRequest<CarShareInfoResponse, CarShareInfoRequest>($"https://atlas.microsoft.com/mobility/transit/carShare/json", req);
+            var res = await ExecuteRequest<CarShareInfoResponse, CarShareInfoRequest>($"{baseDomain}/mobility/transit/carShare/json", req);
 
             return res;
         }
@@ -165,7 +170,7 @@ namespace AzureMapsToolkit
             {
                 var query = base.GetQuery<PostPointInPolygonRequest>(req, true);
 
-                var url = $"https://atlas.microsoft.com/spatial/pointInPolygon/json?subscription-key={base.Key}{query}";
+                var url = $"{baseDomain}/spatial/pointInPolygon/json?subscription-key={base.Key}{query}";
 
                 using (var response = await GetHttpResponseMessage(url, geoJson, HttpMethod.Post))
                 {
@@ -190,7 +195,7 @@ namespace AzureMapsToolkit
             {
                 var query = base.GetQuery<PostGeofenceRequest>(req, true);
 
-                var url = $"https://atlas.microsoft.com/spatial/geofence/json?subscription-key={base.Key}{query}";
+                var url = $"{baseDomain}/spatial/geofence/json?subscription-key={base.Key}{query}";
                
                 using (var response = await GetHttpResponseMessage(url, geoJson, HttpMethod.Post))
                 {
@@ -214,7 +219,7 @@ namespace AzureMapsToolkit
             try
             {
                 var query = base.GetQuery<PostClosestPointRequest>(req, true);
-                var url = $"https://atlas.microsoft.com/spatial/closestPoint/json?subscription-key={base.Key}{query}";
+                var url = $"{baseDomain}/spatial/closestPoint/json?subscription-key={base.Key}{query}";
 
                 using (var response = await GetHttpResponseMessage(url, geoJson, HttpMethod.Post))
                 {
@@ -243,7 +248,7 @@ namespace AzureMapsToolkit
         {
             try
             {
-                var url = $"https://atlas.microsoft.com/spatial/buffer/json?subscription-key={Key}&api-version=1.0";
+                var url = $"{baseDomain}/spatial/buffer/json?subscription-key={Key}&api-version=1.0";
                 var res = await GetHttpResponseMessage(url, json, HttpMethod.Post);
                 return new Response<BufferResponse> { Result = new BufferResponse { Result = res.Content.ReadAsStringAsync().Result } };
 
@@ -262,7 +267,7 @@ namespace AzureMapsToolkit
         /// <returns></returns>
         public async Task<Response<PointInPolygonResponse>> GetPointInPolygon(PointInPolygonRequest request)
         {
-            var res = await ExecuteRequest<PointInPolygonResponse, PointInPolygonRequest>($"https://atlas.microsoft.com/spatial/pointInPolygon/json", request);
+            var res = await ExecuteRequest<PointInPolygonResponse, PointInPolygonRequest>($"{baseDomain}/spatial/pointInPolygon/json", request);
 
             return res;
         }
@@ -281,7 +286,7 @@ namespace AzureMapsToolkit
                 request.Query += $":{request.Start.Lat.ToString(CultureInfo.InvariantCulture)},{request.Start.Lon.ToString(CultureInfo.InvariantCulture)}";
             }
 
-            var res = await ExecuteRequest<GreatCircleDistanceResponse, GreatCircleDistanceRequest>($"https://atlas.microsoft.com/spatial/greatCircleDistance/json", request);
+            var res = await ExecuteRequest<GreatCircleDistanceResponse, GreatCircleDistanceRequest>($"{baseDomain}/spatial/greatCircleDistance/json", request);
 
             return res;
 
@@ -294,7 +299,7 @@ namespace AzureMapsToolkit
         /// <returns></returns>
         public async Task<Response<GeofenceResponse>> GetGeofence(GeofenceRequest request)
         {
-            var res = await ExecuteRequest<GeofenceResponse, GeofenceRequest>($"https://atlas.microsoft.com/spatial/geofence/json", request);
+            var res = await ExecuteRequest<GeofenceResponse, GeofenceRequest>($"{baseDomain}/spatial/geofence/json", request);
             return res;
         }
 
@@ -306,7 +311,7 @@ namespace AzureMapsToolkit
         /// <returns></returns>
         public async Task<Response<BufferResponse>> GetBuffer(BufferRequest request, string format = "json")
         {
-            var res = await ExecuteRequest<BufferResponse, BufferRequest>($"https://atlas.microsoft.com/spatial/buffer/{format}", request);
+            var res = await ExecuteRequest<BufferResponse, BufferRequest>($"{baseDomain}/spatial/buffer/{format}", request);
             return res;
         }
 
@@ -317,7 +322,7 @@ namespace AzureMapsToolkit
         /// <returns></returns>
         public async Task<Response<ClosestPointResponse>> GetClosestPoint(ClosestPointRequest request)
         {
-            var res = await ExecuteRequest<ClosestPointResponse, ClosestPointRequest>($"https://atlas.microsoft.com/spatial/closestPoint/json", request);
+            var res = await ExecuteRequest<ClosestPointResponse, ClosestPointRequest>($"{baseDomain}/spatial/closestPoint/json", request);
             return res;
         }
 
@@ -335,7 +340,7 @@ namespace AzureMapsToolkit
         {
             try
             {
-                var url = $"https://atlas.microsoft.com/mapData/{udid.ToString()}?subscription-key={Key}&api-version=1.0";
+                var url = $"{baseDomain}/mapData/{udid.ToString()}?subscription-key={Key}&api-version=1.0";
 
                 using (var client = new HttpClient())
                 {
@@ -366,7 +371,7 @@ namespace AzureMapsToolkit
         {
             try
             {
-                var url = $"https://atlas.microsoft.com/mapData/{udid}?subscription-key={Key}&api-version=1.0";
+                var url = $"{baseDomain}/mapData/{udid}?subscription-key={Key}&api-version=1.0";
 
                 using (var client = new HttpClient())
                 {
@@ -396,7 +401,7 @@ namespace AzureMapsToolkit
         {
             try
             {
-                var url = $"https://atlas.microsoft.com/mapData";
+                var url = $"{baseDomain}/mapData";
                 var res = await ExecuteRequest<MapDataListResponse, RequestBase>(url, new RequestBase { ApiVersion = "1.0" });
                 return res;
 
@@ -419,7 +424,7 @@ namespace AzureMapsToolkit
                 dataFormat = "geojson";
             try
             {
-                var url = $"https://atlas.microsoft.com/mapData/upload?subscription-key={Key}&api-version=1.0&dataFormat={dataFormat}";
+                var url = $"{baseDomain}/mapData/upload?subscription-key={Key}&api-version=1.0&dataFormat={dataFormat}";
                 var res = await GetHttpResponseMessage(url, geoJson, HttpMethod.Post);
                 var location = res.Headers.GetValues("Location").First();
 
@@ -453,7 +458,7 @@ namespace AzureMapsToolkit
                     throw new ArgumentException("GeoJson paramater cannot be empty or null");
                 }
 
-                var url = $"https://atlas.microsoft.com/mapData/{udid.ToString()}?api-version=1.0&subscription-key={Key}";
+                var url = $"{baseDomain}/mapData/{udid.ToString()}?api-version=1.0&subscription-key={Key}";
 
                 var res = await GetHttpResponseMessage(url, geoJson, HttpMethod.Put);
                 var location = res.Headers.GetValues("Location").First();
@@ -483,7 +488,7 @@ namespace AzureMapsToolkit
         {
             var req = new IpAddressToLocationRequest { Ip = ip };
             var res = await ExecuteRequest<IpAddressToLocationResult, IpAddressToLocationRequest>
-              ("https://atlas.microsoft.com/geolocation/ip/json", req);
+              ($"{baseDomain}/geolocation/ip/json", req);
             return res;
         }
 
@@ -499,7 +504,7 @@ namespace AzureMapsToolkit
         public virtual async Task<Response<Render.CopyrightCaptionResult>> GetCopyrightCaption(string apiVersion = "1.0")
         {
             var res = await ExecuteRequest<CopyrightCaptionResult, RequestBase>
-               ("https://atlas.microsoft.com/map/copyright/caption/json", new RequestBase());
+               ($"{baseDomain}/map/copyright/caption/json", new RequestBase());
             return res;
 
         }
@@ -512,7 +517,7 @@ namespace AzureMapsToolkit
         public virtual async Task<Response<Render.CopyrightResult>> GetCopyrightForTile(CopyrightForTileRequest req)
         {
             var res = await ExecuteRequest<CopyrightResult, CopyrightForTileRequest>
-                ("https://atlas.microsoft.com/map/copyright/tile/json", req);
+                ($"{baseDomain}/map/copyright/tile/json", req);
             return res;
         }
 
@@ -526,7 +531,7 @@ namespace AzureMapsToolkit
         public virtual async Task<Response<Render.CopyrightResult>> GetCopyrightForWorld(string apiVersion = "1.0")
         {
             var res = await ExecuteRequest<CopyrightResult, RequestBase>
-               ("https://atlas.microsoft.com/map/copyright/world/json", new RequestBase());
+               ($"{baseDomain}/map/copyright/world/json", new RequestBase());
             return res;
         }
 
@@ -538,7 +543,7 @@ namespace AzureMapsToolkit
             CopyrightFromBoundingBoxRequest req)
         {
             var res = await ExecuteRequest<CopyrightResult, CopyrightFromBoundingBoxRequest>
-               ("https://atlas.microsoft.com/map/copyright/bounding/json", req);
+               ($"{baseDomain}/map/copyright/bounding/json", req);
             return res;
 
         }
@@ -557,7 +562,7 @@ namespace AzureMapsToolkit
             // TODO, check that the image is correct
             try
             {
-                var baseAddress = "https://atlas.microsoft.com/map/static/png";
+                var baseAddress = $"{baseDomain}/map/static/png";
                 string url = $"?subscription-key={Key}&api-version={req.ApiVersion}&layer={req.Layer}&style={req.Style}";
                 if (!string.IsNullOrEmpty(req.Bbox))
                 {
@@ -587,7 +592,7 @@ namespace AzureMapsToolkit
         {
             try
             {
-                var baseAddress = "https://atlas.microsoft.com/map/imagery/png";
+                var baseAddress = $"{baseDomain}/map/imagery/png";
                 var url = $"?subscription-key={Key}&api-version=1.0&style=satellite&zoom={req.Zoom}&x={req.X}&y={req.Y}";
                 var content = await GetByteArray(baseAddress, url);
                 var response = Response<byte[]>.CreateResponse(content);
@@ -608,7 +613,7 @@ namespace AzureMapsToolkit
             try
             {
                 string tileFormat = req.Format == TileFormat.pbf ? "pbf" : "png";
-                var baseAddress = $"https://atlas.microsoft.com/map/tile/{tileFormat}";
+                var baseAddress = $"{baseDomain}/map/tile/{tileFormat}";
                 var mapLayer = req.Layer == StaticMapLayer.basic ? "basic" : req.Layer == StaticMapLayer.hybrid ? "hybrid" : "labels";
                 var languagePart = req.Format == TileFormat.png ? "" : $"&language={req.Language}";
                 var size = req.TileSize == MapTileSize._256 ? "256" : "512";
@@ -638,7 +643,7 @@ namespace AzureMapsToolkit
         public virtual async Task<Response<RouteDirectionsResponse>> GetRouteDirections(RouteRequestDirections routeReq)
         {
             var res = await ExecuteRequest<RouteDirectionsResponse, RouteRequestDirections>
-                ("https://atlas.microsoft.com/route/directions/json", routeReq);
+                ($"{baseDomain}/route/directions/json", routeReq);
             return res;
 
         }
@@ -654,7 +659,7 @@ namespace AzureMapsToolkit
         public virtual async Task<Response<RouteRangeResponse>> GetRouteRange(RouteRangeRequest routeRequest)
         {
             var res = await ExecuteRequest<RouteRangeResponse, RouteRangeRequest>
-                ("https://atlas.microsoft.com/route/range/json", routeRequest);
+                ($"{baseDomain}/route/range/json", routeRequest);
             return res;
         }
 
@@ -667,7 +672,7 @@ namespace AzureMapsToolkit
         {
             try
             {
-                var url = $"https://atlas.microsoft.com/route/directions/batch/json?subscription-key={Key}&api-version=1.0";
+                var url = $"{baseDomain}/route/directions/batch/json?subscription-key={Key}&api-version=1.0";
 
                 var queryCollection = GetSearchQuery<RouteRequestDirections>(routeRequestItems);
                 var q = new { queries = queryCollection };
@@ -699,7 +704,7 @@ namespace AzureMapsToolkit
         {
             try
             {
-                var url = $"https://atlas.microsoft.com/route/matrix/json?subscription-key={Key}";
+                var url = $"{baseDomain}/route/matrix/json?subscription-key={Key}";
                 url += GetQuery<RouteMatrixRequest>(routeMatrixRequest, true);
 
                 var originPoints = GetMultipPoint(coordinatesOrigins);
@@ -741,7 +746,7 @@ namespace AzureMapsToolkit
         public virtual async Task<Response<SearchAddressResponse>> GetSearchAddress(SearchAddressRequest searchAddressRequest)
         {
 
-            var res = await ExecuteRequest<SearchAddressResponse, SearchAddressRequest>("https://atlas.microsoft.com/search/address/json", searchAddressRequest);
+            var res = await ExecuteRequest<SearchAddressResponse, SearchAddressRequest>($"{baseDomain}/search/address/json", searchAddressRequest);
             return res;
 
         }
@@ -754,7 +759,7 @@ namespace AzureMapsToolkit
         public virtual async Task<Response<SearchAddressReverseResponse>> GetSearchAddressReverse(SearchAddressReverseRequest request)
         {
 
-            var res = await ExecuteRequest<SearchAddressReverseResponse, SearchAddressReverseRequest>("https://atlas.microsoft.com/search/address/reverse/json", request);
+            var res = await ExecuteRequest<SearchAddressReverseResponse, SearchAddressReverseRequest>($"{baseDomain}/search/address/reverse/json", request);
             return res;
 
         }
@@ -767,7 +772,7 @@ namespace AzureMapsToolkit
         public virtual async Task<Response<SearchAddressReverseCrossStreetResponse>> GetSearchAddressReverseCrossStreet(SearchAddressReverseCrossStreetRequest request)
         {
 
-            var res = await ExecuteRequest<SearchAddressReverseCrossStreetResponse, SearchAddressReverseCrossStreetRequest>("https://atlas.microsoft.com/search/address/reverse/crossStreet/json", request);
+            var res = await ExecuteRequest<SearchAddressReverseCrossStreetResponse, SearchAddressReverseCrossStreetRequest>($"{baseDomain}/search/address/reverse/crossStreet/json", request);
             return res;
 
         }
@@ -780,7 +785,7 @@ namespace AzureMapsToolkit
         public virtual async Task<Response<SearchAddressStructuredResponse>> GetSearchAddressStructured(SearchAddressStructuredRequest req)
         {
 
-            var res = await ExecuteRequest<SearchAddressStructuredResponse, SearchAddressStructuredRequest>("https://atlas.microsoft.com/search/address/structured/json", req);
+            var res = await ExecuteRequest<SearchAddressStructuredResponse, SearchAddressStructuredRequest>($"{baseDomain}/search/address/structured/json", req);
             return res;
         }
         /// <summary>
@@ -792,7 +797,7 @@ namespace AzureMapsToolkit
         /// <returns></returns>
         public virtual async Task<Response<SearchFuzzyResponse>> GetSearchFuzzy(SearchFuzzyRequest req)
         {
-            var res = await ExecuteRequest<SearchFuzzyResponse, SearchFuzzyRequest>("https://atlas.microsoft.com/search/fuzzy/json", req);
+            var res = await ExecuteRequest<SearchFuzzyResponse, SearchFuzzyRequest>($"{baseDomain}/search/fuzzy/json", req);
             return res;
 
         }
@@ -804,7 +809,7 @@ namespace AzureMapsToolkit
         /// <returns></returns>
         public virtual async Task<Response<SearchNearbyResponse>> GetSearchNearby(SearchNearbyRequest req)
         {
-            var res = await ExecuteRequest<SearchNearbyResponse, SearchNearbyRequest>("https://atlas.microsoft.com/search/nearby/json", req);
+            var res = await ExecuteRequest<SearchNearbyResponse, SearchNearbyRequest>($"{baseDomain}/search/nearby/json", req);
             return res;
         }
 
@@ -815,7 +820,7 @@ namespace AzureMapsToolkit
         /// <returns></returns>
         public virtual async Task<Response<SearchPoiResponse>> GetSearchPoi(SearchPoiRequest req)
         {
-            var res = await ExecuteRequest<SearchPoiResponse, SearchPoiRequest>("https://atlas.microsoft.com/search/poi/json", req);
+            var res = await ExecuteRequest<SearchPoiResponse, SearchPoiRequest>($"{baseDomain}/search/poi/json", req);
             return res;
         }
 
@@ -826,7 +831,7 @@ namespace AzureMapsToolkit
         /// <returns></returns>
         public virtual async Task<Response<SearchPoiCategoryResponse>> GetSearchPOICategory(SearchPoiCategoryRequest req)
         {
-            var res = await ExecuteRequest<SearchPoiCategoryResponse, SearchPoiCategoryRequest>("https://atlas.microsoft.com/search/poi/category/json", req);
+            var res = await ExecuteRequest<SearchPoiCategoryResponse, SearchPoiCategoryRequest>($"{baseDomain}/search/poi/category/json", req);
             return res;
         }
 
@@ -839,7 +844,7 @@ namespace AzureMapsToolkit
         {
             try
             {
-                var url = $"https://atlas.microsoft.com/search/address/batch/json?subscription-key={Key}&api-version=1.0";
+                var url = $"{baseDomain}/search/address/batch/json?subscription-key={Key}&api-version=1.0";
                 var queryCollection = GetSearchQuery<SearchAddressRequest>(req);
 
                 var q = new { queries = queryCollection };
@@ -869,7 +874,7 @@ namespace AzureMapsToolkit
         {
             try
             {
-                var url = $"https://atlas.microsoft.com/search/address/reverse/batch/json?subscription-key={Key}&api-version=1.0";
+                var url = $"{baseDomain}/search/address/reverse/batch/json?subscription-key={Key}&api-version=1.0";
                 var queryCollection = GetSearchQuery<SearchAddressReverseRequest>(req);
 
                 var q = new { queries = queryCollection };
@@ -907,7 +912,7 @@ namespace AzureMapsToolkit
 
                 var args = GetQuery<SearchAlongRouteRequest>(req, true);
 
-                var url = $"https://atlas.microsoft.com/search/alongRoute/json?subscription-key={Key}&api-version=1.0{args}";
+                var url = $"{baseDomain}/search/alongRoute/json?subscription-key={Key}&api-version=1.0{args}";
 
                 using (var responseMsg = await GetHttpResponseMessage(url, queryContent, HttpMethod.Post))
                 {
@@ -935,7 +940,7 @@ namespace AzureMapsToolkit
         {
             try
             {
-                var url = $"https://atlas.microsoft.com/search/fuzzy/batch/json?subscription-key={Key}&api-version=1.0";
+                var url = $"{baseDomain}/search/fuzzy/batch/json?subscription-key={Key}&api-version=1.0";
 
                 var queryCollection = GetSearchQuery<SearchFuzzyRequest>(req);
 
@@ -971,7 +976,7 @@ namespace AzureMapsToolkit
 
                 var args = GetQuery<SearchInsidePolygonRequest>(request, false);
 
-                var url = $"https://atlas.microsoft.com/search/geometry/json?subscription-key={Key}&api-version=1.0{args}";
+                var url = $"{baseDomain}/search/geometry/json?subscription-key={Key}&api-version=1.0{args}";
 
                 using (var responseMsg = await GetHttpResponseMessage(url, json, HttpMethod.Post))
                 {
@@ -1003,7 +1008,7 @@ namespace AzureMapsToolkit
         public virtual async Task<Response<TimezoneResult>> GetTimezoneByCoordinates(TimeZoneRequest req)
         {
             var res = await ExecuteRequest<TimezoneResult, TimeZoneRequest>
-                ("https://atlas.microsoft.com/timezone/byCoordinates/json", req);
+                ($"{baseDomain}/timezone/byCoordinates/json", req);
             return res;
         }
 
@@ -1015,7 +1020,7 @@ namespace AzureMapsToolkit
         public virtual async Task<Response<TimezoneResult>> GetTimezoneById(TimeZoneRequest req)
         {
             var res = await ExecuteRequest<TimezoneResult, TimeZoneRequest>
-                ("https://atlas.microsoft.com/timezone/byId/json", req);
+                ($"{baseDomain}/timezone/byId/json", req);
             return res;
         }
 
@@ -1023,7 +1028,7 @@ namespace AzureMapsToolkit
         {
             var req = new RequestBase();
             var res = await ExecuteRequest<IEnumerable<IanaId>, RequestBase>
-                ("https://atlas.microsoft.com/timezone/enumIana/json", req);
+                ($"{baseDomain}/timezone/enumIana/json", req);
             return res;
         }
 
@@ -1035,7 +1040,7 @@ namespace AzureMapsToolkit
         {
             var req = new RequestBase();
             var res = await ExecuteRequest<IEnumerable<TimezoneEnumWindow>, RequestBase>
-                ("https://atlas.microsoft.com/timezone/enumWindows/json", req);
+                ($"{baseDomain}/timezone/enumWindows/json", req);
             return res;
         }
 
@@ -1048,7 +1053,7 @@ namespace AzureMapsToolkit
         {
             var req = new RequestBase();
             var res = await ExecuteRequest<TimezoneIanaVersionResult, RequestBase>
-                ("https://atlas.microsoft.com/timezone/ianaVersion/json", req);
+                ($"{baseDomain}/timezone/ianaVersion/json", req);
 
             return res;
 
@@ -1062,7 +1067,7 @@ namespace AzureMapsToolkit
         public virtual async Task<Response<IEnumerable<IanaId>>> GetTimezoneWindowsToIANA(TimezoneWindowsToIANARequest req)
         {
             var res = await ExecuteRequest<IEnumerable<IanaId>, TimezoneWindowsToIANARequest>
-                ("https://atlas.microsoft.com/timezone/windowsToIana/json", req);
+                ($"{baseDomain}/timezone/windowsToIana/json", req);
             return res;
         }
 
@@ -1079,7 +1084,7 @@ namespace AzureMapsToolkit
         public virtual async Task<Response<TrafficFlowSegmentResult>> GetTrafficFlowSegment(TrafficFlowSegmentRequest req)
         {
             var res = await ExecuteRequest<TrafficFlowSegmentResult, TrafficFlowSegmentRequest>
-                ("https://atlas.microsoft.com/traffic/flow/segment/json", req);
+                ($"{baseDomain}/traffic/flow/segment/json", req);
             return res;
         }
 
@@ -1095,7 +1100,7 @@ namespace AzureMapsToolkit
             try
             {
                 Url = string.Empty;
-                var baseAddress = "https://atlas.microsoft.com/traffic/flow/tile/png";
+                var baseAddress = $"{baseDomain}/traffic/flow/tile/png";
                 Url += GetQuery<TrafficFlowTileRequest>(req, true);
 
                 var content = await GetByteArray(baseAddress, Url);
@@ -1118,7 +1123,7 @@ namespace AzureMapsToolkit
         {
 
             var res = await ExecuteRequest<TrafficIncidentDetailResult, TrafficIncidentDetailRequest>
-                ("https://atlas.microsoft.com/traffic/incident/detail/json", req);
+                ($"{baseDomain}/traffic/incident/detail/json", req);
             return res;
         }
 
@@ -1133,7 +1138,7 @@ namespace AzureMapsToolkit
             try
             {
                 Url = string.Empty;
-                var baseAddress = "https://atlas.microsoft.com/traffic/incident/tile/png";
+                var baseAddress = $"{baseDomain}/traffic/incident/tile/png";
                 Url += GetQuery<TrafficIncidentTileRequest>(req, true);
 
                 var content = await GetByteArray(baseAddress, Url);
@@ -1156,7 +1161,7 @@ namespace AzureMapsToolkit
         public virtual async Task<Response<TrafficIncidentViewportResult>> GetTrafficIncidentViewport(TrafficIncidentViewportRequest req)
         {
             var res = await ExecuteRequest<TrafficIncidentViewportResult, TrafficIncidentViewportRequest>
-                    ("https://atlas.microsoft.com/traffic/incident/viewport/json", req);
+                    ($"{baseDomain}/traffic/incident/viewport/json", req);
             return res;
         }
 
