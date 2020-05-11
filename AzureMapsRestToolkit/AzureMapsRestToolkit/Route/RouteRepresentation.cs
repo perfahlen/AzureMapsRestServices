@@ -13,6 +13,11 @@
         /// <summary>
         /// Includes route geometry in the response.
         /// </summary>
-        polyline
+        polyline,
+
+        /// <summary>
+        /// Summary as per polyline but excluding the point geometry elements for the routes in the response.
+        /// </summary>
+        summaryOnly
     }
 }
