@@ -71,7 +71,7 @@ namespace AzureMapsToolkit_Core_Test
                 Text = "yes"
             };
             var resp = am.GetCopyrightForTile(req).Result;
-            Assert.Equal("CAN", resp.Result.Regions[0].Country.ISO3);
+            Assert.Equal("RUS", resp.Result.Regions[0].Country.ISO3);
         }
 
         [Fact]
