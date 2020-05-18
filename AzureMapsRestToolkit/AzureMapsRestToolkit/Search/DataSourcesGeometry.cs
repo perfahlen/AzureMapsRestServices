@@ -2,12 +2,15 @@
 
 namespace AzureMapsToolkit.Search
 {
+    /// <summary
+    /// Information about the geometric shape of the result. Only present if type == Geography.mmary>
+    /// </summary>
     public class DataSourcesGeometry
     {
-        /// <summary
-        /// Information about the geometric shape of the result. Only present if type == Geography.mmary>
+        /// <summary>
+        /// Information about the geometric shape of the result. Only present if type == Geography.
         /// </summary>
-        [JsonProperty("Pass this as geometryId to the Get Search Polygon API to fetch geometry information for this result.")]
+        [JsonProperty("id")]
         public string Id { get; set; }
 
 

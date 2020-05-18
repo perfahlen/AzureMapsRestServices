@@ -335,7 +335,8 @@ namespace AzureMapsToolkit_Core_Test
             var req = new SearchFuzzyRequest
             {
                 CountrySet = "US",
-                Query = "seattle"
+                Query = "seattle",
+                IdxSet = new string[] { "Geo", "POI" }
             };
             var res = am.GetSearchFuzzy(req).Result;
 

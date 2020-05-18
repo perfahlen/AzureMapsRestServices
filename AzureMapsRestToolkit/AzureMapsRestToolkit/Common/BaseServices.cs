@@ -94,8 +94,7 @@ namespace AzureMapsToolkit.Common
 
             foreach (var propertyInfo in properties)
             {
-                if (propertyInfo.
-                    GetValue(request) != null)
+                if (propertyInfo.GetValue(request) != null)
                 {
                     var argumentName = string.Empty;
                     var argumentValue = string.Empty;
@@ -109,6 +108,10 @@ namespace AzureMapsToolkit.Common
                         var enumVal = propertyInfo.GetValue(request).ToString().ToCamlCase();
                         
                     }
+                    //else if (propertyInfo != null && propertyInfo.PropertyType.IsArray)
+                    //{
+                    //    argumentName = Char.ToLower(propertyInfo.Name[0]) + propertyInfo.Name.Substring(1)
+                    //}
                     else
                     {
 
@@ -122,17 +125,25 @@ namespace AzureMapsToolkit.Common
 
                         if (string.IsNullOrEmpty(argumentValue))
                         {
-                            argumentValue = propertyInfo.GetValue(request).ToString();
-
-                            if (propertyInfo.PropertyType == typeof(int) && int.TryParse(argumentValue, out int i))
+                            if (propertyInfo.PropertyType.IsArray)
                             {
-                                argumentValue = ((int)propertyInfo.GetValue(request)).ToString(CultureInfo.InvariantCulture);
+                                object[] array = (object[])propertyInfo.GetValue(request);
+                                argumentValue = string.Join(",", array);
                             }
-
-                            if (propertyInfo.PropertyType == typeof(double) || propertyInfo.PropertyType == typeof(double?) 
-                                && double.TryParse(argumentValue, out double d))
+                            else
                             {
-                                argumentValue = ((double)propertyInfo.GetValue(request)).ToString(CultureInfo.InvariantCulture);
+                                argumentValue = propertyInfo.GetValue(request).ToString();
+
+                                if (propertyInfo.PropertyType == typeof(int) && int.TryParse(argumentValue, out int i))
+                                {
+                                    argumentValue = ((int)propertyInfo.GetValue(request)).ToString(CultureInfo.InvariantCulture);
+                                }
+
+                                if (propertyInfo.PropertyType == typeof(double) || propertyInfo.PropertyType == typeof(double?)
+                                    && double.TryParse(argumentValue, out double d))
+                                {
+                                    argumentValue = ((double)propertyInfo.GetValue(request)).ToString(CultureInfo.InvariantCulture);
+                                }
                             }
                         }
                     }
