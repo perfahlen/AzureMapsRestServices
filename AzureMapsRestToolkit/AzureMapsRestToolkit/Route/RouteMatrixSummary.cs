@@ -13,7 +13,7 @@ namespace AzureMapsToolkit.Common
         /// <summary>
         /// Total number of routes requested. Number of cells in the input matrix.
         /// </summary>
-        [JsonProperty("TotalRoutes")]
+        [JsonProperty("totalRoutes")]
         public int TotalRoutes { get; set; }
     }
 }
