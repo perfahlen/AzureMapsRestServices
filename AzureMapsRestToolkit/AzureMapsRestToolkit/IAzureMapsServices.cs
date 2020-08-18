@@ -82,7 +82,7 @@ namespace AzureMapsToolkit
 
         Task<(string ResultUrl, Exception ex)> GetRouteDirections(IEnumerable<RouteRequestDirections> routeRequestItems);
 
-        Task<(RouteMatrixResponse matrix, Exception ex)> GetRouteMatrix(RouteMatrixRequest routeMatrixRequest, IEnumerable<Common.Coordinate> coordinatesOrigins, IEnumerable<Common.Coordinate> coordinatesDestinations);
+        Task<(string ResultUrl, Exception ex)> GetRouteMatrix(RouteMatrixRequest routeMatrixRequest, IEnumerable<Common.Coordinate> coordinatesOrigins, IEnumerable<Common.Coordinate> coordinatesDestinations);
 
         Task<Response<SearchAddressResponse>> GetSearchAddress(SearchAddressRequest searchAddressRequest);
 

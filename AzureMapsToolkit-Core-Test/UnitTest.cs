@@ -71,7 +71,7 @@ namespace AzureMapsToolkit_Core_Test
                 Text = "yes"
             };
             var resp = am.GetCopyrightForTile(req).Result;
-            Assert.Equal("RUS", resp.Result.Regions[0].Country.ISO3);
+            Assert.Equal("CAN", resp.Result.Regions[0].Country.ISO3);
         }
 
         [Fact]
@@ -227,6 +227,7 @@ namespace AzureMapsToolkit_Core_Test
                 , new Coordinate { Longitude = 4.85056f, Latitude = 52.36187f}
             };
 
+
             var destinations = new List<Coordinate> {
                 new Coordinate { Longitude = 4.85003f, Latitude = 52.36241f }
                 , new Coordinate { Longitude =  13.42937f, Latitude = 52.50931f}
@@ -236,11 +237,7 @@ namespace AzureMapsToolkit_Core_Test
 
             Assert.Null(result.ex);
 
-            Assert.NotNull(result.matrix);
-
-            Assert.True(result.matrix.Matrix.Length > 0);
-
-            Assert.Equal(495, result.matrix.Matrix[0][0].Response.RouteSummary.LengthInMeters);
+            Assert.NotNull(result.ResultUrl);
 
         }
 

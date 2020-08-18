@@ -692,6 +692,9 @@ namespace AzureMapsToolkit
             }
         }
 
+        //public virtual async Task<(RouteMatrixResponse matrix, Exception ex)> GetRouteMatrix(RouteMatrixRequest routeMatrixRequest, IEnumerable<Common.Coordinate> coordinatesOrigins, IEnumerable<Common.Coordinate> coordinatesDestinations)
+        //{
+
         /// <summary>
         /// The Matrix Routing service allows calculation of a matrix of route summaries for a set of routes defined by origin and destination locations. For every given origin, this service calculates the cost of routing from that origin to every given destination. The set of origins and the set of destinations can be thought of as the column and row headers of a table and each cell in the table contains the costs of routing from the origin to the destination for that cell. For each route, the travel times and distances are calculated. You can use the computed costs to determine which routes to calculate using the Routing Directions API. If the computation takes longer than 20 seconds or forceAsyn parameter in the request is set to true, this API returns a 202 response code along a redirect URL in the Location field of the response header. This URL should be checked periodically until the response data or error information is available. 
         /// The asynchronous responses are stored for 14 days. The redirect URL returns a 400 response if used after the expiration period.
@@ -700,7 +703,7 @@ namespace AzureMapsToolkit
         /// <param name="coordinatesOrigins"></param>
         /// <param name="coordinatesDestinations"></param>
         /// <returns></returns>
-        public virtual async Task<(RouteMatrixResponse matrix, Exception ex)> GetRouteMatrix(RouteMatrixRequest routeMatrixRequest, IEnumerable<Common.Coordinate> coordinatesOrigins, IEnumerable<Common.Coordinate> coordinatesDestinations)
+        public virtual async Task<(string ResultUrl, Exception ex)> GetRouteMatrix(RouteMatrixRequest routeMatrixRequest, IEnumerable<Common.Coordinate> coordinatesOrigins, IEnumerable<Common.Coordinate> coordinatesDestinations)
         {
             try
             {
@@ -720,12 +723,14 @@ namespace AzureMapsToolkit
 
                 using (var response = await GetHttpResponseMessage(url, data, HttpMethod.Post))
                 {
-                    using (var responseMessage = response.Content)
-                    {
-                        var responseData = await responseMessage.ReadAsStringAsync();
-                        var matrix = Newtonsoft.Json.JsonConvert.DeserializeObject<RouteMatrixResponse>(responseData);
-                        return (matrix, null);
-                    }
+                    return (response.Headers.Location.AbsoluteUri, null); // .Location.AbsoluteUri;
+                    //return response;
+                    //using (var responseMessage = response.Content)
+                    //{
+                    //    var responseData = await responseMessage.ReadAsStringAsync();
+                    //    var matrix = Newtonsoft.Json.JsonConvert.DeserializeObject<RouteMatrixResponse>(responseData);
+                    //    return (matrix, null);
+                    //}
                 }
             }
             catch (Exception ex)

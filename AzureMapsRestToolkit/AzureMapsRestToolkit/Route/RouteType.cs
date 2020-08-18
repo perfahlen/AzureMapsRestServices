@@ -1,10 +1,13 @@
-﻿namespace AzureMapsToolkit.Common
+﻿using System;
+
+namespace AzureMapsToolkit.Common
 {
 
     /// <summary>
     /// The type of route requested.
     /// </summary>
-    public enum RouteType
+    [Flags]
+    public enum RouteType : byte
     {
         /// <summary>
         /// A route balanced by economy and speed.
