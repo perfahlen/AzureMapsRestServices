@@ -84,6 +84,8 @@ namespace AzureMapsToolkit
 
         Task<(string ResultUrl, Exception ex)> GetRouteMatrix(RouteMatrixRequest routeMatrixRequest, IEnumerable<Common.Coordinate> coordinatesOrigins, IEnumerable<Common.Coordinate> coordinatesDestinations);
 
+        Task<Response<RouteMatrixResponse>> GetRouteMatrixResult(string url);
+
         Task<Response<SearchAddressResponse>> GetSearchAddress(SearchAddressRequest searchAddressRequest);
 
         Task<Response<SearchAddressReverseResponse>> GetSearchAddressReverse(SearchAddressReverseRequest request);

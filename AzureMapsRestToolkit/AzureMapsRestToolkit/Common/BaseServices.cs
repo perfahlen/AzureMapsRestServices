@@ -188,6 +188,8 @@ namespace AzureMapsToolkit.Common
             }
         }
 
+        
+
         internal HttpClient GetClient(string baseAddress)
         {
             var client = new HttpClient();
@@ -198,7 +200,7 @@ namespace AzureMapsToolkit.Common
             return client;
         }
 
-        Response<T> GetResponse<T>(T t)
+        internal Response<T> GetResponse<T>(T t)
         {
             var res = new Response<T>
             {

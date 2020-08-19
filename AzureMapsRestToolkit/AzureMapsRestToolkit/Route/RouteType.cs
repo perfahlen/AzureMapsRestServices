@@ -6,7 +6,6 @@ namespace AzureMapsToolkit.Common
     /// <summary>
     /// The type of route requested.
     /// </summary>
-    [Flags]
     public enum RouteType : byte
     {
         /// <summary>

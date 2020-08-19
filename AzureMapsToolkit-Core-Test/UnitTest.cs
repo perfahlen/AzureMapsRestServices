@@ -214,6 +214,7 @@ namespace AzureMapsToolkit_Core_Test
 
         }
 
+       
         [Fact]
         public void GetDistanceMatrix()
         {
@@ -239,6 +240,35 @@ namespace AzureMapsToolkit_Core_Test
 
             Assert.NotNull(result.ResultUrl);
 
+            GetDistanceMatrixResult();
+
+        }
+
+        [Fact]
+        public void GetDistanceMatrixResult()
+        {
+
+            var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
+            var req = new RouteMatrixRequest();
+            req.RouteType = RouteType.Fastest;
+
+            var origins = new List<Coordinate> {
+                new Coordinate { Longitude = 4.85106f, Latitude = 52.36006f }
+                , new Coordinate { Longitude = 4.85056f, Latitude = 52.36187f}
+            };
+
+
+            var destinations = new List<Coordinate> {
+                new Coordinate { Longitude = 4.85003f, Latitude = 52.36241f }
+                , new Coordinate { Longitude =  13.42937f, Latitude = 52.50931f}
+            };
+
+            var result = am.GetRouteMatrix(req, origins, destinations).Result;
+
+            var matrixResponse = am.GetRouteMatrixResult(result.ResultUrl).Result;
+
+            Assert.Null(matrixResponse.Error);
+            Assert.NotNull(matrixResponse.Result);
         }
 
 
@@ -1065,7 +1095,5 @@ namespace AzureMapsToolkit_Core_Test
 
             Assert.Null(res.Error);
         }
-
-        
     }
 }
