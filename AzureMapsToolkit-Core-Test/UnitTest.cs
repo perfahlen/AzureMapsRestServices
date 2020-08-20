@@ -660,7 +660,7 @@ namespace AzureMapsToolkit_Core_Test
 
             Assert.Null(r.Error);
 
-            Assert.Equal(6, r.Result.Count());
+            Assert.NotNull(r.Result); 
         }
 
         [Fact]
@@ -1083,12 +1083,13 @@ namespace AzureMapsToolkit_Core_Test
         public void GetTransitLineInfo()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
-            var res = am.GetTransitLineInfo(new AzureMapsToolkit.Mobility.TransitLineInfoRequest
+            var transitLineInfoRequest = new AzureMapsToolkit.Mobility.TransitLineInfoRequest
             {
                 MetroId = 121,
-                Query = "373411",
+                Query = "121---373227",
                 DetailType = TransitLineDetailType.Stops | TransitLineDetailType.Schedule | TransitLineDetailType.Stops
-            }).Result;
+            };
+            var res = am.GetTransitLineInfo(transitLineInfoRequest).Result;
             Assert.Null(res.Error);
         }
 

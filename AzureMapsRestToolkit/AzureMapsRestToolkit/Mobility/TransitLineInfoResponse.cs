@@ -20,7 +20,7 @@
         /// </summary>
         public Pattern[] Patterns { get; set; }
 
-        public LineArrival Schedule { get; set; }
+        public LineArrival[] Schedule { get; set; }
 
         public Stop[] Stops { get; set; }
     }
