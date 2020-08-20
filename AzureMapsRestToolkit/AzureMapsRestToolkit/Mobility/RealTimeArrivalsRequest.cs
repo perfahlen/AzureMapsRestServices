@@ -7,7 +7,7 @@ namespace AzureMapsToolkit.Mobility
         /// <summary>
         /// The unique id of the metro area. Required parameter specifying the required metro area to search in. Can be retrieved via Get Metro Area API.
         /// </summary>
-        public int MetroId { get; set; }
+        public int? MetroId { get; set; }
 
         /// <summary>
         /// Stop, line or location identifier.
@@ -17,7 +17,7 @@ namespace AzureMapsToolkit.Mobility
         /// <summary>
         /// The type of the query parameter. Defines the mode of the request. Only one mode per request is supported. By default queryType is set to be ‘stops’ returning the requested number of Live Arrivals for all lines arriving at the specified stop.
         /// </summary>
-        public RealTimeQueryType QueryType { get; set; } = RealTimeQueryType.Stops;
+        public RealTimeQueryType? QueryType { get; set; } = RealTimeQueryType.Stops;
 
         /// <summary>
         /// The type of the unique query parameter of the stop. By default stopQueryType=stopId. This parameter can only be used in conjunction with queryType=stops or queryType=lineAndStop.

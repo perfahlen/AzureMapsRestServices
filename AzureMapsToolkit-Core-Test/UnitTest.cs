@@ -1051,8 +1051,7 @@ namespace AzureMapsToolkit_Core_Test
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
             var res = am.GetRealTimeArrivals(new AzureMapsToolkit.Mobility.RealTimeArrivalsRequest
             {
-                MetroId = 121,
-                Query = "297867"
+                Query = "121---19919516"
             }).Result;
 
             Assert.Null(res.Error);
