@@ -1097,14 +1097,15 @@ namespace AzureMapsToolkit_Core_Test
         public void GetTransitRoute()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
-            var res = am.GetTransitRoute(new TransitRouteRequest
+            var transitRouteRequest = new TransitRouteRequest
             {
                 MetroId = 121,
                 Origin = "40.680903,-73.983723",
                 OriginType = OriginType.Position,
                 Destination = "40.682051,-73.976702",
                 DestinationType = DestinationType.Position
-            }).Result;
+            };
+            var res = am.GetTransitRoute(transitRouteRequest).Result;
 
             Assert.Null(res.Error);
         }
