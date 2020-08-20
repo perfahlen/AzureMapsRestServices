@@ -16,6 +16,10 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System.Globalization;
 using AzureMapsToolkit.Mobility;
+using Newtonsoft.Json.Schema;
+using AzureMapsToolkit.Route;
+using System.Text;
+using Newtonsoft.Json.Linq;
 
 namespace AzureMapsToolkit
 {
@@ -664,31 +668,51 @@ namespace AzureMapsToolkit
         }
 
         /// <summary>
-        /// The Route Directions Batch API allows the caller to batch up to 1,000 Route Directions API queries/requests using just a single API call.
+        /// The Route Directions Batch API allows the caller to batch up to 700 Route Directions API queries/requests using just a single API call.
         /// </summary>
         /// <param name="routeRequest"></param>
         /// <returns></returns>
-        public virtual async Task<(string ResultUrl, Exception ex)> GetRouteDirections(IEnumerable<RouteRequestDirections> routeRequestItems)
+        public virtual async Task<(string ResultUrl, Exception ex)> GetRouteDirections(IEnumerable<PostRouteDirectionsRequest> routeRequestItems)
         {
-            try
+            if (routeRequestItems?.Count() > 0 && routeRequestItems?.Count() < 700 )
             {
-                var url = $"{baseDomain}/route/directions/batch/json?subscription-key={Key}&api-version=1.0";
-
-                var queryCollection = GetSearchQuery<RouteRequestDirections>(routeRequestItems);
-                var q = new { queries = queryCollection };
-                var queryContent = Newtonsoft.Json.JsonConvert.SerializeObject(q);
-
-                using (var responseMessage = await GetHttpResponseMessage(url, queryContent, HttpMethod.Post))
+                try
                 {
+                    var url = $"{baseDomain}/route/directions/batch/json?subscription-key={Key}&api-version=1.0";
 
-                    var resultUrl = responseMessage.Headers.GetValues("Location").First();
-                    return (resultUrl, null);
+                    var queryCollection = GetSearchQuery<RouteRequestDirections>(routeRequestItems);
+
+                    var queries = new string[routeRequestItems.Count()];
+
+                    //var q = new StringBuilder("{\"batchItems\":[");
+
+                    dynamic q = new JObject();
+                    q.batchItems = new JArray();
+                    foreach (var (item, i) in queryCollection.Select((v, i) => (v, i)))
+                    {
+                        queries[i] = item;
+                        dynamic query = new JObject();
+                        query.query = item;
+                        q.batchItems.Add(query);
+                    }
+
+
+                    var queryContent = Newtonsoft.Json.JsonConvert.SerializeObject(q);
+
+                    using (var responseMessage = await GetHttpResponseMessage(url, queryContent, HttpMethod.Post))
+                    {
+                        var resultUrl = responseMessage.Headers.Location.AbsoluteUri;
+                        return (resultUrl, null);
+                    }
                 }
-
+                catch (Exception ex)
+                {
+                    return (string.Empty, ex);
+                }
             }
-            catch (Exception ex)
+            else
             {
-                return (string.Empty, ex);
+                throw new Exception("routeRequestItems must be between 1-699 and not null");
             }
         }
 

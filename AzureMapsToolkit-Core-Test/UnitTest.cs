@@ -14,6 +14,7 @@ using System;
 using System.IO;
 using static System.Net.Mime.MediaTypeNames;
 using AzureMapsToolkit.Mobility;
+using AzureMapsToolkit.Route;
 
 namespace AzureMapsToolkit_Core_Test
 {
@@ -196,12 +197,24 @@ namespace AzureMapsToolkit_Core_Test
         {
 
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
-            var req = new List<RouteRequestDirections>();
-            req.Add(new RouteRequestDirections
+            var req = new List<PostRouteDirectionsRequest>();
+            req.Add(new PostRouteDirectionsRequest
             {
-                Query = "47.639987,-122.128384:47.621252,-122.184408:47.596437,-122.332000",
+                Query = "47.620659,-122.348934:47.610101,-122.342015",
                 RouteType = RouteType.Fastest,
                 TravelMode = TravelMode.Car
+            });
+
+            req.Add(new PostRouteDirectionsRequest
+            {
+                Query = "40.759856,-73.985108:40.771136,-73.973506",
+                TravelMode = TravelMode.Pedestrian,
+                RouteType = RouteType.Shortest
+            });
+
+            req.Add(new PostRouteDirectionsRequest
+            {
+                Query = "48.923159,-122.557362:32.621279,-116.840362"
             });
 
             var result = am.GetRouteDirections(req).Result;

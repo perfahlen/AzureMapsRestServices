@@ -3,6 +3,7 @@ using AzureMapsToolkit.Data;
 using AzureMapsToolkit.GeoJson;
 using AzureMapsToolkit.Mobility;
 using AzureMapsToolkit.Render;
+using AzureMapsToolkit.Route;
 using AzureMapsToolkit.Search;
 using AzureMapsToolkit.Spatial;
 using AzureMapsToolkit.Timezone;
@@ -80,7 +81,7 @@ namespace AzureMapsToolkit
 
         Task<Response<RouteRangeResponse>> GetRouteRange(RouteRangeRequest routeRequest);
 
-        Task<(string ResultUrl, Exception ex)> GetRouteDirections(IEnumerable<RouteRequestDirections> routeRequestItems);
+        Task<(string ResultUrl, Exception ex)> GetRouteDirections(IEnumerable<PostRouteDirectionsRequest> routeRequestItems);
 
         Task<(string ResultUrl, Exception ex)> GetRouteMatrix(RouteMatrixRequest routeMatrixRequest, IEnumerable<Common.Coordinate> coordinatesOrigins, IEnumerable<Common.Coordinate> coordinatesDestinations);
 

@@ -105,7 +105,7 @@ namespace AzureMapsToolkit.Common
                     {
                         argumentName = Char.ToLower(propertyInfo.Name[0]) + propertyInfo.Name.Substring(1);
 
-                        var enumVal = propertyInfo.GetValue(request).ToString().ToCamlCase();    
+                        argumentValue = propertyInfo.GetValue(request).ToString().ToCamlCase();    
                     }
                     //else if (propertyInfo != null && propertyInfo.PropertyType.IsArray)
                     //{
