@@ -1058,18 +1058,6 @@ namespace AzureMapsToolkit_Core_Test
         }
 
         [Fact]
-        public void TransitDockInfo()
-        {
-            var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
-            var res = am.GetTransitDockInfo(new AzureMapsToolkit.Mobility.TransitDockInfoRequest
-            {
-                Query = "121---4640538"
-            }).Result;
-
-            Assert.Null(res.Error);
-        }
-
-        [Fact]
         public void GetTransitItenary()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);

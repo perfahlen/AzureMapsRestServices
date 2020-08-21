@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Globalization;
 using AzureMapsToolkit.Spatial;
+using Newtonsoft.Json.Linq;
 
 namespace AzureMapsToolkit.Common
 {
@@ -186,6 +187,22 @@ namespace AzureMapsToolkit.Common
             {
                 return Response<T>.CreateErrorResponse(ex);
             }
+        }
+
+        internal string GetQuerycontent(IEnumerable<string> queryCollection)
+        {
+            dynamic q = new JObject();
+            q.batchItems = new JArray();
+            foreach (var item in queryCollection)
+            {
+                dynamic query = new JObject();
+                query.query = item;
+                q.batchItems.Add(query);
+            }
+
+
+            var queryContent = Newtonsoft.Json.JsonConvert.SerializeObject(q);
+            return queryContent;
         }
 
         

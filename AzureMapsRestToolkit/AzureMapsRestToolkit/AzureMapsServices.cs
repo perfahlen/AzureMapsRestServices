@@ -67,7 +67,7 @@ namespace AzureMapsToolkit
         /// <returns></returns>
         public async Task<Response<TransitRouteResponse>> GetTransitRoute(TransitRouteRequest req)
         {
-            var res = await ExecuteRequest< TransitRouteResponse, TransitRouteRequest> ($"{baseDomain}/mobility/transit/route/json", req);
+            var res = await ExecuteRequest<TransitRouteResponse, TransitRouteRequest>($"{baseDomain}/mobility/transit/route/json", req);
             return res;
         }
 
@@ -90,19 +90,6 @@ namespace AzureMapsToolkit
         public async Task<Response<TransitItineraryResponse>> GetTransitItinerary(TransitItineraryRequest req)
         {
             var res = await ExecuteRequest<TransitItineraryResponse, TransitItineraryRequest>($"{baseDomain}/mobility/transit/itinerary/json", req);
-            return res;
-        }
-    
-
-
-        /// <summary>
-        /// Get Transit Dock Info API allows to request static and real-time information for a given bike or scooter docking station. Response includes availability and vacancy information and operator details. The service supplements Nearby Transit API that allows you to search nearby bike and scooter docking stations.
-        /// </summary>
-        /// <param name="req"></param>
-        /// <returns></returns>
-        public async Task<Response<TransitDockInfoResponse>> GetTransitDockInfo(TransitDockInfoRequest req)
-        {
-            var res = await ExecuteRequest<TransitDockInfoResponse, TransitDockInfoRequest>($"{baseDomain}/mobility/transit/dock/json", req);
             return res;
         }
 
@@ -200,7 +187,7 @@ namespace AzureMapsToolkit
                 var query = base.GetQuery<PostGeofenceRequest>(req, true);
 
                 var url = $"{baseDomain}/spatial/geofence/json?subscription-key={base.Key}{query}";
-               
+
                 using (var response = await GetHttpResponseMessage(url, geoJson, HttpMethod.Post))
                 {
                     using (var responseMessage = response.Content)
@@ -674,7 +661,7 @@ namespace AzureMapsToolkit
         /// <returns></returns>
         public virtual async Task<(string ResultUrl, Exception ex)> GetRouteDirections(IEnumerable<PostRouteDirectionsRequest> routeRequestItems)
         {
-            if (routeRequestItems?.Count() > 0 && routeRequestItems?.Count() < 700 )
+            if (routeRequestItems?.Count() > 0 && routeRequestItems?.Count() < 700)
             {
                 try
                 {
@@ -682,20 +669,7 @@ namespace AzureMapsToolkit
 
                     var queryCollection = GetSearchQuery<RouteRequestDirections>(routeRequestItems);
 
-                    var queries = new string[routeRequestItems.Count()];
-
-
-                    dynamic q = new JObject();
-                    q.batchItems = new JArray();
-                    foreach (var item in queryCollection)
-                    {
-                        dynamic query = new JObject();
-                        query.query = item;
-                        q.batchItems.Add(query);
-                    }
-
-
-                    var queryContent = Newtonsoft.Json.JsonConvert.SerializeObject(q);
+                    var queryContent = GetQuerycontent(queryCollection);
 
                     using (var responseMessage = await GetHttpResponseMessage(url, queryContent, HttpMethod.Post))
                     {
@@ -759,12 +733,12 @@ namespace AzureMapsToolkit
         /// <returns></returns>
         public virtual async Task<Response<RouteMatrixResponse>> GetRouteMatrixResult(string url)
         {
-            using (var client = GetClient(url)) 
+            using (var client = GetClient(url))
             {
                 var routeMatrixResponse = await base.GetData<RouteMatrixResponse>(client, url);
                 var response = GetResponse<RouteMatrixResponse>(routeMatrixResponse);
                 return response;
-             }
+            }
 
             //using (var client = GetClient(url))
             //{
@@ -890,12 +864,12 @@ namespace AzureMapsToolkit
 
                 var q = new { queries = queryCollection };
 
-                var queryContent = Newtonsoft.Json.JsonConvert.SerializeObject(q);
+                var queryContent = GetQuerycontent(queryCollection);
 
                 using (var responseMessage = await GetHttpResponseMessage(url, queryContent, HttpMethod.Post))
                 {
 
-                    var resultUrl = responseMessage.Headers.GetValues("Location").First();
+                    var resultUrl = responseMessage.Headers.Location.AbsoluteUri;
                     return (resultUrl, null);
                 }
 
@@ -918,13 +892,11 @@ namespace AzureMapsToolkit
                 var url = $"{baseDomain}/search/address/reverse/batch/json?subscription-key={Key}&api-version=1.0";
                 var queryCollection = GetSearchQuery<SearchAddressReverseRequest>(req);
 
-                var q = new { queries = queryCollection };
-
-                var queryContent = Newtonsoft.Json.JsonConvert.SerializeObject(q);
+                var queryContent = GetQuerycontent(queryCollection);
 
                 using (var responseMessage = await GetHttpResponseMessage(url, queryContent, HttpMethod.Post))
                 {
-                    var resultUrl = responseMessage.Headers.GetValues("Location").First();
+                    var resultUrl = responseMessage.Headers.Location.AbsoluteUri;
                     return (resultUrl, null);
                 }
 
@@ -980,30 +952,6 @@ namespace AzureMapsToolkit
         public virtual async Task<(string ResultUrl, Exception ex)> GetSearchFuzzy(IEnumerable<SearchFuzzyRequest> req)
         {
 
-            //var queryCollection = GetSearchQuery<RouteRequestDirections>(routeRequestItems);
-
-            //var queries = new string[routeRequestItems.Count()];
-
-
-            //dynamic q = new JObject();
-            //q.batchItems = new JArray();
-            //foreach (var (item, i) in queryCollection.Select((v, i) => (v, i)))
-            //{
-            //    queries[i] = item;
-            //    dynamic query = new JObject();
-            //    query.query = item;
-            //    q.batchItems.Add(query);
-            //}
-
-
-            //var queryContent = Newtonsoft.Json.JsonConvert.SerializeObject(q);
-
-            //using (var responseMessage = await GetHttpResponseMessage(url, queryContent, HttpMethod.Post))
-            //{
-            //    var resultUrl = responseMessage.Headers.Location.AbsoluteUri;
-            //    return (resultUrl, null);
-            //}
-
 
             try
             {
@@ -1011,21 +959,11 @@ namespace AzureMapsToolkit
 
                 var queryCollection = GetSearchQuery<SearchFuzzyRequest>(req);
 
-                dynamic q = new JObject();
-                q.batchItems = new JArray();
-                foreach (var item in queryCollection)
-                {
-                    dynamic query = new JObject();
-                    query.query = item;
-                    q.batchItems.Add(query);
-                }
-
-
-                var queryContent = Newtonsoft.Json.JsonConvert.SerializeObject(q);
+                var queryContent = GetQuerycontent(queryCollection);
 
                 using (var responseMessage = await GetHttpResponseMessage(url, queryContent, HttpMethod.Post))
                 {
-                    var resultUrl = responseMessage.Headers.Location.AbsoluteUri; 
+                    var resultUrl = responseMessage.Headers.Location.AbsoluteUri;
                     return (resultUrl, null);
                 }
             }

@@ -21,7 +21,6 @@ namespace AzureMapsToolkit
         Task<Response<TransitLineInfoResponse>> GetTransitLineInfo(TransitLineInfoRequest req);
         Task<Response<TransitItineraryResponse>> GetTransitItinerary(TransitItineraryRequest req);
 
-        Task<Response<TransitDockInfoResponse>> GetTransitDockInfo(TransitDockInfoRequest req);    
 
         Task<Response<RealTimeArrivalsResponse>> GetRealTimeArrivals(RealTimeArrivalsRequest req);
 
