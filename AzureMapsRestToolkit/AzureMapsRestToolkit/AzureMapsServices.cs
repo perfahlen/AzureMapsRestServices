@@ -684,13 +684,11 @@ namespace AzureMapsToolkit
 
                     var queries = new string[routeRequestItems.Count()];
 
-                    //var q = new StringBuilder("{\"batchItems\":[");
 
                     dynamic q = new JObject();
                     q.batchItems = new JArray();
-                    foreach (var (item, i) in queryCollection.Select((v, i) => (v, i)))
+                    foreach (var item in queryCollection)
                     {
-                        queries[i] = item;
                         dynamic query = new JObject();
                         query.query = item;
                         q.batchItems.Add(query);
@@ -981,19 +979,53 @@ namespace AzureMapsToolkit
         /// <returns></returns>
         public virtual async Task<(string ResultUrl, Exception ex)> GetSearchFuzzy(IEnumerable<SearchFuzzyRequest> req)
         {
+
+            //var queryCollection = GetSearchQuery<RouteRequestDirections>(routeRequestItems);
+
+            //var queries = new string[routeRequestItems.Count()];
+
+
+            //dynamic q = new JObject();
+            //q.batchItems = new JArray();
+            //foreach (var (item, i) in queryCollection.Select((v, i) => (v, i)))
+            //{
+            //    queries[i] = item;
+            //    dynamic query = new JObject();
+            //    query.query = item;
+            //    q.batchItems.Add(query);
+            //}
+
+
+            //var queryContent = Newtonsoft.Json.JsonConvert.SerializeObject(q);
+
+            //using (var responseMessage = await GetHttpResponseMessage(url, queryContent, HttpMethod.Post))
+            //{
+            //    var resultUrl = responseMessage.Headers.Location.AbsoluteUri;
+            //    return (resultUrl, null);
+            //}
+
+
             try
             {
                 var url = $"{baseDomain}/search/fuzzy/batch/json?subscription-key={Key}&api-version=1.0";
 
                 var queryCollection = GetSearchQuery<SearchFuzzyRequest>(req);
 
-                var q = new { queries = queryCollection };
+                dynamic q = new JObject();
+                q.batchItems = new JArray();
+                foreach (var item in queryCollection)
+                {
+                    dynamic query = new JObject();
+                    query.query = item;
+                    q.batchItems.Add(query);
+                }
+
 
                 var queryContent = Newtonsoft.Json.JsonConvert.SerializeObject(q);
 
                 using (var responseMessage = await GetHttpResponseMessage(url, queryContent, HttpMethod.Post))
                 {
-                    var resultUrl = responseMessage.Headers.GetValues("Location").First();
+                    var resultUrl = responseMessage.Headers.Location.AbsoluteUri; 
                     return (resultUrl, null);
                 }
             }
