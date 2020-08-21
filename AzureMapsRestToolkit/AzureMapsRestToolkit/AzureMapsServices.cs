@@ -154,7 +154,12 @@ namespace AzureMapsToolkit
         #endregion
 
         #region Spatial
-
+        /// <summary>
+        /// This API returns a boolean value indicating whether a point is inside a set of polygons. The user data may contain Polygon and MultiPolygon geometries, other geometries will be ignored if provided. If the point is inside or on the boundary of one of these polygons, the value returned is true. In all other cases, the value returned is false. When the point is inside multiple polygons, the result will give intersecting geometries section to show all valid geometries (referenced by geometryId) in user data. The maximum number of vertices accepted to form a Polygon is 10,000.
+        /// </summary>
+        /// <param name="req"></param>
+        /// <param name="geoJson"></param>
+        /// <returns></returns>
         public async Task<Response<PostPointInPolygonResponse>> PostPointInPolygon(PostPointInPolygonRequest req, string geoJson)
         {
             try
@@ -180,6 +185,12 @@ namespace AzureMapsToolkit
             }
         }
 
+        /// <summary>
+        /// Search Geofence Post API Applies to: S1 Pricing tier. The Geofence Post API allows you to retrieve the proximity of a coordinate to a provided geofence or set of fences. With POST call, you do not have to upload the fence data in advance, instead you supply the location of the object you are tracking in query parameters as well as the fence or set of fences data in post request body. See Geofencing GeoJSON data for more details on the geofence data format. The response will contain information about the distance from the outer edge of the geofence. A negative value signifies that the coordinate is inside of the fence while a positive value means that it is outside of the fence.
+        /// </summary>
+        /// <param name="req"></param>
+        /// <param name="geoJson"></param>
+        /// <returns></returns>
         public async Task<Response<GeofenceResponse>> PostGeofence(PostGeofenceRequest req, string geoJson)
         {
             try
@@ -205,6 +216,12 @@ namespace AzureMapsToolkit
             }
         }
 
+        /// <summary>
+        /// This API returns the closest point between a base point and a given set of target points. The set of target points is provided by user data in post request body. The user data may only contain a collection of Point geometry. MultiPoint or other geometries will be ignored if provided. The algorithm does not take into account routing or traffic. The maximum number of points accepted is 100,000. Information returned includes closest point latitude, longitude, and distance in meters from the closest point.
+        /// </summary>
+        /// <param name="req"></param>
+        /// <param name="geoJson"></param>
+        /// <returns></returns>
         public async Task<Response<ClosestPointResponse>> PostClosestPoint(PostClosestPointRequest req, string geoJson)
         {
             try

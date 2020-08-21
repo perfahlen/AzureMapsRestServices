@@ -959,15 +959,16 @@ namespace AzureMapsToolkit_Core_Test
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
             var json = "{ \"type\": \"FeatureCollection\", \"features\": [ { \"type\": \"Feature\", \"geometry\": { \"type\": \"Polygon\", \"coordinates\": [ [ [ -122.13241226662022, 47.617011400917221 ], [ -122.12810106940353, 47.6169969269402 ], [ -122.12824948956276, 47.619076837513489 ], [ -122.12833297981392, 47.621929787055336 ], [ -122.12971398040168, 47.62184100705295 ], [ -122.1318413862121, 47.62195364373008 ], [ -122.13231034769727, 47.617163326181213 ], [ -122.13241226662022, 47.617011400917221 ] ] ] }, \"properties\": { \"geometryId\": \"2\", \"name\": \"Crossroad Mall\" } }, { \"type\": \"Feature\", \"geometry\": { \"type\": \"Polygon\", \"coordinates\": [ [ [ -122.15342205632391, 47.609818185466253 ], [ -122.153451623509, 47.606287331460038 ], [ -122.14971782206638, 47.606250040787046 ], [ -122.14817354810637, 47.606391046012305 ], [ -122.14827351288071, 47.609833167963558 ], [ -122.15225500989803, 47.609826136787518 ], [ -122.15342205632391, 47.609818185466253 ] ] ] }, \"properties\": { \"geometryId\": \"1\", \"name\": \"Sammamish High school\" } } ] }";
-            var res = am.PostGeofence(new AzureMapsToolkit.Spatial.PostGeofenceRequest
+            var reqOjb = new AzureMapsToolkit.Spatial.PostGeofenceRequest
             {
                 Lat = 47.617011400917221,
                 Lon = -122.13241226662022,
                 SearchBuffer = 50,
-                DeviceId = "2",
-                Mode = AzureMapsToolkit.Spatial.Mode.All,
-                IsAsync = true
-            }, json).Result;
+                DeviceId = Guid.NewGuid().ToString(),
+                Mode = AzureMapsToolkit.Spatial.Mode.EnterAndExit,
+                IsAsync = false
+            };
+            var res = am.PostGeofence(reqOjb, json).Result;
 
             Assert.Null(res.Error);
         }
