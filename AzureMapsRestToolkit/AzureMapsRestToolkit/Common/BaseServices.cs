@@ -2,13 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Globalization;
-using AzureMapsToolkit.Spatial;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Serialization;
 
 namespace AzureMapsToolkit.Common
 {
@@ -19,6 +19,11 @@ namespace AzureMapsToolkit.Common
         {
             Key = key;
         }
+
+        private readonly JsonSerializerSettings _jsonSerializerSettings = new JsonSerializerSettings
+        {
+            ContractResolver = new CamelCasePropertyNamesContractResolver()
+        };
 
         internal async Task<HttpResponseMessage> GetHttpResponseMessage(string url, string data, HttpMethod method)
         {
@@ -201,7 +206,7 @@ namespace AzureMapsToolkit.Common
             }
 
 
-            var queryContent = Newtonsoft.Json.JsonConvert.SerializeObject(q);
+            var queryContent = SerializeObject(q);
             return queryContent;
         }
 
@@ -232,18 +237,28 @@ namespace AzureMapsToolkit.Common
             if (res.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 var json = res.Content.ReadAsStringAsync().Result;
-                var val = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(json);
+                var val = DeserializeObject<T>(json);
                 return val;
             }
             else
             {
                 string content = res.Content.ReadAsStringAsync().Result;
 
-                var ex = Newtonsoft.Json.JsonConvert.DeserializeObject<ErrorResponse>(content);
+                var ex = DeserializeObject<ErrorResponse>(content);
 
                 throw new AzureMapsException(ex);
             }
 
+        }
+
+        protected string SerializeObject(object value)
+        {
+            return JsonConvert.SerializeObject(value, _jsonSerializerSettings);
+        }
+
+        protected T DeserializeObject<T>(string value)
+        {
+            return JsonConvert.DeserializeObject<T>(value, _jsonSerializerSettings);
         }
 
         internal string GetUdidFromLocation(string location)
