@@ -22,9 +22,14 @@ namespace AzureMapsToolkit_Core_Test
 {
     public class UnitTest
     {
+        private static readonly string _KEY;
 
-        const string _KEY = AzureMapsKey._KEY;
-
+        static UnitTest()
+        {
+            _KEY = Environment.GetEnvironmentVariable("AZURE_MAPS_KEY");
+            if (string.IsNullOrEmpty(_KEY))
+                throw new Exception("Please set the AZURE_MAPS_KEY environment variable to a valid Azure Maps key.");
+        }
 
         [Fact]
         public void InvalidIPCountry()
