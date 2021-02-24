@@ -10,9 +10,9 @@
     <RepositoryType>GIT</RepositoryType>
     <PackageTags>Azure Maps REST Toolkit</PackageTags>
     <Version>6.0.0</Version>
-    <AssemblyVersion>5.0.0.3</AssemblyVersion>
+    <AssemblyVersion>6.0.0.0</AssemblyVersion>
     <RootNamespace>AzureMapsToolkit</RootNamespace>
-    <FileVersion>5.0.0.3</FileVersion>
+    <FileVersion>6.0.0.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
