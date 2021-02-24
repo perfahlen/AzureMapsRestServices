@@ -40,3 +40,6 @@ if (resp.Error != null)
 ```
 PM> Install-Package AzureMapsRestToolkit
 ```
+
+## TLS 1.2 issue
+See issue <https://github.com/perfahlen/AzureMapsRestServices/issues/33>
