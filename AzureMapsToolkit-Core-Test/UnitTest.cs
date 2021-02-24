@@ -156,7 +156,8 @@ namespace AzureMapsToolkit_Core_Test
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
             var req = new RouteRequestDirections
             {
-                Query = "52.50931,13.42936:52.50274,13.43872"
+                //Query = "52.50931,13.42936:52.50274,13.43872"
+                Query = "62.469026,16.696987:62.397051,17.363892"
             };
             var directions = am.GetRouteDirections(req).Result;
             Assert.Null(directions.Error);
@@ -319,7 +320,7 @@ namespace AzureMapsToolkit_Core_Test
 
             var req = new SearchAddressReverseRequest
             {
-                Query = "37.337,-121.89"
+                Query = "37.337,-121.89",
             };
 
             var resp = am.GetSearchAddressReverse(req).Result;
@@ -669,7 +670,8 @@ namespace AzureMapsToolkit_Core_Test
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
             var req = new TrafficFlowSegmentRequest
             {
-                Query = "52.41072,4.84239",
+                //Query = "52.41072,4.84239",
+                Query = "62.40948,17.23301",
                 Style = TrafficFlowSegmentStyle.Absolute,
                 Zoom = 10
             };
