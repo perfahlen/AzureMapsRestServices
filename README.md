@@ -1,6 +1,6 @@
 # Azure Maps REST Services
 
-[![NuGet](https://img.shields.io/badge/NuGet-5.0.0-blue.svg)](https://www.nuget.org/packages/AzureMapsRestToolkit/)
+[![NuGet](https://img.shields.io/badge/NuGet-6.0.0-blue.svg)](https://www.nuget.org/packages/AzureMapsRestToolkit/)
 [![license](https://img.shields.io/badge/license-MIT-yellow.svg)](https://github.com/perfahlen/AzureMapsRestServices/blob/master/LICENSE)
 
 
