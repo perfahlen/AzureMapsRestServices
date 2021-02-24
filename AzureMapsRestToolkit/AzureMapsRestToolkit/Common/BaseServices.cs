@@ -9,6 +9,8 @@ using System.Net.Http.Headers;
 using System.Globalization;
 using AzureMapsToolkit.Spatial;
 using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace AzureMapsToolkit.Common
 {
@@ -115,9 +117,18 @@ namespace AzureMapsToolkit.Common
                     else
                     {
 
-                        var attribute = propertyInfo.GetCustomAttributes(typeof(NameArgument), false);
-                        if (attribute.Length > 0)
-                            argumentName = ((NameArgument)attribute[0]).Name;
+                        var nameAttribute = propertyInfo.GetCustomAttributes(typeof(NameArgument), false);
+                        if (nameAttribute.Length > 0)
+                            argumentName = ((NameArgument)nameAttribute[0]).Name;
+
+                        else
+                        {
+                            var jsonAttribute = propertyInfo.GetCustomAttributes(typeof(JsonPropertyAttribute), false);
+                            if (jsonAttribute.Length > 0)
+                            {
+                                argumentName = ((JsonPropertyAttribute)jsonAttribute[0]).PropertyName;
+                            }
+                        }
 
                         if (argumentName == string.Empty)
                             argumentName = Char.ToLower(propertyInfo.Name[0]) + propertyInfo.Name.Substring(1);

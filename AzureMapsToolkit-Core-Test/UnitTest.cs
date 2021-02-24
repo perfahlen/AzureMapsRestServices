@@ -359,7 +359,8 @@ namespace AzureMapsToolkit_Core_Test
                 StreetName = "Storgatan",
                 Municipality = "Sundsvall",
                 PostalCode = "85230",
-                CountrySubdivision = "Sundsvall"
+                CountrySubdivision = "Sundsvall",
+                Offset = 1
 
             };
             var result = am.GetSearchAddressStructured(req).Result;
