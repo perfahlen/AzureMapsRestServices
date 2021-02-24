@@ -157,7 +157,8 @@ namespace AzureMapsToolkit_Core_Test
             var req = new RouteRequestDirections
             {
                 //Query = "52.50931,13.42936:52.50274,13.43872"
-                Query = "62.469026,16.696987:62.397051,17.363892"
+                Query = "62.469026,16.696987:62.397051,17.363892",
+                Avoid = Avoid.tollRoads
             };
             var directions = am.GetRouteDirections(req).Result;
             Assert.Null(directions.Error);
