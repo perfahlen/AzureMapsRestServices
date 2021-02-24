@@ -17,7 +17,7 @@ namespace AzureMapsToolkit.Mobility
         /// <summary>
         /// Specify additional details requested respective to the line group as a comma separated list. As a default service returns line basic info.
         /// </summary>
-        public TransitLineDetailType DetailType { get; set; }
+        public TransitLineDetailType? DetailTypes { get; set; }
 
         /// <summary>
         /// Language in which search results will be returned. Only NGT is supported. Please refer to Supported languages for details.

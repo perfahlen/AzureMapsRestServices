@@ -5,8 +5,8 @@
     /// </summary>
     public enum QueryType : byte
     {
-        Position,
+        position,
 
-        CountryCode
+        countryCode
     }
 }

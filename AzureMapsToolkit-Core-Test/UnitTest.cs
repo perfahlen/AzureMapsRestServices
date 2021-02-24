@@ -1006,7 +1006,7 @@ namespace AzureMapsToolkit_Core_Test
             var res = am.GetMetroAreaInfo(new AzureMapsToolkit.Mobility.MetroAreaInfoRequest
             {
                 Query = "121",
-                DetailType = $"{AzureMapsToolkit.Mobility.DetailType.AGENCIES}"
+                DetailType= $"{AzureMapsToolkit.Mobility.DetailType.AGENCIES}"
             }).Result;
 
             Assert.Null(res.Error);
@@ -1021,7 +1021,7 @@ namespace AzureMapsToolkit_Core_Test
             var res = am.GetMetroArea(new AzureMapsToolkit.Mobility.MetroAreaRequest
             {
                 Query = "40.648677,-74.010535",
-                QueryType = AzureMapsToolkit.Mobility.QueryType.Position
+                QueryType = AzureMapsToolkit.Mobility.QueryType.position
             }).Result;
 
             Assert.Null(res.Error);
@@ -1079,7 +1079,7 @@ namespace AzureMapsToolkit_Core_Test
             {
                 MetroId = 121,
                 Query = "121---373227",
-                DetailType = TransitLineDetailType.Stops | TransitLineDetailType.Schedule | TransitLineDetailType.Stops
+                DetailTypes = TransitLineDetailType.Stops | TransitLineDetailType.Schedule | TransitLineDetailType.Stops
             };
             var res = am.GetTransitLineInfo(transitLineInfoRequest).Result;
             Assert.Null(res.Error);
@@ -1093,9 +1093,9 @@ namespace AzureMapsToolkit_Core_Test
             {
                 MetroId = 121,
                 Origin = "40.680903,-73.983723",
-                OriginType = OriginType.Position,
+                OriginType = OriginType.position,
                 Destination = "40.682051,-73.976702",
-                DestinationType = DestinationType.Position
+                DestinationType = DestinationType.position
             };
             var res = am.GetTransitRoute(transitRouteRequest).Result;
 
