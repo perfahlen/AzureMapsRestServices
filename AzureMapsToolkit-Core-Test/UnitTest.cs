@@ -321,8 +321,9 @@ namespace AzureMapsToolkit_Core_Test
 
             var req = new SearchAddressReverseRequest
             {
-                Query = "37.337,-121.89",
-                EntityTypes = SearchAddressEntityTypes.Municipality | SearchAddressEntityTypes.PostalCodeArea
+                //Query = "37.337,-121.89",
+                Query = "47.591180, -122.332700",
+                EntityType = SearchAddressEntityTypes.Municipality | SearchAddressEntityTypes.PostalCodeArea
             };
 
             var resp = am.GetSearchAddressReverse(req).Result;

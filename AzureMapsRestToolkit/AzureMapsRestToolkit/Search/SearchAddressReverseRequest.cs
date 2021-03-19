@@ -66,7 +66,7 @@ namespace AzureMapsToolkit.Search
         /// - roadUse
         /// - returnMatchType
         /// </summary>
-        public SearchAddressEntityTypes? EntityTypes { get; set; }
+        public SearchAddressEntityTypes? EntityType { get; set; }
 
         
     }
