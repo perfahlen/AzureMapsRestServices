@@ -761,7 +761,7 @@ namespace AzureMapsToolkit
         public virtual async Task<Response<SearchAddressReverseResponse>> GetSearchAddressReverse(SearchAddressReverseRequest request)
         {
 
-            var res = await ExecuteRequest<SearchAddressReverseResponse, SearchAddressReverseRequest>($"{baseDomain}/search/address/reverse/json", request);
+            var res = await ExecuteRequest<SearchAddressReverseResponse, SearchAddressReverseRequest>($"{baseDomain}/search/address/reverse/json", request, false);
             return res;
 
         }
