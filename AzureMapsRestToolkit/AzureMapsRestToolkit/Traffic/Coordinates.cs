@@ -1,11 +1,11 @@
 ﻿using AzureMapsToolkit.Common;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace AzureMapsToolkit.Traffic
 {
     public class Coordinates
     {
-        [JsonProperty("coordinate")]
+        [JsonPropertyName("coordinate")]
         public Coordinate[] Coordinate { get; set; }
     }
 }

@@ -1,14 +1,14 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace AzureMapsToolkit.Mobility
 {
     public class Direction
     {
-        [JsonConverter(typeof (StringEnumConverter))]
+        [JsonConverter(typeof (JsonStringEnumConverter))]
         public AbsoluteDirection AbsoluteDirection { get; set; }
 
-        [JsonConverter(typeof(StringEnumConverter))]
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         public RelativeDirection RelativeDirection { get; set; }
     }
 }

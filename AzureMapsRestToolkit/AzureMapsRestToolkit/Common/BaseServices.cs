@@ -1,48 +1,43 @@
-﻿using AzureMapsToolkit.GeoJson;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
-using System.Linq;
-using System.Net.Http.Headers;
 using System.Globalization;
-using AzureMapsToolkit.Spatial;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json.Serialization;
-using Newtonsoft.Json;
+using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Threading.Tasks;
+
+using Azure.Core.GeoJson;
 
 namespace AzureMapsToolkit.Common
 {
     public class BaseServices
     {
         internal string Key { get; set; }
+
         public BaseServices(string key)
         {
             Key = key;
         }
 
-        internal async Task<HttpResponseMessage> GetHttpResponseMessage(string url, string data, HttpMethod method)
+        internal static async Task<HttpResponseMessage> GetHttpResponseMessage(string url, string data, HttpMethod method)
         {
 
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri(url);
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(
-                    new MediaTypeWithQualityHeaderValue("application/json"));
-                using (var request = new HttpRequestMessage(method, url))
-                {
-                    var content = new StringContent(data); //, Encoding.UTF8, "application/json"))
+            using var client = new HttpClient();
+            client.BaseAddress = new Uri(url);
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/json"));
+            using var request = new HttpRequestMessage(method, url);
+            var content = new StringContent(data); //, Encoding.UTF8, "application/json"))
 
-                    content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-                    request.Content = content;
-                    var response = await client.SendAsync(request); //, HttpCompletionOption.ResponseHeadersRead);
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            request.Content = content;
+            var response = await client.SendAsync(request); //, HttpCompletionOption.ResponseHeadersRead);
 
-                    response.EnsureSuccessStatusCode();
-                    return response;
-                }
-            }
+            response.EnsureSuccessStatusCode();
+            return response;
         }
 
         string _url = string.Empty;
@@ -60,18 +55,19 @@ namespace AzureMapsToolkit.Common
         }
 
 
-        internal MultiPoint GetMultipPoint(IEnumerable<Coordinate> coordinates)
+        internal static GeoPointCollection GetMultiPoint(IEnumerable<Coordinate> coordinates)
         {
-            double[,] points = new double[coordinates.Count(), 2];
+            List<GeoPoint> points = new(coordinates.Count());
+
+            //double[,] points = new double[coordinates.Count(), 2];
             for (int i = 0; i < coordinates.Count(); i++)
             {
-                points[i, 0] = coordinates.ElementAt(i).Longitude;
-                points[i, 1] = coordinates.ElementAt(i).Latitude;
+                GeoPoint point = new(coordinates.ElementAt(i).Longitude, coordinates.ElementAt(i).Latitude);
+                points.Add(point);
             }
 
-            var multiPoint = new MultiPoint();
-            multiPoint.Coordinates = points;
-
+            GeoPointCollection multiPoint = new GeoPointCollection(points);
+          
             return multiPoint;
 
         }
@@ -106,9 +102,9 @@ namespace AzureMapsToolkit.Common
 
                     if (propertyInfo?.PropertyType.IsEnum == true || underLayingtype?.IsEnum == true)
                     {
-                        argumentName = Char.ToLower(propertyInfo.Name[0]) + propertyInfo.Name.Substring(1);
+                        argumentName = Char.ToLower(propertyInfo.Name[0]) + propertyInfo.Name[1..];
 
-                        argumentValue = propertyInfo.GetValue(request).ToString().Replace(" ", "");  //.ToCamlCase();    
+                        argumentValue = propertyInfo.GetValue(request).ToString().Replace(" ", "").ToCamelCase();
                     }
                     //else if (propertyInfo != null && propertyInfo.PropertyType.IsArray)
                     //{
@@ -123,15 +119,15 @@ namespace AzureMapsToolkit.Common
 
                         else
                         {
-                            var jsonAttribute = propertyInfo.GetCustomAttributes(typeof(JsonPropertyAttribute), false);
+                            var jsonAttribute = propertyInfo.GetCustomAttributes(typeof(JsonPropertyNameAttribute), false);
                             if (jsonAttribute.Length > 0)
                             {
-                                argumentName = ((JsonPropertyAttribute)jsonAttribute[0]).PropertyName;
+                                argumentName = ((JsonPropertyNameAttribute)jsonAttribute[0]).Name;
                             }
                         }
 
                         if (argumentName == string.Empty)
-                            argumentName = Char.ToLower(propertyInfo.Name[0]) + propertyInfo.Name.Substring(1);
+                            argumentName = Char.ToLower(propertyInfo.Name[0]) + propertyInfo.Name[1..];
 
 
                         if (string.IsNullOrEmpty(argumentValue))
@@ -169,14 +165,12 @@ namespace AzureMapsToolkit.Common
 
 
 
-        internal async Task<byte[]> GetByteArray(string baseAddress, string url)
+        internal static async Task<byte[]> GetByteArray(string baseAddress, string url)
         {
-            using (var httpClient = new HttpClient())
-            {
-                httpClient.BaseAddress = new Uri(baseAddress);
-                var content = await httpClient.GetByteArrayAsync(url);
-                return content;
-            }
+            using var httpClient = new HttpClient();
+            httpClient.BaseAddress = new Uri(baseAddress);
+            var content = await httpClient.GetByteArrayAsync(url);
+            return content;
         }
 
         internal async Task<Response<T>> ExecuteRequest<T, U>(string baseUrl, U req) where U : RequestBase
@@ -187,12 +181,10 @@ namespace AzureMapsToolkit.Common
                 if (req != null)
                     Url += GetQuery<U>(req, true);
 
-                using (var client = GetClient(baseUrl))
-                {
-                    var data = await GetData<T>(client, Url);
-                    var response = GetResponse<T>(data);
-                    return response;
-                }
+                using HttpClient client = GetClient(baseUrl);
+                T data = await GetData<T>(client, Url);
+                Response<T> response = GetResponse(data);
+                return response;
             }
             catch (AzureMapsException ex)
             {
@@ -200,25 +192,23 @@ namespace AzureMapsToolkit.Common
             }
         }
 
-        internal string GetQuerycontent(IEnumerable<string> queryCollection)
+        internal static string GetQuerycontent(IEnumerable<string> queryCollection)
         {
-            dynamic q = new JObject();
-            q.batchItems = new JArray();
-            foreach (var item in queryCollection)
+            Batch b = new();
+
+            b.BatchItems = new List<BatchItem>(queryCollection.Count());
+            foreach (string item in queryCollection)
             {
-                dynamic query = new JObject();
-                query.query = item;
-                q.batchItems.Add(query);
+                BatchItem bi = new ();
+                bi.Query = item;
+                b.BatchItems.Add(bi);
             }
 
-
-            var queryContent = Newtonsoft.Json.JsonConvert.SerializeObject(q);
+            string queryContent = JsonSerializer.Serialize<Batch>(b);
             return queryContent;
         }
 
-        
-
-        internal HttpClient GetClient(string baseAddress)
+        internal static HttpClient GetClient(string baseAddress)
         {
             var client = new HttpClient();
             if (!string.IsNullOrEmpty(baseAddress))
@@ -228,7 +218,7 @@ namespace AzureMapsToolkit.Common
             return client;
         }
 
-        internal Response<T> GetResponse<T>(T t)
+        internal static Response<T> GetResponse<T>(T t)
         {
             var res = new Response<T>
             {
@@ -237,27 +227,27 @@ namespace AzureMapsToolkit.Common
             return res;
         }
 
-        internal async Task<T> GetData<T>(HttpClient client, string url)
+        internal static async Task<T> GetData<T>(HttpClient client, string url)
         {
             var res = await client.GetAsync(url);
             if (res.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 var json = res.Content.ReadAsStringAsync().Result;
-                var val = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(json);
+                var val = JsonSerializer.Deserialize<T>(json);
                 return val;
             }
             else
             {
                 string content = res.Content.ReadAsStringAsync().Result;
 
-                var ex = Newtonsoft.Json.JsonConvert.DeserializeObject<ErrorResponse>(content);
+                var ex = JsonSerializer.Deserialize<ErrorResponse>(content);
 
                 throw new AzureMapsException(ex);
             }
 
         }
 
-        internal string GetUdidFromLocation(string location)
+        internal static string GetUdidFromLocation(string location)
         {
             using (var client = GetClient(location))
             {

@@ -1,13 +1,14 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace AzureMapsToolkit.GeoJson
 {
     public class LineString
     {
-        [JsonProperty("type")]
+        [JsonPropertyName("type")]
         public string Type { get { return "LineString"; } }
 
-        [JsonProperty("coordinates")]
+        [JsonPropertyName("coordinates")]
         public double[,] Coordinates { get; set; }
 
 

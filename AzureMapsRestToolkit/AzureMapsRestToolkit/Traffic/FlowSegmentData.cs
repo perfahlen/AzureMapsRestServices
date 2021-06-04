@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,49 +13,49 @@ namespace AzureMapsToolkit.Traffic
         /// <summary>
         /// @Version property
         /// </summary>
-        [JsonProperty("@version")]
+        [JsonPropertyName("@version")]
         public string Version { get; set; }
 
         /// <summary>
         /// Confidence property
         /// </summary>
-        [JsonProperty("confidence")]
+        [JsonPropertyName("confidence")]
         public double Confidence { get; set; }
 
         /// <summary>
         /// Coordinates of the result
         /// </summary>
-        [JsonProperty("coordinates")]
+        [JsonPropertyName("coordinates")]
         public Coordinates Coordinates { get; set; }
 
         /// <summary>
         /// Current Speed property
         /// </summary>
-        [JsonProperty("currentSpeed")]
+        [JsonPropertyName("currentSpeed")]
         public int CurrentSpped { get; set; }
 
         /// <summary>
         /// Current Travel Time property
         /// </summary>
-        [JsonProperty("currentTravelTime")]
+        [JsonPropertyName("currentTravelTime")]
         public int currentTravelTime { get; set; }
 
         /// <summary>
         /// FRC property
         /// </summary>
-        [JsonProperty("frc")]
+        [JsonPropertyName("frc")]
         public string FRC { get; set; }
 
         /// <summary>
         /// Free Flow Speed property
         /// </summary>
-        [JsonProperty("freeFlowSpeed")]
+        [JsonPropertyName("freeFlowSpeed")]
         public int FreeFlowSpeed { get; set; }
 
         /// <summary>
         /// Free Flow Travel Time property
         /// </summary>
-        [JsonProperty("freeFlowTravelTime")]
+        [JsonPropertyName("freeFlowTravelTime")]
         public int FreeFlowTravelTime { get; set; }
     }
 }

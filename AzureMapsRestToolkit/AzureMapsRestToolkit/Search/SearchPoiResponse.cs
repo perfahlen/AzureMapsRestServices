@@ -1,17 +1,17 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace AzureMapsToolkit.Search
 {
     public class SearchPoiResponse
     {
-        [JsonProperty("results")]
+        [JsonPropertyName("results")]
         public SearchNearbyPoiResult[] Results { get; set; }
 
 
         /// <summary>
         /// 
         /// </summary>
-        [JsonProperty("summary")]
+        [JsonPropertyName("summary")]
         public SearchSummary Summary { get; set; }
     }
 }

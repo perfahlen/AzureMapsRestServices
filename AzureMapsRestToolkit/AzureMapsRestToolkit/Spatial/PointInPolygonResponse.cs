@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,13 +10,13 @@ namespace AzureMapsToolkit.Spatial
         /// <summary>
         /// Point In Polygon Result Object
         /// </summary>
-        [JsonProperty("result")]
+        [JsonPropertyName("result")]
         public PointInPolygonResult Result { get; set; }
 
         /// <summary>
         /// Point In Polygon Summary object
         /// </summary>
-        [JsonProperty("summary")]
+        [JsonPropertyName("summary")]
         public GetPointInPolygonSummary Summary { get; set; }
 
 

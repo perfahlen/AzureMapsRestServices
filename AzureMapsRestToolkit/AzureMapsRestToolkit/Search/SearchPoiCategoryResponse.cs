@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace AzureMapsToolkit.Search
 {
@@ -10,13 +10,13 @@ namespace AzureMapsToolkit.Search
         /// <summary>
         /// Results array
         /// </summary>
-        [JsonProperty("results")]
+        [JsonPropertyName("results")]
         public SearchNearbyPoiResult[] Results { get; set; }
 
         /// <summary>
         /// Summary object for a Search POI Category response
         /// </summary>
-        [JsonProperty("summary")]
+        [JsonPropertyName("summary")]
         public SearchSummary Summary { get; set; }
     }
 }

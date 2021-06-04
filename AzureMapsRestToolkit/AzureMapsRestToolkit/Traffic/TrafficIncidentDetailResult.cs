@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace AzureMapsToolkit.Traffic
 {
@@ -10,7 +10,7 @@ namespace AzureMapsToolkit.Traffic
         /// <summary>
         /// Main response element
         /// </summary>
-        [JsonProperty("tm")]
+        [JsonPropertyName("tm")]
         public Tm Tm { get; set; }
     }
 }

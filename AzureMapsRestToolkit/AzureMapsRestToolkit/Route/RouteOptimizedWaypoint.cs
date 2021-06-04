@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace AzureMapsToolkit.Common
 {
@@ -10,13 +11,13 @@ namespace AzureMapsToolkit.Common
         /// <summary>
         /// Optimized way point index from the system.
         /// </summary>
-        [JsonProperty("optimizedIndex")]
+        [JsonPropertyName("optimizedIndex")]
         public int OptimizedIndex { get; set; }
 
         /// <summary>
         /// Way point index provided by the user.
         /// </summary>
-        [JsonProperty("providedIndex")]
+        [JsonPropertyName("providedIndex")]
         public int ProvidedIndex { get; set; }
     }
 }

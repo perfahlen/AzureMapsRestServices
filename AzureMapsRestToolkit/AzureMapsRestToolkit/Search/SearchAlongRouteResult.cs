@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace AzureMapsToolkit.Search
 {
@@ -7,14 +7,14 @@ namespace AzureMapsToolkit.Search
         /// <summary>
         /// Detour time in seconds
         /// </summary>
-        [JsonProperty("detourTime")]
+        [JsonPropertyName("detourTime")]
         public int DetourTime { get; set; }
 
 
         /// <summary>
         /// Entity Type property
         /// </summary>
-        [JsonProperty("entityType")]
+        [JsonPropertyName("entityType")]
         public string EntityType { get; set; }
     }
 }

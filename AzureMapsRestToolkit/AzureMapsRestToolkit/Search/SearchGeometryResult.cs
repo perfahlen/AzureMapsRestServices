@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace AzureMapsToolkit.Search
 {
@@ -11,13 +11,13 @@ namespace AzureMapsToolkit.Search
         /// <summary>
         /// Entity Type property
         /// </summary>
-        [JsonProperty("entityTyp")]
+        [JsonPropertyName("entityTyp")]
         public string EntityType { get; set; }
 
         /// <summary>
         /// Info property
         /// </summary>
-        [JsonProperty("info")]
+        [JsonPropertyName("info")]
         public string Info { get; set; }
 
     }

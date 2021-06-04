@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace AzureMapsToolkit.Common
 {
@@ -10,13 +11,13 @@ namespace AzureMapsToolkit.Common
         /// <summary>
         /// The effect on the traffic flow. Contains a value in the tec001:EffectCode table, as defined in the TPEG2-TEC standard. Can be used to color-code traffic events according to severity.
         /// </summary>
-        [JsonProperty("effectCode")]
+        [JsonPropertyName("effectCode")]
         public int EffectCode { get; set; }
 
         /// <summary>
         /// List of elements.
         /// </summary>
-        [JsonProperty("causes")]
+        [JsonPropertyName("causes")]
         public RouteResultSectionTecCause[] Causes { get; set; }
     }
 }

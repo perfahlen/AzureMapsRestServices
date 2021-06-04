@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,13 +7,13 @@ namespace AzureMapsToolkit.Spatial
 {
     public class BufferResponse
     {
-        [JsonProperty("result")]
+        [JsonPropertyName("result")]
         public object Result { get; set; }
 
-        [JsonProperty("results")]
+        [JsonPropertyName("results")]
         public object Results { get; set; }
 
-        [JsonProperty("summary")]
+        [JsonPropertyName("summary")]
         public Summary Summary { get; set; }
     }
 

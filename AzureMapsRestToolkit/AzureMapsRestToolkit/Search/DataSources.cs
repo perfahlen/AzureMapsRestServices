@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace AzureMapsToolkit.Search
 {
@@ -7,7 +7,7 @@ namespace AzureMapsToolkit.Search
         /// <summary>
         /// Information about the geometric shape of the result. Only present if type == Geography.
         /// </summary>
-        [JsonProperty("geometry")]
+        [JsonPropertyName("geometry")]
         public DataSourcesGeometry Geometry { get; set; }
     }
 }

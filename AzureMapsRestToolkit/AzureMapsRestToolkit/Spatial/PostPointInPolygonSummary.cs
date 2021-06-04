@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,13 +10,13 @@ namespace AzureMapsToolkit.Spatial
         /// <summary>
         /// Processing information
         /// </summary>
-        [JsonProperty("information")]
+        [JsonPropertyName("information")]
         public string Information { get; set; }
 
         /// <summary>
         /// A location represented as a latitude and longitude
         /// </summary>
-        [JsonProperty("sourcePoint")]
+        [JsonPropertyName("sourcePoint")]
         public Coordinate SourcePoint { get; set; }
 
 

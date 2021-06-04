@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 namespace AzureMapsToolkit.Search
 {
     public class SearchFuzzyResult : SearchResult
@@ -6,7 +6,7 @@ namespace AzureMapsToolkit.Search
         /// <summary>
         /// The address of the result
         /// </summary>
-        [JsonProperty("adress")]
+        [JsonPropertyName("adress")]
         public SearchResultAddress[] Addresses { get; set; }
 
         //hack for hiding
@@ -15,14 +15,14 @@ namespace AzureMapsToolkit.Search
         /// <summary>
         /// Describes the address range on both sides of the street for a search result. Coordinates for the start and end locations of the address range are included.
         /// </summary>
-        [JsonProperty("addressRanges")]
+        [JsonPropertyName("addressRanges")]
         public SearchResultAddressRanges AddressRanges { get; set; }
 
 
         /// <summary>
         /// Optional section. Reference ids for use with the Get Search Polygon API.
         /// </summary>
-        [JsonProperty("dataSources")]
+        [JsonPropertyName("dataSources")]
         public DataSources DataSources { get; set; }
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace AzureMapsToolkit.Search
         ///  - Neighbourhood
         ///  - PostalCodeArea
         /// </summary>
-        [JsonProperty("entityType")]
+        [JsonPropertyName("entityType")]
         public string EntityType { get; set; }
 
 
@@ -44,7 +44,7 @@ namespace AzureMapsToolkit.Search
         /// <summary>
         /// Info property
         /// </summary>
-        [JsonProperty("info")]
+        [JsonPropertyName("info")]
         public string Info { get; set; }
     }
 }

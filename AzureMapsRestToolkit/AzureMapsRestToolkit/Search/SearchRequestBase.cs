@@ -1,5 +1,5 @@
 ﻿using AzureMapsToolkit.Common;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace AzureMapsToolkit.Search
 {

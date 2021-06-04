@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace AzureMapsToolkit.Mobility
 {
@@ -8,25 +8,25 @@ namespace AzureMapsToolkit.Mobility
         /// <summary>
         /// The Id of the relevant transit agency, for example, '5872'
         /// </summary>
-        [JsonProperty("agencyId")]
+        [JsonPropertyName("agencyId")]
         public string AgencyId { get; set; }
 
         /// <summary>
         /// The agency’s GTFS Id.
         /// </summary>
-        [JsonProperty("agencyKey")]
+        [JsonPropertyName("agencyKey")]
         public string AgencyKey { get; set; }
 
         /// <summary>
         /// Name of the relevant transit agency, e.g. Metro Transit.
         /// </summary>
-        [JsonProperty("agencyName")]
+        [JsonPropertyName("agencyName")]
         public string AgencyName { get; set; }
 
         /// <summary>
         /// Supported public transit type. One of Tram, Subway, Rail, Bus, Ferry, CableCar, Gondola, Funicular.
         /// </summary>
-        [JsonProperty("transitType")]
+        [JsonPropertyName("transitType")]
         public TransitTypeResult TransitType { get; set; }
     }
 }

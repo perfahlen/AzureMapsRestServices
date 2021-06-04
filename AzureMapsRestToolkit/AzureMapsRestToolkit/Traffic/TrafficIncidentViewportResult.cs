@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace AzureMapsToolkit.Traffic
 {
@@ -10,7 +10,7 @@ namespace AzureMapsToolkit.Traffic
         /// <summary>
         /// Viewport Response object
         /// </summary>
-        [JsonProperty("viewpResp")]
+        [JsonPropertyName("viewpResp")]
         public ViewpResp ViewpResp { get; set; }
     }
 }

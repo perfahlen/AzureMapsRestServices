@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace AzureMapsToolkit.Spatial
 {
@@ -7,13 +7,13 @@ namespace AzureMapsToolkit.Spatial
         /// <summary>
         /// Point In Polygon Result Object
         /// </summary>
-        [JsonProperty("result")]
+        [JsonPropertyName("result")]
         public PointInPolygonResult Result { get; set; }
 
         /// <summary>
         /// Point In Polygon Summary object
         /// </summary>
-        [JsonProperty("summary")]
+        [JsonPropertyName("summary")]
         public PostPointInPolygonSummary Summary { get; set; }
     }
 }

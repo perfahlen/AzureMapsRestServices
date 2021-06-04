@@ -1,5 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json;
 using System;
+using System.Text.Json.Serialization;
 
 namespace AzureMapsToolkit.Data
 {
@@ -8,7 +9,7 @@ namespace AzureMapsToolkit.Data
         /// <summary>
         /// The unique data id for the data.
         /// </summary>
-        [JsonProperty("udid")]
+        [JsonPropertyName("udid")]
         public Guid Udid { get; set; }
     }
 }

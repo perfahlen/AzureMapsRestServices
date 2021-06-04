@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace AzureMapsToolkit.Common
 {
@@ -10,13 +11,13 @@ namespace AzureMapsToolkit.Common
         /// <summary>
         /// Groups a sequence of instruction elements which are related to each other.
         /// </summary>
-        [JsonProperty("instructionGroups")]
+        [JsonPropertyName("instructionGroups")]
         public RouteResultInstructionGroup[] InstructionGroups { get; set; }
 
         /// <summary>
         /// A list of instructions describing maneuvers.
         /// </summary>
-        [JsonProperty("instructions")]
+        [JsonPropertyName("instructions")]
         public RouteResultInstruction[] Instructions { get; set; }
     }
 }

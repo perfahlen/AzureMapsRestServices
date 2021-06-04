@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace AzureMapsToolkit.Render
 {
@@ -15,7 +16,7 @@ namespace AzureMapsToolkit.Render
         /// <summary>
         /// Label property
         /// </summary>
-        [JsonProperty("label")]
+        [JsonPropertyName("label")]
         public string Label { get; set; }
     }
 }

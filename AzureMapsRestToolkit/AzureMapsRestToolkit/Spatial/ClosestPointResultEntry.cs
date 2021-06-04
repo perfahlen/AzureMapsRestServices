@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace AzureMapsToolkit.Spatial
 {
@@ -10,19 +10,19 @@ namespace AzureMapsToolkit.Spatial
         /// <summary>
         /// The distance in meters from the source point to the closest point
         /// </summary>
-        [JsonProperty("distanceInMeters")]
+        [JsonPropertyName("distanceInMeters")]
         public double DistanceInMeters { get; set; }
 
         /// <summary>
         /// The unique id identifies a geometry
         /// </summary>
-        [JsonProperty("geometryId")]
+        [JsonPropertyName("geometryId")]
         public int GeometryId { get; set; }
 
         /// <summary>
         /// A location represented as a latitude and longitude
         /// </summary>
-        [JsonProperty("position")]
+        [JsonPropertyName("position")]
         public Coordinate Position { get; set; }
     }
 }

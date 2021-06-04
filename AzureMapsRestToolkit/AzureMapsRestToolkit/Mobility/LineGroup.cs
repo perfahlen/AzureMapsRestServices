@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace AzureMapsToolkit.Mobility
 {
@@ -43,7 +43,7 @@ namespace AzureMapsToolkit.Mobility
         /// <summary>
         /// The public transit type of the line.
         /// </summary>
-        [JsonConverter(typeof(StringEnumConverter))]
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         public TransitType TransitType { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace AzureMapsToolkit.Timezone
 {
@@ -7,26 +7,26 @@ namespace AzureMapsToolkit.Timezone
         /// <summary>
         /// AliasOf property
         /// </summary>
-        [JsonProperty("aliasOf")]
+        [JsonPropertyName("aliasOf")]
         public string AliasOf { get; set; }
 
 
         /// <summary>
         /// HasZone1970Location property
         /// </summary>
-        [JsonProperty("hasZone1970Location")]
+        [JsonPropertyName("hasZone1970Location")]
         public bool HasZone1970Location { get; set; }
 
         /// <summary>
         /// Id property
         /// </summary>
-        [JsonProperty("id")]
+        [JsonPropertyName("id")]
         public string Id { get; set; }
 
         /// <summary>
         /// IsAlias property
         /// </summary>
-        [JsonProperty("isAlias")]
+        [JsonPropertyName("isAlias")]
         public bool IsAlias { get; set; }
     }
 }

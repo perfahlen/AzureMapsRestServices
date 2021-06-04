@@ -1,4 +1,10 @@
-﻿using AzureMapsToolkit.Common;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+using Azure.Core.GeoJson;
+
+using AzureMapsToolkit.Common;
 using AzureMapsToolkit.Data;
 using AzureMapsToolkit.GeoJson;
 using AzureMapsToolkit.Mobility;
@@ -8,9 +14,6 @@ using AzureMapsToolkit.Search;
 using AzureMapsToolkit.Spatial;
 using AzureMapsToolkit.Timezone;
 using AzureMapsToolkit.Traffic;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace AzureMapsToolkit
 {
@@ -110,7 +113,7 @@ namespace AzureMapsToolkit
 
         Task<(string ResultUrl, Exception ex)> GetSearchFuzzy(IEnumerable<SearchFuzzyRequest> req);
 
-        Task<Response<SearchGeometryResponse>> GetSearchInsidePolygon(SearchInsidePolygonRequest request, Object geoJson);
+        Task<Response<SearchGeometryResponse>> GetSearchInsidePolygon(SearchInsidePolygonRequest request, GeoCollection geoJson);
 
         Task<Response<TimezoneResult>> GetTimezoneByCoordinates(TimeZoneRequest req);
 

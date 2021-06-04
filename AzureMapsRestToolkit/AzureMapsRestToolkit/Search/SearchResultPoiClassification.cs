@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 namespace AzureMapsToolkit.Search
 {
     public class SearchResultPoiClassification
@@ -7,14 +7,14 @@ namespace AzureMapsToolkit.Search
         /// <summary>
         /// Code property
         /// </summary>
-        [JsonProperty("code")]
+        [JsonPropertyName("code")]
         public string Code { get; set; }
 
 
         /// <summary>
         /// Names array
         /// </summary>
-        [JsonProperty("names")]
+        [JsonPropertyName("names")]
         public SearchResultPoiClassificationName[] Names { get; set; }
 
     }

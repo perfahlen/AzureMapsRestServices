@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace AzureMapsToolkit.Geolocation
 {
@@ -12,11 +13,13 @@ namespace AzureMapsToolkit.Geolocation
         /// <summary>
         /// The object containing the country/region information.
         /// </summary>
+        [JsonPropertyName("countryRegion")]
         public CountryRegion CountryRegion { get; set; }
 
         /// <summary>
         /// The IP Address of the request.
         /// </summary>
+        [JsonPropertyName("ipAddress")]
         public string IPAddress { get; set; }
     }
 }

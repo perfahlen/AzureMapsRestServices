@@ -1,22 +1,23 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace AzureMapsToolkit.Common
 {
     public class RouteMatrixResponseSummary
     {
-        [JsonProperty("lengthInMeters")]
+        [JsonPropertyName("lengthInMeters")]
         public int LengthInMeters { get; set; }
 
-        [JsonProperty("travelTimeInSeconds")]
+        [JsonPropertyName("travelTimeInSeconds")]
         public int TravelTimeInSeconds { get; set; }
 
-        [JsonProperty("trafficDelayInSeconds")]
+        [JsonPropertyName("trafficDelayInSeconds")]
         public int TrafficDelayInSeconds { get; set; }
 
-        [JsonProperty("departureTime")]
+        [JsonPropertyName("departureTime")]
         public string DepartureTime { get; set; }
 
-        [JsonProperty("arrivalTime")]
-        public string arrivalTime { get; set; }
+        [JsonPropertyName("arrivalTime")]
+        public string ArrivalTime { get; set; }
     }
 }

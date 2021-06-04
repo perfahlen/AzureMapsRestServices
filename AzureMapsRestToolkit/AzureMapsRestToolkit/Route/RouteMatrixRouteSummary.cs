@@ -1,10 +1,11 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace AzureMapsToolkit.Common
 {
     public class RouteMatrixRouteSummary
     {
-        [JsonProperty("routeSummary")]
+        [JsonPropertyName("routeSummary")]
         public RouteMatrixResponseSummary RouteSummary { get; set; }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using AzureMapsToolkit.Common;
-using Newtonsoft.Json;
+using System.Text.Json;
 using System;
 
 namespace AzureMapsToolkit.Route

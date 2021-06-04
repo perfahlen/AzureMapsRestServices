@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,7 +13,7 @@ namespace AzureMapsToolkit.Traffic
         /// <summary>
         /// Flow Segment Data property
         /// </summary>
-        [JsonProperty("flowSegmentData")]
+        [JsonPropertyName("flowSegmentData")]
         public FlowSegmentData FlowSegmentData { get; set; }
     }
 }

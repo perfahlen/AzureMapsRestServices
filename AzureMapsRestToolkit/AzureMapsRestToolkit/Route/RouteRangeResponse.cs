@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace AzureMapsToolkit.Common
 {
@@ -7,7 +8,7 @@ namespace AzureMapsToolkit.Common
         /// <summary>
         /// Reachable Range
         /// </summary>
-        [JsonProperty("reachableRange")]
+        [JsonPropertyName("reachableRange")]
         public RouteRange ReachableRange { get; set; }
         
     }

@@ -1,5 +1,6 @@
 ﻿using AzureMapsToolkit.Common;
-using Newtonsoft.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace AzureMapsToolkit.Mobility
 {
@@ -11,13 +12,13 @@ namespace AzureMapsToolkit.Mobility
         /// <summary>
         /// A location represented as a latitude and longitude.
         /// </summary>
-        [JsonProperty("btmRightPoint")]
+        [JsonPropertyName("btmRightPoint")]
         public Coordinate BtmRightPoint { get; set; }
 
         /// <summary>
         /// A location represented as a latitude and longitude.
         /// </summary>
-        [JsonProperty("topLeftPoint")]
+        [JsonPropertyName("topLeftPoint")]
         public Coordinate TopLeftPoint { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace AzureMapsToolkit.Search
 {
@@ -9,13 +9,13 @@ namespace AzureMapsToolkit.Search
         /// <summary>
         /// Straight line distance between the result and geobias location in meters.
         /// </summary>
-        [JsonProperty("dist")]
+        [JsonPropertyName("dist")]
         public double Distance { get; set; }
 
         /// <summary>
         /// Info property
         /// </summary>
-        [JsonProperty("info")]
+        [JsonPropertyName("info")]
         public string Info { get; set; }
 
 

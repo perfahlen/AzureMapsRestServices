@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace AzureMapsToolkit.Search
 {
@@ -21,19 +21,19 @@ namespace AzureMapsToolkit.Search
         ///   -extendedPostalCodesFor = None
         ///   Extended postal code is returned as an extendedPostalCode property of an address. Availability is region-dependent.
         /// </summary>
-        [JsonProperty("extendedPostalCodesFor")]
+        [JsonPropertyName("extendedPostalCodesFor")]
         public string ExtendedPostalCodesFor { get; set; }
 
         /// <summary>
         /// Starting offset of the returned results within the full result set
         /// </summary>
-        [JsonProperty("ofs")]
+        [JsonPropertyName("ofs")]
         public int? Offset { get; set; }
 
         /// <summary>
         /// Maximum number of responses that will be returned
         /// </summary>
-        [JsonProperty("limit")]
+        [JsonPropertyName("limit")]
         public int? Limit { get; set; }
     }
 }

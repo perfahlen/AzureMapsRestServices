@@ -1,6 +1,6 @@
 ﻿using AzureMapsToolkit.Common;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace AzureMapsToolkit.Mobility
 {
@@ -22,7 +22,7 @@ namespace AzureMapsToolkit.Mobility
         /// <summary>
         /// The transit type of most lines stopping at this stop. One of Tram, Subway, Rail, Bus, Ferry, CableCar, Gondola, Funicular
         /// </summary>
-        [JsonConverter(typeof(StringEnumConverter))]
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         public TransitType MainTransitType { get; set; }
 
         /// <summary>

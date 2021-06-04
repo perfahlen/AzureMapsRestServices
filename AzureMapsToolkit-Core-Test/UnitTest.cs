@@ -1,20 +1,21 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.Json;
+using System.Threading.Tasks;
+
+using Azure.Core.GeoJson;
+
+using AzureMapsToolkit;
 using AzureMapsToolkit.Common;
+using AzureMapsToolkit.Mobility;
+using AzureMapsToolkit.Render;
+using AzureMapsToolkit.Route;
 using AzureMapsToolkit.Search;
 using AzureMapsToolkit.Timezone;
-using GeoJSON.Net.Geometry;
-using Newtonsoft.Json;
-using System.Collections.Generic;
-using Xunit;
-using System.Linq;
 using AzureMapsToolkit.Traffic;
-using AzureMapsToolkit.Render;
-using AzureMapsToolkit;
-using System.Threading.Tasks;
-using System;
-using System.IO;
-using static System.Net.Mime.MediaTypeNames;
-using AzureMapsToolkit.Mobility;
-using AzureMapsToolkit.Route;
+
+using Xunit;
 
 namespace AzureMapsToolkit_Core_Test
 {
@@ -79,7 +80,7 @@ namespace AzureMapsToolkit_Core_Test
         public void GetCopyrightForWorld()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
-            var resp = am.GetCopyrightForWorld().Result;
+            _ = am.GetCopyrightForWorld().Result;
 
         }
 
@@ -199,61 +200,64 @@ namespace AzureMapsToolkit_Core_Test
         {
 
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
-            var req = new List<PostRouteDirectionsRequest>();
-            req.Add(new PostRouteDirectionsRequest
+            var req = new List<PostRouteDirectionsRequest>
             {
-                Query = "47.620659,-122.348934:47.610101,-122.342015",
-                RouteType = RouteType.Fastest,
-                TravelMode = TravelMode.Car
-            });
+                new PostRouteDirectionsRequest
+                {
+                    Query = "47.620659,-122.348934:47.610101,-122.342015",
+                    RouteType = RouteType.Fastest,
+                    TravelMode = TravelMode.Car
+                },
 
-            req.Add(new PostRouteDirectionsRequest
-            {
-                Query = "40.759856,-73.985108:40.771136,-73.973506",
-                TravelMode = TravelMode.Pedestrian,
-                RouteType = RouteType.Shortest
-            });
+                new PostRouteDirectionsRequest
+                {
+                    Query = "40.759856,-73.985108:40.771136,-73.973506",
+                    TravelMode = TravelMode.Pedestrian,
+                    RouteType = RouteType.Shortest
+                },
 
-            req.Add(new PostRouteDirectionsRequest
-            {
-                Query = "48.923159,-122.557362:32.621279,-116.840362"
-            });
+                new PostRouteDirectionsRequest
+                {
+                    Query = "48.923159,-122.557362:32.621279,-116.840362"
+                }
+            };
 
-            var result = am.GetRouteDirections(req).Result;
+            var (ResultUrl, ex) = am.GetRouteDirections(req).Result;
 
-            Assert.Null(result.ex);
+            Assert.Null(ex);
 
-            Assert.NotNull(result.ResultUrl);
+            Assert.NotNull(ResultUrl);
 
-            Assert.True(result.ResultUrl.Length > 0);
+            Assert.True(ResultUrl.Length > 0);
 
         }
 
-       
+
         [Fact]
         public void GetDistanceMatrix()
         {
 
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
-            var req = new RouteMatrixRequest();
-            req.RouteType = RouteType.Fastest;
 
             var origins = new List<Coordinate> {
-                new Coordinate { Longitude = 4.85106f, Latitude = 52.36006f }
-                , new Coordinate { Longitude = 4.85056f, Latitude = 52.36187f}
+                new Coordinate { Longitude = 4.85106f, Latitude = 52.36006f },
+                new Coordinate { Longitude = 4.85056f, Latitude = 52.36187f}
             };
 
 
             var destinations = new List<Coordinate> {
-                new Coordinate { Longitude = 4.85003f, Latitude = 52.36241f }
-                , new Coordinate { Longitude =  13.42937f, Latitude = 52.50931f}
+                new Coordinate { Longitude = 4.85003f, Latitude = 52.36241f },
+                new Coordinate { Longitude =  13.42937f, Latitude = 52.50931f}
             };
 
-            var result = am.GetRouteMatrix(req, origins, destinations).Result;
+            var (ResultUrl, ex) = am.GetRouteMatrix(new RouteMatrixRequest
+            {
+                RouteType = RouteType.Fastest
+            }, origins, destinations).Result;
 
-            Assert.Null(result.ex);
+            Assert.Null(ex);
 
-            Assert.NotNull(result.ResultUrl);
+            Assert.NotNull(ResultUrl);
 
             GetDistanceMatrixResult();
 
@@ -264,23 +268,24 @@ namespace AzureMapsToolkit_Core_Test
         {
 
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
-            var req = new RouteMatrixRequest();
-            req.RouteType = RouteType.Fastest;
+            var req = new RouteMatrixRequest
+            {
+                RouteType = RouteType.Fastest
+            };
 
             var origins = new List<Coordinate> {
-                new Coordinate { Longitude = 4.85106f, Latitude = 52.36006f }
-                , new Coordinate { Longitude = 4.85056f, Latitude = 52.36187f}
+                new Coordinate { Longitude = 4.85106f, Latitude = 52.36006f },
+                new Coordinate { Longitude = 4.85056f, Latitude = 52.36187f}
             };
 
 
             var destinations = new List<Coordinate> {
-                new Coordinate { Longitude = 4.85003f, Latitude = 52.36241f }
-                , new Coordinate { Longitude =  13.42937f, Latitude = 52.50931f}
+                new Coordinate { Longitude = 4.85003f, Latitude = 52.36241f },
+                new Coordinate { Longitude =  13.42937f, Latitude = 52.50931f}
             };
+            var (ResultUrl, _) = am.GetRouteMatrix(req, origins, destinations).Result;
 
-            var result = am.GetRouteMatrix(req, origins, destinations).Result;
-
-            var matrixResponse = am.GetRouteMatrixResult(result.ResultUrl).Result;
+            var matrixResponse = am.GetRouteMatrixResult(ResultUrl).Result;
 
             Assert.Null(matrixResponse.Error);
             Assert.NotNull(matrixResponse.Result);
@@ -323,7 +328,7 @@ namespace AzureMapsToolkit_Core_Test
             {
                 //Query = "37.337,-121.89",
                 Query = "47.591180, -122.332700",
-                EntityType = SearchAddressEntityTypes.Municipality | SearchAddressEntityTypes.PostalCodeArea
+                EntityType = SearchAddressEntityType.Municipality | SearchAddressEntityType.PostalCodeArea
             };
 
             var resp = am.GetSearchAddressReverse(req).Result;
@@ -472,11 +477,11 @@ namespace AzureMapsToolkit_Core_Test
 
             var req = new SearchAddressRequest[] { req1, req2, req3 };
 
-            var res = am.GetSearchAddress(req).Result;
+            var (ResultUrl, ex) = am.GetSearchAddress(req).Result;
 
-            Assert.Null(res.ex);
+            Assert.Null(ex);
 
-            Assert.NotNull(res.ResultUrl);
+            Assert.NotNull(ResultUrl);
         }
 
         [Fact]
@@ -499,11 +504,11 @@ namespace AzureMapsToolkit_Core_Test
 
             var req = new SearchAddressReverseRequest[] { q1, q2, q3 };
 
-            var res = am.GetSearchAddressReverse(req).Result;
+            var (ResultUrl, ex) = am.GetSearchAddressReverse(req).Result;
 
-            Assert.Null(res.ex);
+            Assert.Null(ex);
 
-            Assert.NotNull(res.ResultUrl);
+            Assert.NotNull(ResultUrl);
         }
 
         [Fact]
@@ -565,11 +570,11 @@ namespace AzureMapsToolkit_Core_Test
             };
 
             var req = new SearchFuzzyRequest[] { q1, q2, q3 };
-            var res = am.GetSearchFuzzy(req).Result;
+            var (ResultUrl, ex) = am.GetSearchFuzzy(req).Result;
 
-            Assert.Null(res.ex);
+            Assert.Null(ex);
 
-            Assert.NotNull(res.ResultUrl);
+            Assert.NotNull(ResultUrl);
 
         }
 
@@ -577,7 +582,7 @@ namespace AzureMapsToolkit_Core_Test
         public void SearchInsidePolygon()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
-            var coll = JsonConvert.DeserializeObject<GeometryCollection>("{\"type\":\"GeometryCollection\",\"geometries\":[{\"type\":\"Polygon\",\"coordinates\":[[[-122.43576049804686,37.7524152343544],[-122.43301391601562,37.70660472542312],[-122.36434936523437,37.712059855877314],[-122.43576049804686,37.7524152343544]]]}]}");
+            var coll = JsonSerializer.Deserialize<GeoCollection>("{\"type\":\"GeometryCollection\",\"geometries\":[{\"type\":\"Polygon\",\"coordinates\":[[[-122.43576049804686,37.7524152343544],[-122.43301391601562,37.70660472542312],[-122.36434936523437,37.712059855877314],[-122.43576049804686,37.7524152343544]]]}]}");
             var d = am.GetSearchInsidePolygon(new SearchInsidePolygonRequest
             {
                 Query = "burger"
@@ -665,7 +670,7 @@ namespace AzureMapsToolkit_Core_Test
 
             Assert.Null(r.Error);
 
-            Assert.NotNull(r.Result); 
+            Assert.NotNull(r.Result);
         }
 
         [Fact]
@@ -825,7 +830,7 @@ namespace AzureMapsToolkit_Core_Test
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
             var res = am.GetList().Result;
-            Assert.InRange(res.Result.MapDataList.Count(), 0, int.MaxValue);
+            Assert.InRange(res.Result.MapDataList.Count, 0, int.MaxValue);
         }
 
         [Fact]
@@ -1068,8 +1073,7 @@ namespace AzureMapsToolkit_Core_Test
         public void GetTransitItenary()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
-
-            var res = am.GetTransitItinerary(new AzureMapsToolkit.Mobility.TransitItineraryRequest
+            _ = am.GetTransitItinerary(new AzureMapsToolkit.Mobility.TransitItineraryRequest
             {
             }).Result;
         }

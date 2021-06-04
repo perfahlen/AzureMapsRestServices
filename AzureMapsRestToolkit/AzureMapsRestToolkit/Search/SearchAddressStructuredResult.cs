@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace AzureMapsToolkit.Search
 {
@@ -8,19 +8,19 @@ namespace AzureMapsToolkit.Search
         /// <summary>
         /// Describes the address range on both sides of the street for a search result. Coordinates for the start and end locations of the address range are included.
         /// </summary>
-        [JsonProperty("addressRanges")]
+        [JsonPropertyName("addressRanges")]
         public SearchResultAddressRanges AddressRanges { get; set; }
 
         /// <summary>
         /// Straight line distance between the result and geobias location in meters.
         /// </summary>
-        [JsonProperty("dist")]
+        [JsonPropertyName("dist")]
         public double Dist { get; set; }
 
         /// <summary>
         /// Info property
         /// </summary>
-        [JsonProperty("info")]
+        [JsonPropertyName("info")]
         public string Info { get; set; }
     }
 }
