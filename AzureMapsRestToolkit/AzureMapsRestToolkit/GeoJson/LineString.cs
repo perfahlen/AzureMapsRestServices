@@ -1,6 +1,8 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 
+using AzureMapsToolkit.Traffic;
+
 namespace AzureMapsToolkit.GeoJson
 {
     public class LineString
@@ -9,7 +11,7 @@ namespace AzureMapsToolkit.GeoJson
         public string Type { get { return "LineString"; } }
 
         [JsonPropertyName("coordinates")]
-        public double[,] Coordinates { get; set; }
+        public Coordinates Coordinates { get; set; }
 
 
 

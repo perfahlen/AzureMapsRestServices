@@ -898,22 +898,20 @@ namespace AzureMapsToolkit
         /// <param name="req"></param>
         /// <param name="lineString"></param>
         /// <returns></returns>
-        public virtual async Task<Response<SearchAlongRouteResponse>> GetSearchAlongRoute(SearchAlongRouteRequest req, LineString lineString)
+        public virtual async Task<Response<SearchAlongRouteResponse>> GetSearchAlongRoute(SearchAlongRouteRequest req, GeoLineString lineString)
         {
             try
             {
-                var bodyContent = new { route = lineString };
 
-                //ToDo
-                var queryContent = "";  // JsonSerializer.Deserialize(bodyContent);
+                string queryContent = "{\"route\":" + JsonSerializer.Serialize(lineString) + "}";
 
-                var args = GetQuery<SearchAlongRouteRequest>(req, true);
+                string args = GetQuery<SearchAlongRouteRequest>(req, true);
 
-                var url = $"{baseDomain}/search/alongRoute/json?subscription-key={Key}&api-version=1.0{args}";
+                string url = $"{baseDomain}/search/alongRoute/json?subscription-key={Key}&api-version=1.0{args}";
 
-                using var responseMsg = await GetHttpResponseMessage(url, queryContent, HttpMethod.Post);
-                using var data = responseMsg.Content;
-                var content = await data.ReadAsStringAsync();
+                using HttpResponseMessage responseMsg = await GetHttpResponseMessage(url, queryContent, HttpMethod.Post);
+                using HttpContent data = responseMsg.Content;
+                string content = await data.ReadAsStringAsync();
                 var response = JsonSerializer.Deserialize<SearchAlongRouteResponse>(content);
                 return Response<SearchAlongRouteResponse>.CreateResponse(response);
             }

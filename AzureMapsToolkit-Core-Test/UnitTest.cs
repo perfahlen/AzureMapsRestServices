@@ -8,6 +8,7 @@ using Azure.Core.GeoJson;
 
 using AzureMapsToolkit;
 using AzureMapsToolkit.Common;
+using AzureMapsToolkit.GeoJson;
 using AzureMapsToolkit.Mobility;
 using AzureMapsToolkit.Render;
 using AzureMapsToolkit.Route;
@@ -523,15 +524,15 @@ namespace AzureMapsToolkit_Core_Test
                 Query = "burger"
             };
 
-            var lineString = new AzureMapsToolkit.GeoJson.LineString
+            List<GeoPosition> coordinates = new()
             {
-                Coordinates = new double[,] {
-                    { -122.143035, 47.653536 },
-                    {-122.187164, 47.617556 },
-                    { -122.114981, 47.570599},
-                    { -122.132756, 47.654009}
-                }
+                new GeoPosition(-122.143035, 47.653536),
+                new GeoPosition(-122.187164, 47.617556),
+                new GeoPosition(-122.114981, 47.570599),
+                new GeoPosition(-122.132756, 47.654009)
             };
+
+            GeoLineString lineString = new (coordinates);
 
             var result = am.GetSearchAlongRoute(req, lineString).Result;
 
