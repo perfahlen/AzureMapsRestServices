@@ -17,6 +17,7 @@ namespace AzureMapsToolkit.Spatial
         /// The unique id identifies a geometry
         /// </summary>
         [JsonPropertyName("geometryId")]
+        [JsonNumberHandling(JsonNumberHandling.AllowReadingFromString)]
         public int GeometryId { get; set; }
 
         /// <summary>
