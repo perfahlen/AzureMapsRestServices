@@ -1,10 +1,10 @@
 # Azure Maps REST Services
 
-[![NuGet](https://img.shields.io/badge/NuGet-6.0.0-blue.svg)](https://www.nuget.org/packages/AzureMapsRestToolkit/)
+[![NuGet](https://img.shields.io/badge/NuGet-7.0.0-blue.svg)](https://www.nuget.org/packages/AzureMapsRestToolkit/)
 [![license](https://img.shields.io/badge/license-MIT-yellow.svg)](https://github.com/perfahlen/AzureMapsRestServices/blob/master/LICENSE)
 
+# .NET 5 library to access AzureMaps Services
 
-# .Net Standard 2.0 library to access AzureMaps Services
 This library covers 50 Azure Maps services including the following services
 - Data services
 - Geolocation services
@@ -43,3 +43,23 @@ PM> Install-Package AzureMapsRestToolkit
 
 ## TLS 1.2 issue
 See issue <https://github.com/perfahlen/AzureMapsRestServices/issues/33>
+
+
+## .Net Standard 2.0 library to access AzureMaps Services (DEPRECATED)
+**NOTE, this version is deprecated and last release is 6.0.0.0**
+
+The .Net Standard release is available in the net-standard branch.
+
+Nuget: ```Install-Package AzureMapsRestToolkit -Version 6.0.0```
+
+.NET CLI ```dotnet add package AzureMapsRestToolkit --version 6.0.0```
+
+PackageReference ```<PackageReference Include="AzureMapsRestToolkit" Version="6.0.0" />```
+
+Cake
+```// Install AzureMapsRestToolkit as a Cake Addin
+#addin nuget:?package=AzureMapsRestToolkit&version=6.0.0
+
+// Install AzureMapsRestToolkit as a Cake Tool
+#tool nuget:?package=AzureMapsRestToolkit&version=6.0.0
+```
