@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace AzureMapsToolkit.GeoJson
 {
@@ -12,7 +13,7 @@ namespace AzureMapsToolkit.GeoJson
         /// <summary>
         /// Specifies the type for the object. Value should always be equal to "Polygon".
         /// </summary>
-        [JsonProperty("type")]
+        [JsonPropertyName("type")]
         public string Type
         {
             get { return "Polygon"; }
@@ -29,7 +30,7 @@ namespace AzureMapsToolkit.GeoJson
         /// <summary>
         /// Coordinates for the Polygon geometry type.
         /// </summary>
-        [JsonProperty("coordinates")]
+        [JsonPropertyName("coordinates")]
         public double[][][] Coordinates { get; set; }
     }
 }

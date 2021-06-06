@@ -1,5 +1,5 @@
 ﻿using AzureMapsToolkit.Common;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace AzureMapsToolkit.Traffic
 {
@@ -8,19 +8,19 @@ namespace AzureMapsToolkit.Traffic
         /// <summary>
         /// Zoom level for the desired tile. Zoom value must be in the range: 0-18 (inclusive).
         /// </summary>
-        [JsonProperty("zoom")]
+        [JsonPropertyName("zoom")]
         public int Zoom { get; set; }
 
         /// <summary>
         /// X coordinate of the tile on zoom grid. Value must be in the range [0, 2zoom -1].
         /// </summary>
-        [JsonProperty("x")]
+        [JsonPropertyName("x")]
         public int X { get; set; }
 
         /// <summary>
         /// Y coordinate of the tile on zoom grid. Value must be in the range [0, 2zoom -1].
         /// </summary>
-        [JsonProperty("y")]
+        [JsonPropertyName("y")]
         public int Y { get; set; }
     }
 }

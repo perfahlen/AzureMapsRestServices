@@ -1,5 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json;
 
+using System.Text.Json.Serialization;
 namespace AzureMapsToolkit.Common
 {
     /// <summary>
@@ -10,13 +11,13 @@ namespace AzureMapsToolkit.Common
         /// <summary>
         /// Latitude property
         /// </summary>
-        [JsonProperty("latitude")]
+        [JsonPropertyName("latitude")]
         public double Latitude { get; set; }
 
         /// <summary>
         /// Longitude property
         /// </summary>
-        [JsonProperty("longitude")]
+        [JsonPropertyName("longitude")]
         public double Longitude { get; set; }
     }
 }

@@ -1,7 +1,8 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace AzureMapsToolkit.Data
 {
@@ -10,7 +11,7 @@ namespace AzureMapsToolkit.Data
         /// <summary>
         /// A list of all the previously uploaded data.
         /// </summary>
-        [JsonProperty("mapDataList")]
+        [JsonPropertyName("mapDataList")]
         public List<MapDataDetailInfo> MapDataList { get; set; }
     }
 }

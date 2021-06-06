@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace AzureMapsToolkit.Spatial
 {
@@ -7,13 +7,13 @@ namespace AzureMapsToolkit.Spatial
         /// <summary>
         /// Result Object
         /// </summary>
-        [JsonProperty("result")]
+        [JsonPropertyName("result")]
         public Result Result { get; set; }
 
         /// <summary>
         /// Summary object
         /// </summary>
-        [JsonProperty("summary")]
+        [JsonPropertyName("summary")]
         public Summary Summary { get; set; }
     }
 }

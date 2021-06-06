@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,14 +14,14 @@ namespace AzureMapsToolkit.Spatial
         /// Closest Point Result Array
         /// </summary>
         /// 
-        [JsonProperty("result")]
+        [JsonPropertyName("result")]
         public ClosestPointResultEntry[] Result { get; set; }
 
 
         /// <summary>
         /// Get Closest Point Summary object
         /// </summary>
-        [JsonProperty("summary")]
+        [JsonPropertyName("summary")]
         public ClosestPointSummary Summary { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace AzureMapsToolkit.Common
 {
@@ -7,13 +8,13 @@ namespace AzureMapsToolkit.Common
         /// <summary>
         /// Number of successful routes in the response.
         /// </summary>
-        [JsonProperty("successfulRoutes ")]
+        [JsonPropertyName("successfulRoutes ")]
         public int SuccessfulRoutes { get; set; }
 
         /// <summary>
         /// Total number of routes requested. Number of cells in the input matrix.
         /// </summary>
-        [JsonProperty("totalRoutes")]
+        [JsonPropertyName("totalRoutes")]
         public int TotalRoutes { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace AzureMapsToolkit.Timezone
 {
@@ -10,7 +10,7 @@ namespace AzureMapsToolkit.Timezone
         /// <summary>
         /// Version property
         /// </summary>
-        [JsonProperty("version")]
+        [JsonPropertyName("Version")]
         public string Version { get; set; }
     }
 }

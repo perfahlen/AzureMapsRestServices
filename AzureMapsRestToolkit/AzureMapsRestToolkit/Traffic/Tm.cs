@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace AzureMapsToolkit.Traffic
 {
@@ -10,13 +10,13 @@ namespace AzureMapsToolkit.Traffic
         /// <summary>
         /// ID of the traffic incident
         /// </summary>
-        [JsonProperty("@id")]
+        [JsonPropertyName("@id")]
         public string Id { get; set; }
 
         /// <summary>
         /// A single traffic incident, or a cluster of traffic incidents
         /// </summary>
-        [JsonProperty("poi")]
+        [JsonPropertyName("poi")]
         public TrafficIncidentPoi[] Poi { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace AzureMapsToolkit.Common
 {
@@ -10,14 +11,14 @@ namespace AzureMapsToolkit.Common
         /// <summary>
         /// Polygon boundary of the reachable range represented as a list of points.
         /// </summary>
-        [JsonProperty("boundary")]
+        [JsonPropertyName("boundary")]
         public Coordinate[] Boundary { get; set; }
 
 
         /// <summary>
         /// Center point of the reachable range
         /// </summary>
-        [JsonProperty("center")]
+        [JsonPropertyName("center")]
         public Coordinate Center { get; set; }
     }
 }

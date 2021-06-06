@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace AzureMapsToolkit.Spatial
 {
@@ -7,7 +7,7 @@ namespace AzureMapsToolkit.Spatial
         /// <summary>
         /// The great circle distance in meters from the source point to the target point
         /// </summary>
-        [JsonProperty("distanceInMeters")]
+        [JsonPropertyName("distanceInMeters")]
         public double DistanceInMeters { get; set; }
     }
 }

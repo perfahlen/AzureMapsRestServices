@@ -12,28 +12,28 @@ using AzureMapsToolkit.Geolocation;
 using AzureMapsToolkit.Spatial;
 using System.Net.Http;
 using AzureMapsToolkit.Data;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Globalization;
 using AzureMapsToolkit.Mobility;
-using Newtonsoft.Json.Schema;
+//using Newtonsoft.Json.Schema;
 using AzureMapsToolkit.Route;
 using System.Text;
-using Newtonsoft.Json.Linq;
+using Azure.Core.GeoJson;
+//using Newtonsoft.Json.Linq;
 
 namespace AzureMapsToolkit
 {
     public class AzureMapsServices : BaseServices, IAzureMapsServices
     {
-
-
-        string Format { get { return "json"; } }
+        //static string Format { get { return "json"; } }
 
         private readonly string baseDomain;
 
+        private readonly JsonSerializerOptions serializerOptions;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="key"></param>
         public AzureMapsServices(string key, string baseDomain = "https://atlas.microsoft.com") : base(key)
@@ -45,11 +45,10 @@ namespace AzureMapsToolkit
 
             this.baseDomain = baseDomain;
 
-            JsonConvert.DefaultSettings = () =>
-                new JsonSerializerSettings
-                {
-                    ContractResolver = new CamelCasePropertyNamesContractResolver()
-                };
+            serializerOptions = new()
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            };
         }
 
         #region Mobility
@@ -168,15 +167,11 @@ namespace AzureMapsToolkit
 
                 var url = $"{baseDomain}/spatial/pointInPolygon/json?subscription-key={base.Key}{query}";
 
-                using (var response = await GetHttpResponseMessage(url, geoJson, HttpMethod.Post))
-                {
-                    using (var responseMessage = response.Content)
-                    {
-                        var responseData = await responseMessage.ReadAsStringAsync();
-                        var res = Newtonsoft.Json.JsonConvert.DeserializeObject<PostPointInPolygonResponse>(responseData);
-                        return new Response<PostPointInPolygonResponse> { Result = res };
-                    }
-                }
+                using var response = await GetHttpResponseMessage(url, geoJson, HttpMethod.Post);
+                using var responseMessage = response.Content;
+                var responseData = await responseMessage.ReadAsStringAsync();
+                var res = JsonSerializer.Deserialize<PostPointInPolygonResponse>(responseData);
+                return new Response<PostPointInPolygonResponse> { Result = res };
 
             }
             catch (AzureMapsException ex)
@@ -199,15 +194,11 @@ namespace AzureMapsToolkit
 
                 var url = $"{baseDomain}/spatial/geofence/json?subscription-key={base.Key}{query}";
 
-                using (var response = await GetHttpResponseMessage(url, geoJson, HttpMethod.Post))
-                {
-                    using (var responseMessage = response.Content)
-                    {
-                        var responseData = await responseMessage.ReadAsStringAsync();
-                        var res = Newtonsoft.Json.JsonConvert.DeserializeObject<GeofenceResponse>(responseData);
-                        return new Response<GeofenceResponse> { Result = res };
-                    }
-                }
+                using var response = await GetHttpResponseMessage(url, geoJson, HttpMethod.Post);
+                using var responseMessage = response.Content;
+                var responseData = await responseMessage.ReadAsStringAsync();
+                var res = JsonSerializer.Deserialize<GeofenceResponse>(responseData);
+                return new Response<GeofenceResponse> { Result = res };
 
             }
             catch (AzureMapsException ex)
@@ -229,15 +220,11 @@ namespace AzureMapsToolkit
                 var query = base.GetQuery<PostClosestPointRequest>(req, true);
                 var url = $"{baseDomain}/spatial/closestPoint/json?subscription-key={base.Key}{query}";
 
-                using (var response = await GetHttpResponseMessage(url, geoJson, HttpMethod.Post))
-                {
-                    using (var responseMessage = response.Content)
-                    {
-                        var responseData = await responseMessage.ReadAsStringAsync();
-                        var res = Newtonsoft.Json.JsonConvert.DeserializeObject<ClosestPointResponse>(responseData);
-                        return new Response<ClosestPointResponse> { Result = res };
-                    }
-                }
+                using var response = await GetHttpResponseMessage(url, geoJson, HttpMethod.Post);
+                using var responseMessage = response.Content;
+                var responseData = await responseMessage.ReadAsStringAsync();
+                var res = JsonSerializer.Deserialize<ClosestPointResponse>(responseData);
+                return new Response<ClosestPointResponse> { Result = res };
 
             }
             catch (AzureMapsException ex)
@@ -348,21 +335,17 @@ namespace AzureMapsToolkit
         {
             try
             {
-                var url = $"{baseDomain}/mapData/{udid.ToString()}?subscription-key={Key}&api-version=1.0";
+                var url = $"{baseDomain}/mapData/{udid}?subscription-key={Key}&api-version=1.0";
 
-                using (var client = new HttpClient())
-                {
-                    using (var request = new HttpRequestMessage(HttpMethod.Delete, url))
-                    {
+                using var client = new HttpClient();
+                using var request = new HttpRequestMessage(HttpMethod.Delete, url);
 
 
-                        var response = await client.DeleteAsync(url);
+                var response = await client.DeleteAsync(url);
 
-                        if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
-                            return new Response<bool> { Result = true };
-                        throw new AzureMapsException(new ErrorResponse { Error = new Error() { Message = $"Didn't recieve 204 statuscode, recieved {response.StatusCode.ToString()}" } });
-                    }
-                }
+                if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
+                    return new Response<bool> { Result = true };
+                throw new AzureMapsException(new ErrorResponse { Error = new Error() { Message = $"Didn't recieve 204 statuscode, recieved {response.StatusCode}" } });
             }
             catch (AzureMapsException ex)
             {
@@ -381,19 +364,12 @@ namespace AzureMapsToolkit
             {
                 var url = $"{baseDomain}/mapData/{udid}?subscription-key={Key}&api-version=1.0";
 
-                using (var client = new HttpClient())
-                {
-                    using (var request = new HttpRequestMessage(HttpMethod.Get, url))
-                    {
+                using var client = new HttpClient();
+                using var request = new HttpRequestMessage(HttpMethod.Get, url);
 
-                        using (var response = await client.GetAsync(url))
-                        {
-                            var geojson = response.Content.ReadAsStringAsync().Result;
-                            return new Response<string> { Result = geojson };
-                        }
-
-                    }
-                }
+                using var response = await client.GetAsync(url);
+                var geojson = response.Content.ReadAsStringAsync().Result;
+                return new Response<string> { Result = geojson };
             }
             catch (AzureMapsException ex)
             {
@@ -402,7 +378,7 @@ namespace AzureMapsToolkit
         }
 
         /// <summary>
-        /// This API allows the caller to fetch a list of all content uploaded previously using the Data Upload API.ít 
+        /// This API allows the caller to fetch a list of all content uploaded previously using the Data Upload API.ít
         /// </summary>
         /// <returns></returns>
         public virtual async Task<Response<MapDataListResponse>> GetList()
@@ -439,7 +415,7 @@ namespace AzureMapsToolkit
                 // make another request and wait for the request is processed by the service
                 var udidUrl = $"{location}&subscription-key={this.Key}";
                 string udid = GetUdidFromLocation(udidUrl);
-                var uploadResult = Newtonsoft.Json.JsonConvert.DeserializeObject<UploadResult>(udid);
+                var uploadResult = JsonSerializer.Deserialize<UploadResult>(udid);
                 return new Response<UploadResult> { Result = new UploadResult { Udid = uploadResult.Udid } };
 
             }
@@ -466,13 +442,13 @@ namespace AzureMapsToolkit
                     throw new ArgumentException("GeoJson paramater cannot be empty or null");
                 }
 
-                var url = $"{baseDomain}/mapData/{udid.ToString()}?api-version=1.0&subscription-key={Key}";
+                var url = $"{baseDomain}/mapData/{udid}?api-version=1.0&subscription-key={Key}";
 
                 var res = await GetHttpResponseMessage(url, geoJson, HttpMethod.Put);
                 var location = res.Headers.GetValues("Location").First();
                 var udidUrl = $"{location}&subscription-key={this.Key}";
                 string sUdid = GetUdidFromLocation(udidUrl);
-                var updateResult = Newtonsoft.Json.JsonConvert.DeserializeObject<UploadResult>(sUdid);
+                var updateResult = JsonSerializer.Deserialize<UploadResult>(sUdid,serializerOptions);
                 return new Response<UpdateResult> { Result = new UpdateResult { Udid = updateResult.Udid } };
             }
             catch (AzureMapsException ex)
@@ -613,7 +589,7 @@ namespace AzureMapsToolkit
         }
 
         /// <summary>
-        /// Fetches map tiles in vector or raster format typically to be integrated into a new map control or SDK. By default, Azure uses vector map tiles for its web map control 
+        /// Fetches map tiles in vector or raster format typically to be integrated into a new map control or SDK. By default, Azure uses vector map tiles for its web map control
         /// </summary>
         /// <returns></returns>
         public virtual async Task<Response<byte[]>> GetMapTile(MapTileRequest req)
@@ -659,7 +635,7 @@ namespace AzureMapsToolkit
 
         /// <summary>
         /// This service will calculate a set of locations that can be reached from the origin point based on fuel, energy, or time budget that is specified. A polygon boundary (or Isochrone) is returned in a counterclockwise orientation as well as the precise polygon center which was the result of the origin point.
-        /// 
+        ///
         /// The returned polygon can be used for further processing such as Search Inside Geometry to search for POIs within the provided Isochrone
         /// </summary>
         /// <param name="routeRequest"></param>
@@ -688,11 +664,9 @@ namespace AzureMapsToolkit
 
                     var queryContent = GetQuerycontent(queryCollection);
 
-                    using (var responseMessage = await GetHttpResponseMessage(url, queryContent, HttpMethod.Post))
-                    {
-                        var resultUrl = responseMessage.Headers.Location.AbsoluteUri;
-                        return (resultUrl, null);
-                    }
+                    using var responseMessage = await GetHttpResponseMessage(url, queryContent, HttpMethod.Post);
+                    var resultUrl = responseMessage.Headers.Location.AbsoluteUri;
+                    return (resultUrl, null);
                 }
                 catch (Exception ex)
                 {
@@ -707,7 +681,7 @@ namespace AzureMapsToolkit
 
 
         /// <summary>
-        /// The Matrix Routing service allows calculation of a matrix of route summaries for a set of routes defined by origin and destination locations. For every given origin, this service calculates the cost of routing from that origin to every given destination. The set of origins and the set of destinations can be thought of as the column and row headers of a table and each cell in the table contains the costs of routing from the origin to the destination for that cell. For each route, the travel times and distances are calculated. You can use the computed costs to determine which routes to calculate using the Routing Directions API. If the computation takes longer than 20 seconds or forceAsyn parameter in the request is set to true, this API returns a 202 response code along a redirect URL in the Location field of the response header. This URL should be checked periodically until the response data or error information is available. 
+        /// The Matrix Routing service allows calculation of a matrix of route summaries for a set of routes defined by origin and destination locations. For every given origin, this service calculates the cost of routing from that origin to every given destination. The set of origins and the set of destinations can be thought of as the column and row headers of a table and each cell in the table contains the costs of routing from the origin to the destination for that cell. For each route, the travel times and distances are calculated. You can use the computed costs to determine which routes to calculate using the Routing Directions API. If the computation takes longer than 20 seconds or forceAsyn parameter in the request is set to true, this API returns a 202 response code along a redirect URL in the Location field of the response header. This URL should be checked periodically until the response data or error information is available.
         /// The asynchronous responses are stored for 14 days. The redirect URL returns a 400 response if used after the expiration period.
         /// </summary>
         /// <param name="routeMatrixRequest"></param>
@@ -721,8 +695,8 @@ namespace AzureMapsToolkit
                 var url = $"{baseDomain}/route/matrix/json?subscription-key={Key}";
                 url += GetQuery<RouteMatrixRequest>(routeMatrixRequest, true);
 
-                var originPoints = GetMultipPoint(coordinatesOrigins);
-                var destinationsPoint = GetMultipPoint(coordinatesDestinations);
+                var originPoints = GetMultiPoint(coordinatesOrigins);
+                var destinationsPoint = GetMultiPoint(coordinatesDestinations);
 
                 var body = new
                 {
@@ -730,12 +704,10 @@ namespace AzureMapsToolkit
                     destinations = destinationsPoint
                 };
 
-                string data = Newtonsoft.Json.JsonConvert.SerializeObject(body);
+                string data = JsonSerializer.Serialize(body);
 
-                using (var response = await GetHttpResponseMessage(url, data, HttpMethod.Post))
-                {
-                    return (response.Headers.Location.AbsoluteUri, null); // .Location.AbsoluteUri;
-                }
+                using var response = await GetHttpResponseMessage(url, data, HttpMethod.Post);
+                return (response.Headers.Location.AbsoluteUri, null); // .Location.AbsoluteUri;
             }
             catch (Exception ex)
             {
@@ -750,17 +722,15 @@ namespace AzureMapsToolkit
         /// <returns></returns>
         public virtual async Task<Response<RouteMatrixResponse>> GetRouteMatrixResult(string url)
         {
-            using (var client = GetClient(url))
-            {
-                var routeMatrixResponse = await base.GetData<RouteMatrixResponse>(client, url);
-                var response = GetResponse<RouteMatrixResponse>(routeMatrixResponse);
-                return response;
-            }
+            using var client = GetClient(url);
+            var routeMatrixResponse = await GetData<RouteMatrixResponse>(client, url);
+            var response = GetResponse(routeMatrixResponse);
+            return response;
 
             //using (var client = GetClient(url))
             //{
             //    var res = await client.GetStringAsync(url);
-            //    var routeMatrixResponse = Newtonsoft.Json.JsonConvert.DeserializeObject<RouteMatrixResponse>(res);
+            //    var routeMatrixResponse = JsonSerializer.Deserialize<RouteMatrixResponse>(res);
             //    var response = GetResponse<RouteMatrixResponse>(routeMatrixResponse);
             //    return response;
             //}
@@ -791,7 +761,7 @@ namespace AzureMapsToolkit
         public virtual async Task<Response<SearchAddressReverseResponse>> GetSearchAddressReverse(SearchAddressReverseRequest request)
         {
 
-            var res = await ExecuteRequest<SearchAddressReverseResponse, SearchAddressReverseRequest>($"{baseDomain}/search/address/reverse/json", request);
+            var res = await ExecuteRequest<SearchAddressReverseResponse, SearchAddressReverseRequest>($"{baseDomain}/search/address/reverse/json", request, false);
             return res;
 
         }
@@ -883,12 +853,10 @@ namespace AzureMapsToolkit
 
                 var queryContent = GetQuerycontent(queryCollection);
 
-                using (var responseMessage = await GetHttpResponseMessage(url, queryContent, HttpMethod.Post))
-                {
+                using var responseMessage = await GetHttpResponseMessage(url, queryContent, HttpMethod.Post);
 
-                    var resultUrl = responseMessage.Headers.Location.AbsoluteUri;
-                    return (resultUrl, null);
-                }
+                var resultUrl = responseMessage.Headers.Location.AbsoluteUri;
+                return (resultUrl, null);
 
             }
             catch (Exception ex)
@@ -911,11 +879,9 @@ namespace AzureMapsToolkit
 
                 var queryContent = GetQuerycontent(queryCollection);
 
-                using (var responseMessage = await GetHttpResponseMessage(url, queryContent, HttpMethod.Post))
-                {
-                    var resultUrl = responseMessage.Headers.Location.AbsoluteUri;
-                    return (resultUrl, null);
-                }
+                using var responseMessage = await GetHttpResponseMessage(url, queryContent, HttpMethod.Post);
+                var resultUrl = responseMessage.Headers.Location.AbsoluteUri;
+                return (resultUrl, null);
 
             }
             catch (Exception ex)
@@ -932,27 +898,22 @@ namespace AzureMapsToolkit
         /// <param name="req"></param>
         /// <param name="lineString"></param>
         /// <returns></returns>
-        public virtual async Task<Response<SearchAlongRouteResponse>> GetSearchAlongRoute(SearchAlongRouteRequest req, LineString lineString)
+        public virtual async Task<Response<SearchAlongRouteResponse>> GetSearchAlongRoute(SearchAlongRouteRequest req, GeoLineString lineString)
         {
             try
             {
-                var bodyContent = new { route = lineString };
 
-                var queryContent = Newtonsoft.Json.JsonConvert.SerializeObject(bodyContent);
+                string queryContent = "{\"route\":" + JsonSerializer.Serialize(lineString) + "}";
 
-                var args = GetQuery<SearchAlongRouteRequest>(req, true);
+                string args = GetQuery<SearchAlongRouteRequest>(req, true);
 
-                var url = $"{baseDomain}/search/alongRoute/json?subscription-key={Key}&api-version=1.0{args}";
+                string url = $"{baseDomain}/search/alongRoute/json?subscription-key={Key}&api-version=1.0{args}";
 
-                using (var responseMsg = await GetHttpResponseMessage(url, queryContent, HttpMethod.Post))
-                {
-                    using (var data = responseMsg.Content)
-                    {
-                        var content = await data.ReadAsStringAsync();
-                        var response = Newtonsoft.Json.JsonConvert.DeserializeObject<SearchAlongRouteResponse>(content);
-                        return Response<SearchAlongRouteResponse>.CreateResponse(response);
-                    }
-                }
+                using HttpResponseMessage responseMsg = await GetHttpResponseMessage(url, queryContent, HttpMethod.Post);
+                using HttpContent data = responseMsg.Content;
+                string content = await data.ReadAsStringAsync();
+                var response = JsonSerializer.Deserialize<SearchAlongRouteResponse>(content);
+                return Response<SearchAlongRouteResponse>.CreateResponse(response);
             }
             catch (AzureMapsException ex)
             {
@@ -978,11 +939,9 @@ namespace AzureMapsToolkit
 
                 var queryContent = GetQuerycontent(queryCollection);
 
-                using (var responseMessage = await GetHttpResponseMessage(url, queryContent, HttpMethod.Post))
-                {
-                    var resultUrl = responseMessage.Headers.Location.AbsoluteUri;
-                    return (resultUrl, null);
-                }
+                using var responseMessage = await GetHttpResponseMessage(url, queryContent, HttpMethod.Post);
+                var resultUrl = responseMessage.Headers.Location.AbsoluteUri;
+                return (resultUrl, null);
             }
             catch (Exception ex)
             {
@@ -991,32 +950,26 @@ namespace AzureMapsToolkit
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="request"></param>
         /// <param name="geoJson"></param>
         /// <returns></returns>
-        public virtual async Task<Response<SearchGeometryResponse>> GetSearchInsidePolygon(SearchInsidePolygonRequest request, Object geoJson)
+        public virtual async Task<Response<SearchGeometryResponse>> GetSearchInsidePolygon(SearchInsidePolygonRequest request, GeoCollection geoJson)
         {
             try
             {
-                var g = new { geometry = geoJson };
+                string json = "{\"geometry\":" + JsonSerializer.Serialize<GeoCollection>(geoJson) + "}";
 
-                var json = Newtonsoft.Json.JsonConvert.SerializeObject(g);
+                string args = GetQuery<SearchInsidePolygonRequest>(request, false);
 
-                var args = GetQuery<SearchInsidePolygonRequest>(request, false);
+                string url = $"{baseDomain}/search/geometry/json?subscription-key={Key}&api-version=1.0{args}";
 
-                var url = $"{baseDomain}/search/geometry/json?subscription-key={Key}&api-version=1.0{args}";
-
-                using (var responseMsg = await GetHttpResponseMessage(url, json, HttpMethod.Post))
-                {
-                    using (var data = responseMsg.Content)
-                    {
-                        var content = await data.ReadAsStringAsync();
-                        var response = Newtonsoft.Json.JsonConvert.DeserializeObject<SearchGeometryResponse>(content);
-                        return Response<SearchGeometryResponse>.CreateResponse(response);
-                    }
-                }
+                using HttpResponseMessage responseMsg = await GetHttpResponseMessage(url, json, HttpMethod.Post);
+                using HttpContent data = responseMsg.Content;
+                string content = await data.ReadAsStringAsync();
+                SearchGeometryResponse response = JsonSerializer.Deserialize<SearchGeometryResponse>(content);
+                return Response<SearchGeometryResponse>.CreateResponse(response);
             }
             catch (AzureMapsException ex)
             {

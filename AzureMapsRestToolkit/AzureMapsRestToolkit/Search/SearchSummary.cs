@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace AzureMapsToolkit.Search
 {
@@ -7,43 +7,43 @@ namespace AzureMapsToolkit.Search
         /// <summary>
         /// FuzzyLevel property
         /// </summary>
-        [JsonProperty("fuzzyLevel")]
+        [JsonPropertyName("fuzzyLevel")]
         public int FuzzyLevel { get; set; }
 
         /// <summary>
         /// NumResults property
         /// </summary>
-        [JsonProperty("numResults")]
+        [JsonPropertyName("numResults")]
         public int NumResults { get; set; }
 
         /// <summary>
         /// Offset property
         /// </summary>
-        [JsonProperty("offset")]
+        [JsonPropertyName("offset")]
         public int Offset { get; set; }
 
         /// <summary>
         /// Query property
         /// </summary>
-        [JsonProperty("query")]
+        [JsonPropertyName("query")]
         public string Query { get; set; }
 
         /// <summary>
         /// QueryTime property
         /// </summary>
-        [JsonProperty("queryTime")]
+        [JsonPropertyName("queryTime")]
         public int QueryTime { get; set; }
 
         /// <summary>
         /// QueryType property
         /// </summary>
-        [JsonProperty("queryType")]
+        [JsonPropertyName("queryType")]
         public string QueryType { get; set; }
 
         /// <summary>
         /// TotalResults property
         /// </summary>
-        [JsonProperty("totalResults")]
+        [JsonPropertyName("totalResults")]
         public int TotalResults { get; set; }
     }
 }

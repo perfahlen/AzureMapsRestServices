@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace AzureMapsToolkit.Common
 {
@@ -7,13 +8,13 @@ namespace AzureMapsToolkit.Common
         /// <summary>
         /// Points array
         /// </summary>
-        [JsonProperty("points")]
+        [JsonPropertyName("points")]
         public Coordinate[] Points { get; set; }
 
         /// <summary>
         /// Summary object for route section.
         /// </summary>
-        [JsonProperty("summary")]
+        [JsonPropertyName("summary")]
         public RouteResultLegSummary Summary { get; set; }
     }
 }

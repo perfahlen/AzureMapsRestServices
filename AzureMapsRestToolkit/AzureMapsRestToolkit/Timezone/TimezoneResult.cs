@@ -1,19 +1,19 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace AzureMapsToolkit.Timezone
 {
     public class TimezoneResult
     {
-        [JsonProperty("count")]
+        [JsonPropertyName("Count")]
         public int Count { get; set; }
 
-        [JsonProperty("referenceUtcTimestamp")]
+        [JsonPropertyName("ReferenceUtcTimestamp")]
         public string ReferenceUtcTimestamp { get; set; }
 
-        [JsonProperty("timeZones")]
+        [JsonPropertyName("TimeZones")]
         public Timezone[] TimeZones { get; set; }
 
-        [JsonProperty("version")]
+        [JsonPropertyName("Version")]
         public string Version { get; set; }
     }
 }

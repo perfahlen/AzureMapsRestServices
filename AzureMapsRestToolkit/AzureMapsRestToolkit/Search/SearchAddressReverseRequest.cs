@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace AzureMapsToolkit.Search
 {
@@ -66,7 +66,7 @@ namespace AzureMapsToolkit.Search
         /// - roadUse
         /// - returnMatchType
         /// </summary>
-        public SearchAddressEntityTypes? EntityType { get; set; }
+        public SearchAddressEntityType? EntityType { get; set; }
 
         
     }

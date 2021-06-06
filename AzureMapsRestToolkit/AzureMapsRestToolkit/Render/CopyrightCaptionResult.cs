@@ -1,7 +1,8 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace AzureMapsToolkit.Render
 {
@@ -13,13 +14,13 @@ namespace AzureMapsToolkit.Render
         /// <summary>
         /// Copyrights Caption property
         /// </summary>
-        [JsonProperty("copyrightsCaption")]
+        [JsonPropertyName("copyrightsCaption")]
         public string CopyrightsCaption { get; set; }
 
         /// <summary>
         /// Format Version property
         /// </summary>
-        [JsonProperty("formatVersion")]
+        [JsonPropertyName("formatVersion")]
         public string FormatVersion { get; set; }
     }
 }

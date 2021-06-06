@@ -1,13 +1,14 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace AzureMapsToolkit.GeoJson
 {
     public class MultiPoint
     {
-        [JsonProperty("coordinates")]
+        [JsonPropertyName("coordinates")]
         public double[,] Coordinates { get; set; }
 
-        [JsonProperty("type")]
+        [JsonPropertyName("type")]
         public string Type { get { return "MultiPoint"; } }
     }
 }

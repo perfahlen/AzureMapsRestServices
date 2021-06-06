@@ -5,7 +5,7 @@ namespace AzureMapsToolkit.Common
 {
     public static class Extensions
     {
-        public static string ToCamlCase(this string val)
+        public static string ToCamelCase(this string val)
         {
             char prevChar = val[0];
 

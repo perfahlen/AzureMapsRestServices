@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace AzureMapsToolkit.Spatial
 {
@@ -7,13 +7,13 @@ namespace AzureMapsToolkit.Spatial
         /// <summary>
         /// Geometries array
         /// </summary>
-        [JsonProperty("intersectingGeometries")]
+        [JsonPropertyName("intersectingGeometries")]
         public string[] IntersectingGeometries { get; set; }
 
         /// <summary>
         /// Point In Polygons Property
         /// </summary>
-        [JsonProperty("pointInPolygons")]
+        [JsonPropertyName("pointInPolygons")]
         public bool PointInPolygons { get; set; }
     }
 }

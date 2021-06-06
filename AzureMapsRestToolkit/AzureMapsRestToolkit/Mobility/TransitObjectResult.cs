@@ -1,5 +1,6 @@
 ﻿using AzureMapsToolkit.Common;
-using Newtonsoft.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace AzureMapsToolkit.Mobility
 {
@@ -8,31 +9,31 @@ namespace AzureMapsToolkit.Mobility
         /// <summary>
         /// The object identifier found as a result of the query, for example, stopId for stops.
         /// </summary>
-        [JsonProperty("id")]
+        [JsonPropertyName("id")]
         public string Id { get; set; }
 
         /// <summary>
         /// The object specific details.
         /// </summary>
-        [JsonProperty("objectDetails")]
+        [JsonPropertyName("objectDetails")]
         public object ObjectDetails { get; set; }
 
         /// <summary>
         /// The transit object's position.
         /// </summary>
-        [JsonProperty("position")]
+        [JsonPropertyName("position")]
         public Coordinate Position { get; set; }
 
         /// <summary>
         /// The type of object found as a result of the query.
         /// </summary>
-        [JsonProperty("type")]
+        [JsonPropertyName("type")]
         public string Type { get; set; }
 
         /// <summary>
         /// The viewport that covers the result represented by the top-left and bottom-right coordinates of the viewport.
         /// </summary>
-        [JsonProperty("viewport")]
+        [JsonPropertyName("viewport")]
         public ResultViewport Viewport { get; set; }
     }
 }

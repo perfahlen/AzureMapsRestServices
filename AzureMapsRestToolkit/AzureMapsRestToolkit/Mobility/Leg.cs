@@ -1,6 +1,6 @@
 ﻿using AzureMapsToolkit.GeoJson;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System;
 
 namespace AzureMapsToolkit.Mobility
@@ -37,7 +37,7 @@ namespace AzureMapsToolkit.Mobility
         /// <summary>
         /// The travel mode of the leg.
         /// </summary>
-        [JsonConverter(typeof(StringEnumConverter))]
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         public LegType LegType { get; set; }
 
 

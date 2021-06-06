@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace AzureMapsToolkit.Search
 {
@@ -10,13 +10,13 @@ namespace AzureMapsToolkit.Search
         /// <summary>
         /// A location represented as a latitude and longitude.
         /// </summary>
-        [JsonProperty("btmRightPoint")]
+        [JsonPropertyName("btmRightPoint")]
         public CoordinateAbbreviated BtmRightPoint { get; set; }
 
         /// <summary>
         /// A location represented as a latitude and longitude.
         /// </summary>
-        [JsonProperty("topLeftPoint")]
+        [JsonPropertyName("topLeftPoint")]
         public CoordinateAbbreviated TopLeftPoint { get; set; }
     }
 }

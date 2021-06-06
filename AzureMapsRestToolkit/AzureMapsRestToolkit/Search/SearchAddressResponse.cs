@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace AzureMapsToolkit.Search
 {
@@ -10,14 +10,14 @@ namespace AzureMapsToolkit.Search
         /// <summary>
         /// Results array
         /// </summary>
-        [JsonProperty("results")]
+        [JsonPropertyName("results")]
         public SearchAddressResult[] Results { get; set; }
 
 
         /// <summary>
         /// Summary object for a Search Address response
         /// </summary>
-        [JsonProperty("summary")]
+        [JsonPropertyName("summary")]
         public SearchSummary Summary { get; set; }
     }
 }

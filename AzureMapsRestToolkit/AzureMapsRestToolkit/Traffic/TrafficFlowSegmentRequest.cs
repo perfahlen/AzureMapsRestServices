@@ -1,5 +1,5 @@
 ﻿using AzureMapsToolkit.Common;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace AzureMapsToolkit.Traffic
 {
@@ -33,7 +33,7 @@ namespace AzureMapsToolkit.Traffic
         /// <summary>
         /// The style to be used to render the tile. Valid values are absolute which returns colors reflecting the absolute speed measured, relative which returns the speed relative to free-flow, Relative-delay which displays relative speeds only where they are different from the freeflow speeds
         /// </summary>
-        [JsonProperty("style")]
+        [JsonPropertyName("style")]
         public TrafficFlowSegmentStyle Style { get; set; }
     }
 }

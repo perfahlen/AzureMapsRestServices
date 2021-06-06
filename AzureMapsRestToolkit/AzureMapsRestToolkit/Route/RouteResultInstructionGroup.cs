@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace AzureMapsToolkit.Common
 {
@@ -10,25 +11,25 @@ namespace AzureMapsToolkit.Common
         /// <summary>
         /// 	Index of the first instruction.
         /// </summary>
-        [JsonProperty("firstInstructionIndex")]
+        [JsonPropertyName("firstInstructionIndex")]
         public int FirstInstructionIndex { get; set; }
 
         /// <summary>
         /// Length of the group
         /// </summary>
-        [JsonProperty("groupLengthInMeters")]
+        [JsonPropertyName("groupLengthInMeters")]
         public int GroupLengthInMeters { get; set; }
 
         /// <summary>
         /// Summary message when human-readable text messages are requested for guidance (instructionType=text or tagged).
         /// </summary>
-        [JsonProperty("groupMessage")]
+        [JsonPropertyName("groupMessage")]
         public string groupMessage { get; set; }
 
         /// <summary>
         /// Index of the last instruction.
         /// </summary>
-        [JsonProperty("lastInstructionIndex")]
+        [JsonPropertyName("lastInstructionIndex")]
         public int LastInstructionIndex { get; set; }
     }
 }

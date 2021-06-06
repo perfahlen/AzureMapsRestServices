@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace AzureMapsToolkit.Spatial
 {
@@ -10,13 +10,13 @@ namespace AzureMapsToolkit.Spatial
         /// <summary>
         /// The information about what happened during the call.
         /// </summary>
-        [JsonProperty("information")]
+        [JsonPropertyName("information")]
         public string Information { get; set; }
 
         /// <summary>
         /// The udid for the user data if one exists
         /// </summary>
-        [JsonProperty("udid")]
+        [JsonPropertyName("udid")]
         public string Udid { get; set; }
     }
 }

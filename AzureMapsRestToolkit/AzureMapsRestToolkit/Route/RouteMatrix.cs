@@ -1,13 +1,14 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json;
 
+using System.Text.Json.Serialization;
 namespace AzureMapsToolkit.Common
 {
     public class RouteMatrix
     {
-        [JsonProperty("statusCode")]
+        [JsonPropertyName("statusCode")]
         public int StatusCode { get; set; }
 
-        [JsonProperty("response")]
+        [JsonPropertyName("response")]
         public RouteMatrixRouteSummary Response { get; set; }
     }
 }

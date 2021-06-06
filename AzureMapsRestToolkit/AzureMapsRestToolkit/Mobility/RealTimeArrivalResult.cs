@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace AzureMapsToolkit.Mobility
 {
@@ -10,13 +11,13 @@ namespace AzureMapsToolkit.Mobility
         /// <summary>
         /// The estimated time of arrival in minutes.
         /// </summary>
-        [JsonProperty("arrivalMinutes")]
+        [JsonPropertyName("arrivalMinutes")]
         public int ArrivalMinutes { get; set; }
 
         /// <summary>
         /// The public transit type of the line.
         /// </summary>
-        [JsonProperty("line")]
+        [JsonPropertyName("line")]
         public Line Line { get; set; }
 
         /// <summary>

@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace AzureMapsToolkit.Traffic
 {
@@ -10,25 +10,25 @@ namespace AzureMapsToolkit.Traffic
         /// <summary>
         /// @maps property
         /// </summary>
-        [JsonProperty("@maps")]
+        [JsonPropertyName("@maps")]
         public string Maps { get; set; }
 
         /// <summary>
         /// @Version property
         /// </summary>
-        [JsonProperty("@version")]
+        [JsonPropertyName("@version")]
         public string Version { get; set; }
 
         /// <summary>
         /// Copyright Ids property
         /// </summary>
-        [JsonProperty("copyrightIds")]
+        [JsonPropertyName("copyrightIds")]
         public string CopyrightIds { get; set; }
 
         /// <summary>
         /// Traffic State array
         /// </summary>
-        [JsonProperty("trafficState")]
+        [JsonPropertyName("trafficState")]
         public TrafficState TrafficState { get; set; }
     }
 }

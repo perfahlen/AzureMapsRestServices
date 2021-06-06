@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace AzureMapsToolkit.Common
 {
@@ -11,7 +12,7 @@ namespace AzureMapsToolkit.Common
         /// <summary>
         /// Effective parameters or data used when calling this Route API.
         /// </summary>
-        [JsonProperty("effectiveSettings")]
+        [JsonPropertyName("effectiveSettings")]
         public RouteResponseReportEffectiveSetting[] EffectiveSettings { get; set; }
     }
 }

@@ -1,10 +1,11 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace AzureMapsToolkit.Mobility
 {
     public class MetroAreaResponse
     {
-        [JsonProperty("results")]
+        [JsonPropertyName("results")]
         public MetroAreaResult[] Results { get; set; }
     }
 }

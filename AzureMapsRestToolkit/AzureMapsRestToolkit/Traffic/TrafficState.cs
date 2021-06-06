@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace AzureMapsToolkit.Traffic
 {
@@ -10,13 +10,13 @@ namespace AzureMapsToolkit.Traffic
         /// <summary>
         /// @Traffic Age property
         /// </summary>
-        [JsonProperty("@trafficAge")]
+        [JsonPropertyName("@trafficAge")]
         public int TrafficAge { get; set; }
 
         /// <summary>
         /// @Traffic Model Id property
         /// </summary>
-        [JsonProperty("@trafficModelId")]
+        [JsonPropertyName("@trafficModelId")]
         public string TrafficModelId { get; set; }
     }
 }
