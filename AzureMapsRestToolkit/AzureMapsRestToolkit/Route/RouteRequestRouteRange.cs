@@ -22,6 +22,10 @@ namespace AzureMapsToolkit.Common
         /// </summary>
         public string TimeBudgetInSec { get; set; }
 
+        /// <summary>
+        /// Distance budget in meters that determines maximal range which can be travelled using driving distance. The Consumption Model will only affect the range when routeType is eco.
+        /// </summary>
+        public string DistanceBudgetInMeters { get; set; }
 
     }
 }
