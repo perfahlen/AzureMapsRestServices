@@ -140,6 +140,8 @@ namespace AzureMapsToolkit
 
         Task<Response<BoundingBoxResult>> GetElevationDataForBoundingBox(GetElevationDataForBoundingBoxRequest req);
 
+        Task<Response<PointsResult>> GetElevationDataForPoints(GetElevationDataForPointsRequest req);
+
 
     }
 }

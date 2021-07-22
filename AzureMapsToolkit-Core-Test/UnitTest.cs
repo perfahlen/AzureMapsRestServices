@@ -1124,5 +1124,19 @@ namespace AzureMapsToolkit_Core_Test
 
             Assert.Null(res.Error);
         }
+
+        [Fact]
+        public void GetElevationDataForPoints()
+        {
+            var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
+            var req = new AzureMapsToolkit.Elevation.GetElevationDataForPointsRequest
+            {
+                Points = "-121.66853362143818, 46.84646479863713|-121.68853362143818, 46.856464798637127",
+               
+            };
+            var res = am.GetElevationDataForPoints(req).Result;
+
+            Assert.Null(res.Error);
+        }
     }
 }

@@ -1162,6 +1162,13 @@ namespace AzureMapsToolkit
             
         }
 
+        public virtual async Task<Response<PointsResult>> GetElevationDataForPoints(GetElevationDataForPointsRequest req)
+        {
+            var res = await ExecuteRequest<PointsResult, GetElevationDataForPointsRequest>
+                ($"{baseDomain}/elevation/point/json", req);
+            return res;
+        }
+
 
 
         #endregion
