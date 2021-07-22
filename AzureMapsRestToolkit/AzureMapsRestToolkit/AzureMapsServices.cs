@@ -1201,6 +1201,30 @@ namespace AzureMapsToolkit
             }
         }
 
+        public virtual async Task<Response<ElevationResult>> PostElevationDataForPolyline(PostDataForPolylineRequest req, PostDataForPolylineData[] data)
+        {
+            try
+            {
+                var url = $"{baseDomain}/elevation/line/json?subscription-key={Key}";
+
+                url += GetQuery<PostDataForPolylineRequest>(req, true);
+
+                string body = JsonSerializer.Serialize(data);
+
+                using var response = await GetHttpResponseMessage(url, body, HttpMethod.Post);
+
+                using HttpContent responseContent = response.Content;
+                string content = await responseContent.ReadAsStringAsync();
+                var elevationResult = JsonSerializer.Deserialize<ElevationResult>(content);
+                return Response<ElevationResult>.CreateResponse(elevationResult);
+
+            }
+            catch (AzureMapsException ex)
+            {
+                return Response<ElevationResult>.CreateErrorResponse(ex);
+            }
+        }
+
         #endregion
 
     }

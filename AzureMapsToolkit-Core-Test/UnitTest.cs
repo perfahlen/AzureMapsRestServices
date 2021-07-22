@@ -1180,5 +1180,36 @@ namespace AzureMapsToolkit_Core_Test
             Assert.Equal(2, res.Result.Result.Length);
 
         }
+
+        [Fact]
+        public void PostElevationDataForPoline()
+        {
+            var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
+            var req = new AzureMapsToolkit.Elevation.PostDataForPolylineRequest
+            {
+                Samples = 5
+            };
+
+            var data = new AzureMapsToolkit.Elevation.PostDataForPolylineData[]
+            {
+                new AzureMapsToolkit.Elevation.PostDataForPolylineData
+                {
+                    Lat =46.846464798637129,
+                    Lon = -121.66853362143819
+                },
+                new AzureMapsToolkit.Elevation.PostDataForPolylineData
+                {
+                     Lat =46.856464798637127,
+                     Lon = -121.67853362143818
+                }
+            };
+
+
+            var res = am.PostElevationDataForPolyline(req, data).Result;
+
+            Assert.Null(res.Error);
+            Assert.Equal(5, res.Result.Result.Length);
+
+        }
     }
 }

@@ -1,9 +1,8 @@
-﻿using AzureMapsToolkit.Common;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace AzureMapsToolkit.Elevation
 {
-    public class PostDataForPoints 
+    public class PostDataForPolylineData
     {
         [JsonPropertyName("lon")]
         public double Lon { get; set; }

@@ -144,5 +144,6 @@ namespace AzureMapsToolkit
 
         Task<Response<ElevationResult>> GetElevationDataForPolyline(GetElevationDataForPolylineRequest req);
         Task<Response<ElevationResult>> PostElevationDataForPoints(PostDataForPoints[] req);
+        Task<Response<ElevationResult>> PostElevationDataForPolyline(PostDataForPolylineRequest req, PostDataForPolylineData[] data);
     }
 }
