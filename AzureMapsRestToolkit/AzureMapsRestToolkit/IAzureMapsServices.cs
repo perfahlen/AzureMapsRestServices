@@ -142,6 +142,8 @@ namespace AzureMapsToolkit
 
         Task<Response<PointsResult>> GetElevationDataForPoints(GetElevationDataForPointsRequest req);
 
+        Task<Response<LinesResult>> GetElevationDataForPolyline(GetElevationDataForPolylineRequest req);
+
 
     }
 }

@@ -1169,6 +1169,14 @@ namespace AzureMapsToolkit
             return res;
         }
 
+        public virtual async Task<Response<LinesResult>> GetElevationDataForPolyline(GetElevationDataForPolylineRequest req)
+        {
+            //var res = await ExecuteRequest<LinesResult, GetElevationDataForPolylineRequest>
+            var res = await ExecuteRequest<LinesResult, GetElevationDataForPolylineRequest>
+               ($"{baseDomain}/elevation/line/json", req);
+            return res;
+        }
+
 
 
         #endregion

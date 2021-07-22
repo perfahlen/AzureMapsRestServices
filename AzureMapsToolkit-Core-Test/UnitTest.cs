@@ -1138,5 +1138,22 @@ namespace AzureMapsToolkit_Core_Test
 
             Assert.Null(res.Error);
         }
+
+        [Fact]
+        public void GetElevationDataForPolyline()
+        {
+            var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
+            var req = new AzureMapsToolkit.Elevation.GetElevationDataForPolylineRequest
+            {
+                Lines = "-121.66853362143818, 46.84646479863713|-121.67853362143818, 46.85646479863713",
+                Samples = 5
+
+            };
+            var res = am.GetElevationDataForPolyline(req).Result;
+
+            Assert.Null(res.Error);
+
+            Assert.Equal(5, res.Result.Result.Length);
+        }
     }
 }
