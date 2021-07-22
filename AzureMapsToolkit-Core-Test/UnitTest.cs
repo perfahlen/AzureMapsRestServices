@@ -1109,5 +1109,20 @@ namespace AzureMapsToolkit_Core_Test
 
             Assert.Null(res.Error);
         }
+
+        [Fact]
+        public void GetElevationDataForBoundingBox()
+        {
+            var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
+            var req = new AzureMapsToolkit.Elevation.GetElevationDataForBoundingBoxRequest
+            {
+                Bounds = "-121.66853362143818, 46.84646479863713,-121.65853362143818, 46.8564647986371",
+                Rows = 2,
+                Columns = 3
+            };
+            var res = am.GetElevationDataForBoundingBox(req).Result;
+
+            Assert.Null(res.Error);
+        }
     }
 }

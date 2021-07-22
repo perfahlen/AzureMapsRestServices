@@ -20,6 +20,7 @@ using AzureMapsToolkit.Mobility;
 using AzureMapsToolkit.Route;
 using System.Text;
 using Azure.Core.GeoJson;
+using AzureMapsToolkit.Elevation;
 //using Newtonsoft.Json.Linq;
 
 namespace AzureMapsToolkit
@@ -448,7 +449,7 @@ namespace AzureMapsToolkit
                 var location = res.Headers.GetValues("Location").First();
                 var udidUrl = $"{location}&subscription-key={this.Key}";
                 string sUdid = GetUdidFromLocation(udidUrl);
-                var updateResult = JsonSerializer.Deserialize<UploadResult>(sUdid,serializerOptions);
+                var updateResult = JsonSerializer.Deserialize<UploadResult>(sUdid, serializerOptions);
                 return new Response<UpdateResult> { Result = new UpdateResult { Udid = updateResult.Udid } };
             }
             catch (AzureMapsException ex)
@@ -1146,6 +1147,19 @@ namespace AzureMapsToolkit
             var res = await ExecuteRequest<TrafficIncidentViewportResult, TrafficIncidentViewportRequest>
                     ($"{baseDomain}/traffic/incident/viewport/json", req);
             return res;
+        }
+
+
+        #endregion
+
+
+        #region Elevation
+        public virtual async Task<Response<BoundingBoxResult>> GetElevationDataForBoundingBox(GetElevationDataForBoundingBoxRequest req)
+        {
+            var res = await ExecuteRequest<BoundingBoxResult, GetElevationDataForBoundingBoxRequest>
+                ($"{baseDomain}/elevation/lattice/json", req);
+            return res;
+            
         }
 
 

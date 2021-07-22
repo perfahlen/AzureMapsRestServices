@@ -6,6 +6,7 @@ using Azure.Core.GeoJson;
 
 using AzureMapsToolkit.Common;
 using AzureMapsToolkit.Data;
+using AzureMapsToolkit.Elevation;
 using AzureMapsToolkit.GeoJson;
 using AzureMapsToolkit.Mobility;
 using AzureMapsToolkit.Render;
@@ -136,6 +137,8 @@ namespace AzureMapsToolkit
         Task<Response<byte[]>> GetTrafficIncidentTile(TrafficIncidentTileRequest req);
 
         Task<Response<TrafficIncidentViewportResult>> GetTrafficIncidentViewport(TrafficIncidentViewportRequest req);
+
+        Task<Response<BoundingBoxResult>> GetElevationDataForBoundingBox(GetElevationDataForBoundingBoxRequest req);
 
 
     }
