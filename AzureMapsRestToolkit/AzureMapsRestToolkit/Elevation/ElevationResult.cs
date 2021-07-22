@@ -2,7 +2,7 @@
 
 namespace AzureMapsToolkit.Elevation
 {
-    public class BoundingBoxResult
+    public class ElevationResult
     {
         [JsonPropertyName("data")]
         public PointElevationResult[] Result { get; set; }

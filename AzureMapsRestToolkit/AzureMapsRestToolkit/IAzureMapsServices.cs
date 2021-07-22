@@ -138,12 +138,11 @@ namespace AzureMapsToolkit
 
         Task<Response<TrafficIncidentViewportResult>> GetTrafficIncidentViewport(TrafficIncidentViewportRequest req);
 
-        Task<Response<BoundingBoxResult>> GetElevationDataForBoundingBox(GetElevationDataForBoundingBoxRequest req);
+        Task<Response<ElevationResult>> GetElevationDataForBoundingBox(GetElevationDataForBoundingBoxRequest req);
 
-        Task<Response<PointsResult>> GetElevationDataForPoints(GetElevationDataForPointsRequest req);
+        Task<Response<ElevationResult>> GetElevationDataForPoints(GetElevationDataForPointsRequest req);
 
-        Task<Response<LinesResult>> GetElevationDataForPolyline(GetElevationDataForPolylineRequest req);
-
-
+        Task<Response<ElevationResult>> GetElevationDataForPolyline(GetElevationDataForPolylineRequest req);
+        Task<Response<ElevationResult>> PostElevationDataForPoints(PostDataForPoints[] req);
     }
 }

@@ -1154,30 +1154,52 @@ namespace AzureMapsToolkit
 
 
         #region Elevation
-        public virtual async Task<Response<BoundingBoxResult>> GetElevationDataForBoundingBox(GetElevationDataForBoundingBoxRequest req)
+        public virtual async Task<Response<ElevationResult>> GetElevationDataForBoundingBox(GetElevationDataForBoundingBoxRequest req)
         {
-            var res = await ExecuteRequest<BoundingBoxResult, GetElevationDataForBoundingBoxRequest>
+            var res = await ExecuteRequest<ElevationResult, GetElevationDataForBoundingBoxRequest>
                 ($"{baseDomain}/elevation/lattice/json", req);
             return res;
             
         }
 
-        public virtual async Task<Response<PointsResult>> GetElevationDataForPoints(GetElevationDataForPointsRequest req)
+        public virtual async Task<Response<ElevationResult>> GetElevationDataForPoints(GetElevationDataForPointsRequest req)
         {
-            var res = await ExecuteRequest<PointsResult, GetElevationDataForPointsRequest>
+            var res = await ExecuteRequest<ElevationResult, GetElevationDataForPointsRequest>
                 ($"{baseDomain}/elevation/point/json", req);
             return res;
         }
 
-        public virtual async Task<Response<LinesResult>> GetElevationDataForPolyline(GetElevationDataForPolylineRequest req)
+        public virtual async Task<Response<ElevationResult>> GetElevationDataForPolyline(GetElevationDataForPolylineRequest req)
         {
             //var res = await ExecuteRequest<LinesResult, GetElevationDataForPolylineRequest>
-            var res = await ExecuteRequest<LinesResult, GetElevationDataForPolylineRequest>
+            var res = await ExecuteRequest<ElevationResult, GetElevationDataForPolylineRequest>
                ($"{baseDomain}/elevation/line/json", req);
             return res;
         }
 
+        public virtual async Task<Response<ElevationResult>> PostElevationDataForPoints(PostDataForPoints[] req)
+        {
+            try
+            {
+                var url = $"{baseDomain}/elevation/point/json?subscription-key={Key}";
+                
+                url += GetQuery<RequestBase>(new RequestBase(), true);
 
+                string data = JsonSerializer.Serialize(req);
+
+                using var response = await GetHttpResponseMessage(url, data, HttpMethod.Post);
+
+                using HttpContent responseContent = response.Content;
+                string content = await responseContent.ReadAsStringAsync();
+                var elevationResult = JsonSerializer.Deserialize<ElevationResult>(content);
+                return Response<ElevationResult>.CreateResponse(elevationResult);
+
+            }
+            catch (AzureMapsException ex)
+            {
+                return Response<ElevationResult>.CreateErrorResponse(ex);
+            }
+        }
 
         #endregion
 

@@ -532,7 +532,7 @@ namespace AzureMapsToolkit_Core_Test
                 new GeoPosition(-122.132756, 47.654009)
             };
 
-            GeoLineString lineString = new (coordinates);
+            GeoLineString lineString = new(coordinates);
 
             var result = am.GetSearchAlongRoute(req, lineString).Result;
 
@@ -1015,7 +1015,7 @@ namespace AzureMapsToolkit_Core_Test
             var res = am.GetMetroAreaInfo(new AzureMapsToolkit.Mobility.MetroAreaInfoRequest
             {
                 Query = "121",
-                DetailType= $"{AzureMapsToolkit.Mobility.DetailType.AGENCIES}"
+                DetailType = $"{AzureMapsToolkit.Mobility.DetailType.AGENCIES}"
             }).Result;
 
             Assert.Null(res.Error);
@@ -1132,7 +1132,7 @@ namespace AzureMapsToolkit_Core_Test
             var req = new AzureMapsToolkit.Elevation.GetElevationDataForPointsRequest
             {
                 Points = "-121.66853362143818, 46.84646479863713|-121.68853362143818, 46.856464798637127",
-               
+
             };
             var res = am.GetElevationDataForPoints(req).Result;
 
@@ -1154,6 +1154,31 @@ namespace AzureMapsToolkit_Core_Test
             Assert.Null(res.Error);
 
             Assert.Equal(5, res.Result.Result.Length);
+        }
+
+        [Fact]
+        public void PostElevationDataForPoints()
+        {
+            var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
+            var req = new AzureMapsToolkit.Elevation.PostDataForPoints[] {
+                new AzureMapsToolkit.Elevation.PostDataForPoints
+                {
+                Lat= 46.846464798637129,
+                Lon = -121.66853362143819
+                },
+                new AzureMapsToolkit.Elevation.PostDataForPoints
+                {
+                    Lat = 46.856464798637127,
+                    Lon = -121.68853362143818
+                }
+            };
+
+
+            var res = am.PostElevationDataForPoints(req).Result;
+
+            Assert.Null(res.Error);
+            Assert.Equal(2, res.Result.Result.Length);
+
         }
     }
 }
