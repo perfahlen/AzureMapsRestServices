@@ -15,7 +15,7 @@ using AzureMapsToolkit.Route;
 using AzureMapsToolkit.Search;
 using AzureMapsToolkit.Timezone;
 using AzureMapsToolkit.Traffic;
-
+using AzureMapsToolkit.Weather;
 using Xunit;
 
 namespace AzureMapsToolkit_Core_Test
@@ -1210,6 +1210,19 @@ namespace AzureMapsToolkit_Core_Test
             Assert.Null(res.Error);
             Assert.Equal(5, res.Result.Result.Length);
 
+        }
+
+        [Fact]
+        public void GetCurrentCondition()
+        {
+            var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
+            var q = new GetCurrentConditionsRequest
+            {
+                Query = "47.641268,-122.125679"
+            };
+            var res = am.GetCurrentCondition(q).Result;
+
+            Assert.Null(res.Error);
         }
     }
 }

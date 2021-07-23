@@ -21,6 +21,7 @@ using AzureMapsToolkit.Route;
 using System.Text;
 using Azure.Core.GeoJson;
 using AzureMapsToolkit.Elevation;
+using AzureMapsToolkit.Weather;
 //using Newtonsoft.Json.Linq;
 
 namespace AzureMapsToolkit
@@ -1152,7 +1153,6 @@ namespace AzureMapsToolkit
 
         #endregion
 
-
         #region Elevation
         public virtual async Task<Response<ElevationResult>> GetElevationDataForBoundingBox(GetElevationDataForBoundingBoxRequest req)
         {
@@ -1223,6 +1223,16 @@ namespace AzureMapsToolkit
             {
                 return Response<ElevationResult>.CreateErrorResponse(ex);
             }
+        }
+
+        #endregion
+
+        #region Weather
+
+        public virtual async Task<Response<CurrentConditionsResponse>> GetCurrentCondition(GetCurrentConditionsRequest req)
+        {
+            var res = await ExecuteRequest<CurrentConditionsResponse, GetCurrentConditionsRequest>($"{baseDomain}/weather/currentConditions/json", req);
+            return res;
         }
 
         #endregion
