@@ -1252,7 +1252,21 @@ namespace AzureMapsToolkit_Core_Test
             var res = am.GetDailyIndices(q).Result;
 
             Assert.Null(res.Error);
-            
+
+        }
+
+        [Fact]
+        public void GetHourlyForecast()
+        {
+            var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
+            var q = new GetHourlyForecastRequest
+            {
+                Query = "47.632346,-122.13887",
+                Duration = 12
+            };
+            var res = am.GetHourlyForecast(q).Result;
+
+            Assert.Null(res.Error);
         }
     }
 }

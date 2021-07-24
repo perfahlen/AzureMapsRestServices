@@ -1253,6 +1253,12 @@ namespace AzureMapsToolkit
             return res;
         }
 
+        public virtual async Task<Response<HourlyForecastResponse>> GetHourlyForecast(GetHourlyForecastRequest req)
+        {
+            var res = await ExecuteRequest<HourlyForecastResponse, GetHourlyForecastRequest>($"{baseDomain}/weather/forecast/hourly/json", req);
+            return res;
+        }
+
         #endregion
 
     }
