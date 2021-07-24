@@ -1239,5 +1239,20 @@ namespace AzureMapsToolkit_Core_Test
 
             Assert.Null(res.Error);
         }
+
+        [Fact]
+        public void GetDailyIndices()
+        {
+            var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
+            var q = new GetDailyIndicesRequest
+            {
+                Query = "43.84745,-79.37849",
+                //IndexGroupId = 11
+            };
+            var res = am.GetDailyIndices(q).Result;
+
+            Assert.Null(res.Error);
+            
+        }
     }
 }

@@ -1247,6 +1247,12 @@ namespace AzureMapsToolkit
             return res;
         }
 
+        public virtual async Task<Response<DailyIndicesResponse>> GetDailyIndices(GetDailyIndicesRequest req)
+        {
+            var res = await ExecuteRequest<DailyIndicesResponse, GetDailyIndicesRequest>($"{baseDomain}/weather/indices/daily/json", req);
+            return res;
+        }
+
         #endregion
 
     }

@@ -151,5 +151,6 @@ namespace AzureMapsToolkit
         
         Task<Response<CurrentConditionsResponse>> GetCurrentCondition(GetCurrentConditionsRequest req);
         Task<Response<DailyForecastResponse>> GetDailyForecast(GetDailyForecastRequest req);
+        Task<Response<DailyIndicesResponse>> GetDailyIndices(GetDailyIndicesRequest req);
     }
 }
