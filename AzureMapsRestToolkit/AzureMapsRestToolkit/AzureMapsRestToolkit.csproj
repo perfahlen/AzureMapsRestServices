@@ -13,9 +13,9 @@
     <RepositoryType>GIT</RepositoryType>
     <PackageTags>.NET Azure Maps REST API </PackageTags>
     <Version>7.0.0</Version>
-    <AssemblyVersion>7.0.0.0</AssemblyVersion>
+    <AssemblyVersion>7.1.0.0</AssemblyVersion>
     <RootNamespace>AzureMapsToolkit</RootNamespace>
-    <FileVersion>7.0.0.0</FileVersion>
+    <FileVersion>7.1.0.0</FileVersion>
     <Authors>Per Fahlen,Vincent Baaij</Authors>
     <Copyright>© 2021</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
