@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace AzureMapsToolkit.Weather
 {
-    public class GetDailyForecastRequest : RequestBase
+    public class GetForecastRequest : RequestBase
     {
         /// <summary>
         /// Coordinates of the location for which current conditions information is requested. The applicable query is specified as a comma separated string composed by latitude followed by longitude e.g. "47.641268,-122.125679".

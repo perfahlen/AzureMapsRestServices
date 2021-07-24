@@ -1230,7 +1230,7 @@ namespace AzureMapsToolkit_Core_Test
         public void GetDailyForeCast()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
-            var q = new GetDailyForecastRequest
+            var q = new GetForecastRequest
             {
                 Query = "62.6490341,30.0734812",
                 Unit = Unit.metric
@@ -1281,6 +1281,21 @@ namespace AzureMapsToolkit_Core_Test
             var res = am.GetMinuteForecast(q).Result;
 
             Assert.Null(res.Error);
+        }
+
+        [Fact]
+        public void GetQuerterDayForecast()
+        {
+            var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
+            var q = new GetForecastRequest
+            {
+                Query = "47.632346,-122.13887",
+                Duration = 5
+            };
+            var res = am.GetQuarterDayForecast(q).Result;
+
+            Assert.Null(res.Error);
+
         }
 
     }

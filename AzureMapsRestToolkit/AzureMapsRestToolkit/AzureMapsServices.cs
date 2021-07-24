@@ -1241,9 +1241,9 @@ namespace AzureMapsToolkit
         }
 
 
-        public virtual async Task<Response<DailyForecastResponse>> GetDailyForecast(GetDailyForecastRequest req)
+        public virtual async Task<Response<DailyForecastResponse>> GetDailyForecast(GetForecastRequest req)
         {
-            var res = await ExecuteRequest<DailyForecastResponse, GetDailyForecastRequest>($"{baseDomain}/weather/forecast/daily/json", req);
+            var res = await ExecuteRequest<DailyForecastResponse, GetForecastRequest>($"{baseDomain}/weather/forecast/daily/json", req);
             return res;
         }
 
@@ -1262,6 +1262,12 @@ namespace AzureMapsToolkit
         public virtual async Task<Response<MinuteForecastResponse>> GetMinuteForecast(GetMinuteForecastRequest req)
         {
             var res = await ExecuteRequest<MinuteForecastResponse, GetMinuteForecastRequest>($"{baseDomain}/weather/forecast/minute/json", req);
+            return res;
+        }
+
+        public virtual async Task<Response<QuarterDayForecast>> GetQuarterDayForecast(GetForecastRequest req)
+        {
+            var res = await ExecuteRequest<QuarterDayForecast, GetForecastRequest>($"{baseDomain}/weather/forecast/quarterDay/json", req);
             return res;
         }
 

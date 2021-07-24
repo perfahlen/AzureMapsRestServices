@@ -150,9 +150,10 @@ namespace AzureMapsToolkit
         Task<Response<ElevationResult>> PostElevationDataForPolyline(PostDataForPolylineRequest req, PostDataForPolylineData[] data);
         
         Task<Response<CurrentConditionsResponse>> GetCurrentCondition(GetCurrentConditionsRequest req);
-        Task<Response<DailyForecastResponse>> GetDailyForecast(GetDailyForecastRequest req);
+        Task<Response<DailyForecastResponse>> GetDailyForecast(GetForecastRequest req);
         Task<Response<DailyIndicesResponse>> GetDailyIndices(GetDailyIndicesRequest req);
         Task<Response<HourlyForecastResponse>> GetHourlyForecast(GetHourlyForecastRequest req);
         Task<Response<MinuteForecastResponse>> GetMinuteForecast(GetMinuteForecastRequest req);
+        Task<Response<QuarterDayForecast>> GetQuarterDayForecast(GetForecastRequest req);
     }
 }
