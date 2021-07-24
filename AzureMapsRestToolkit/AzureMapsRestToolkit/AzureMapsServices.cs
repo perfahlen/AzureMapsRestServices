@@ -1308,6 +1308,14 @@ namespace AzureMapsToolkit
             return res;
         }
 
+        /// <summary>
+        /// Weather along a route API returns hyper local (one kilometer or less), up-to-the-minute weather nowcasts, weather hazard assessments, and notifications along a route described as a sequence of waypoints. This includes a list of weather hazards affecting the waypoint or route, and the aggregated hazard index for each waypoint might be used to paint each portion of a route according to how safe it is for the driver. When submitting the waypoints, it is recommended to stay within, or close to, the distance that can be traveled within 120-mins or shortly after. Data is updated every five minutes.
+        /// The service supplements Azure Maps Route Service that allows you to first request a route between an origin and a destination and use that as an input for Weather Along Route endpoint
+        /// In addition, the service supports scenarios to generate weather notifications for waypoints that experience an increase in intensity of a weather hazard. For example, if the vehicle is expected to begin experiencing heavy rain as it reaches a waypoint, a weather notification for heavy rain will be generated for that waypoint allowing the end product to display a heavy rain notification before the driver reaches that waypoint. The trigger for when to display the notification for a waypoint could be based, for example, on a geofence, or selectable distance to the waypoint.
+        /// The API covers all regions of the planet except latitudes above Greenland and Antarctica.
+        /// </summary>
+        /// <param name="req"></param>
+        /// <returns></returns>
         public virtual async Task<Response<WeatherAlongRouteResponse>> GetWeatherAlongRoute(GetWeatherAlongRouteRequest req)
         {
             var res = await ExecuteRequest<WeatherAlongRouteResponse, GetWeatherAlongRouteRequest>($"{baseDomain}/weather/route/json", req);

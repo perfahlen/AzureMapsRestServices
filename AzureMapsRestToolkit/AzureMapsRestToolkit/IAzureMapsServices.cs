@@ -156,5 +156,6 @@ namespace AzureMapsToolkit
         Task<Response<MinuteForecastResponse>> GetMinuteForecast(GetMinuteForecastRequest req);
         Task<Response<QuarterDayForecastResponse>> GetQuarterDayForecast(GetForecastRequest req);
         Task<Response<SevereWeatherAlertsResponse>> GetSevereWeatherAlerts(GetSevereWeatherAlertsRequest req);
+        Task<Response<WeatherAlongRouteResponse>> GetWeatherAlongRoute(GetWeatherAlongRouteRequest req);
     }
 }
