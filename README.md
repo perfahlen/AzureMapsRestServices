@@ -1,11 +1,11 @@
 # Azure Maps REST Services
 
-[![NuGet](https://img.shields.io/badge/NuGet-7.0.0-blue.svg)](https://www.nuget.org/packages/AzureMapsRestToolkit/)
+[![NuGet](https://img.shields.io/badge/NuGet-7.1.0-blue.svg)](https://www.nuget.org/packages/AzureMapsRestToolkit/)
 [![license](https://img.shields.io/badge/license-MIT-yellow.svg)](https://github.com/perfahlen/AzureMapsRestServices/blob/master/LICENSE)
 
 # .NET 5 library to access AzureMaps Services
 
-This library covers 50 Azure Maps services including the following services
+This library covers 73 Azure Maps endpoints including the following services
 - Data services
 - Geolocation services
 - Render services
@@ -15,6 +15,8 @@ This library covers 50 Azure Maps services including the following services
 - TimeZone services
 - Traffic services
 - Mobility services
+- Weather services
+- Elevation services
 
 ## Exceptions
 Exception is captures by the library and if any exceptions captured it will be return in the __Error__ property in the returned object. See example below.
