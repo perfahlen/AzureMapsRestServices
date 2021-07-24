@@ -1265,9 +1265,15 @@ namespace AzureMapsToolkit
             return res;
         }
 
-        public virtual async Task<Response<QuarterDayForecast>> GetQuarterDayForecast(GetForecastRequest req)
+        public virtual async Task<Response<QuarterDayForecastResponse>> GetQuarterDayForecast(GetForecastRequest req)
         {
-            var res = await ExecuteRequest<QuarterDayForecast, GetForecastRequest>($"{baseDomain}/weather/forecast/quarterDay/json", req);
+            var res = await ExecuteRequest<QuarterDayForecastResponse, GetForecastRequest>($"{baseDomain}/weather/forecast/quarterDay/json", req);
+            return res;
+        }
+
+        public virtual async Task<Response<SevereWeatherAlertsResponse>> GetSevereWeatherAlerts(GetSevereWeatherAlertsRequest req)
+        {
+            var res = await ExecuteRequest<SevereWeatherAlertsResponse, GetSevereWeatherAlertsRequest>($"{baseDomain}/weather/forecast/quarterDay/json", req);
             return res;
         }
 

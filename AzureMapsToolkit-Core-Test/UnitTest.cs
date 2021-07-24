@@ -1298,5 +1298,20 @@ namespace AzureMapsToolkit_Core_Test
 
         }
 
+        [Fact]
+        public void GetSevereWeatherAlerts()
+        {
+            var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
+            var q = new GetSevereWeatherAlertsRequest
+            {
+                Query = "47.632346,-122.13887",
+
+            };
+            var res = am.GetSevereWeatherAlerts(q).Result;
+
+            Assert.Null(res.Error);
+
+        }
+
     }
 }
