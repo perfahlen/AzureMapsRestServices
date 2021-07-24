@@ -1218,9 +1218,24 @@ namespace AzureMapsToolkit_Core_Test
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
             var q = new GetCurrentConditionsRequest
             {
-                Query = "47.641268,-122.125679"
+                Query = "47.641268,-122.125679",
+                Unit = Unit.imperial
             };
             var res = am.GetCurrentCondition(q).Result;
+
+            Assert.Null(res.Error);
+        }
+
+        [Fact]
+        public void GetDailyForeCast()
+        {
+            var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
+            var q = new GetDailyForecastRequest
+            {
+                Query = "62.6490341,30.0734812",
+                Unit = Unit.metric
+            };
+            var res = am.GetDailyForecast(q).Result;
 
             Assert.Null(res.Error);
         }

@@ -150,5 +150,6 @@ namespace AzureMapsToolkit
         Task<Response<ElevationResult>> PostElevationDataForPolyline(PostDataForPolylineRequest req, PostDataForPolylineData[] data);
         
         Task<Response<CurrentConditionsResponse>> GetCurrentCondition(GetCurrentConditionsRequest req);
+        Task<Response<DailyForecastResponse>> GetDailyForecast(GetDailyForecastRequest req);
     }
 }

@@ -37,7 +37,7 @@ namespace AzureMapsToolkit.Weather
         ///  - imperial
         ///  - metric
         /// </summary>
-        public string Unit { get; set; }
+        public Unit Unit { get; set; }
     }
     
 }

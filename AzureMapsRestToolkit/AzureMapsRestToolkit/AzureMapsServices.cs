@@ -1229,9 +1229,21 @@ namespace AzureMapsToolkit
 
         #region Weather
 
+        /// <summary>
+        /// Get Current Conditions service returns detailed current weather conditions such as precipitation, temperature and wind for a given coordinate location. Also, observations from the past 6 or 24 hours for a particular location can be retrieved. The basic information returned with the response include details such as observation date and time, brief description of the weather conditions, weather icon, precipitation indicator flags, and temperature. Additional details such as RealFeel™ Temperature and UV index are also returned.
+        /// </summary>
+        /// <param name="req"></param>
+        /// <returns></returns>
         public virtual async Task<Response<CurrentConditionsResponse>> GetCurrentCondition(GetCurrentConditionsRequest req)
         {
             var res = await ExecuteRequest<CurrentConditionsResponse, GetCurrentConditionsRequest>($"{baseDomain}/weather/currentConditions/json", req);
+            return res;
+        }
+
+
+        public virtual async Task<Response<DailyForecastResponse>> GetDailyForecast(GetDailyForecastRequest req)
+        {
+            var res = await ExecuteRequest<DailyForecastResponse, GetDailyForecastRequest>($"{baseDomain}/weather/forecast/daily/json", req);
             return res;
         }
 
