@@ -81,7 +81,7 @@ namespace AzureMapsToolkit.Weather
         /// Quarter of the day.
         /// </summary>
         [JsonPropertyName("quarter")]
-        public string Quarter { get; set; }
+        public int Quarter { get; set; }
 
         /// <summary>
         /// Rain

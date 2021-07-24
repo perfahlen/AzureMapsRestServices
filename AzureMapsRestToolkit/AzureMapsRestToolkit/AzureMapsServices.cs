@@ -1273,7 +1273,7 @@ namespace AzureMapsToolkit
 
         public virtual async Task<Response<SevereWeatherAlertsResponse>> GetSevereWeatherAlerts(GetSevereWeatherAlertsRequest req)
         {
-            var res = await ExecuteRequest<SevereWeatherAlertsResponse, GetSevereWeatherAlertsRequest>($"{baseDomain}/weather/forecast/quarterDay/json", req);
+            var res = await ExecuteRequest<SevereWeatherAlertsResponse, GetSevereWeatherAlertsRequest>($"{baseDomain}/weather/severe/alerts/json", req);
             return res;
         }
 
