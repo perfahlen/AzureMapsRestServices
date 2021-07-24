@@ -1241,39 +1241,76 @@ namespace AzureMapsToolkit
         }
 
 
+        /// <summary>
+        /// The service returns detailed weather forecast such as temperature and wind by day for the next 1, 5, 10, 15, 25, or 45 days for a given coordinate location. The response include details such as temperature, wind, precipitation, air quality, and UV index.
+        /// In S0 you can request daily forecast for the next 1, 5, 10, and 15 days. In S1 you can also request daily forecast for the next 25 days, and 45 days.
+        /// </summary>
+        /// <param name="req"></param>
+        /// <returns></returns>
         public virtual async Task<Response<DailyForecastResponse>> GetDailyForecast(GetForecastRequest req)
         {
             var res = await ExecuteRequest<DailyForecastResponse, GetForecastRequest>($"{baseDomain}/weather/forecast/daily/json", req);
             return res;
         }
 
+        /// <summary>
+        /// There may be times when you want to know if the weather conditions are optimal for a specific activity, for example, for outdoor construction, indoor activities, running or farming including soil moisture information. Azure Maps Indices API returns index values that will guide end users to plan future activities. For example, a health mobile application can notify users that today is good weather for running or for other outdoors activities like for playing golf, and retail stores can optimize their digital marketing campaigns based on predicted index values. The service returns in daily indices values for current and next 5, 10 and 15 days starting from current day.
+        /// </summary>
+        /// <param name="req"></param>
+        /// <returns></returns>
         public virtual async Task<Response<DailyIndicesResponse>> GetDailyIndices(GetDailyIndicesRequest req)
         {
             var res = await ExecuteRequest<DailyIndicesResponse, GetDailyIndicesRequest>($"{baseDomain}/weather/indices/daily/json", req);
             return res;
         }
 
+        /// <summary>
+        /// Request detailed weather forecast by the hour for the next 1, 12, 24 (1 day), 72 (3 days), 120 (5 days), and 240 hours (10 days) for the given the given coordinate location. The API returns details such as temperature, humidity, wind, precipitation, and ultraviolet (UV) index.
+        /// In S0 you can request hourly forecast for the next 1, 12, 24 hours (1 day), and 72 hours (3 days). In S1 you can also request hourly forecast for the next 120 (5 days) and 240 hours (10 days).
+        /// </summary>
+        /// <param name="req"></param>
+        /// <returns></returns>
         public virtual async Task<Response<HourlyForecastResponse>> GetHourlyForecast(GetHourlyForecastRequest req)
         {
             var res = await ExecuteRequest<HourlyForecastResponse, GetHourlyForecastRequest>($"{baseDomain}/weather/forecast/hourly/json", req);
             return res;
         }
 
+        /// <summary>
+        /// Get Minute Forecast service returns minute-by-minute forecasts for a given location for the next 120 minutes. Users can request weather forecasts in the interval of 1, 5 and 15 minutes. The response will include details such as the type of precipitation (including rain, snow, or a mixture of both), start time, and precipitation intensity value (dBZ).
+        /// </summary>
+        /// <param name="req"></param>
+        /// <returns></returns>
         public virtual async Task<Response<MinuteForecastResponse>> GetMinuteForecast(GetMinuteForecastRequest req)
         {
             var res = await ExecuteRequest<MinuteForecastResponse, GetMinuteForecastRequest>($"{baseDomain}/weather/forecast/minute/json", req);
             return res;
         }
 
+        /// <summary>
+        /// Service returns detailed weather forecast by quarter-day for the next 1, 5, 10, or 15 days for a given location. Response data is presented by quarters of the day - morning, afternoon, evening, and overnight. Details such as temperature, humidity, wind, precipitation, and UV index are returned.
+        /// </summary>
+        /// <param name="req"></param>
+        /// <returns></returns>
         public virtual async Task<Response<QuarterDayForecastResponse>> GetQuarterDayForecast(GetForecastRequest req)
         {
             var res = await ExecuteRequest<QuarterDayForecastResponse, GetForecastRequest>($"{baseDomain}/weather/forecast/quarterDay/json", req);
             return res;
         }
-
+        /// <summary>
+        /// Severe weather phenomenon can significantly impact our everyday life and business operations. For example, severe weather conditions such as tropical storms, high winds or flooding can close roads and force logistics companies to reroute their fleet causing delays in reaching destinations and breaking the cold chain of refrigerated food products.  Azure Maps Severe Weather Alerts API returns the severe weather alerts that are available worldwide from both official Government Meteorological Agencies and leading global to regional weather alert providers. The service can return details such as alert type, category, level and detailed description about the active severe alerts for the requested location, like hurricanes, thunderstorms, lightning, heat waves or forest fires.
+        /// </summary>
+        /// <param name="req"></param>
+        /// <returns></returns>
         public virtual async Task<Response<SevereWeatherAlertsResponse>> GetSevereWeatherAlerts(GetSevereWeatherAlertsRequest req)
         {
             var res = await ExecuteRequest<SevereWeatherAlertsResponse, GetSevereWeatherAlertsRequest>($"{baseDomain}/weather/severe/alerts/json", req);
+            return res;
+        }
+
+        public virtual async Task<Response<WeatherAlongRouteResponse>> GetWeatherAlongRoute(GetWeatherAlongRouteRequest req)
+        {
+            var res = await ExecuteRequest<WeatherAlongRouteResponse, GetWeatherAlongRouteRequest>($"{baseDomain}/weather/route/json", req);
             return res;
         }
 

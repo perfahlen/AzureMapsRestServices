@@ -1313,5 +1313,19 @@ namespace AzureMapsToolkit_Core_Test
 
         }
 
+        [Fact]
+        public void GetWeatherAlongRoute()
+        {
+            var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
+            var q = new GetWeatherAlongRouteRequest
+            {
+                Query = "38.907,-77.037,0:38.907,-77.009,10:38.926,-76.928,20:39.033,-76.852,30:39.168,-76.732,40:39.269,-76.634,50:39.287,-76.612,60"
+
+            };
+            var res = am.GetWeatherAlongRoute(q).Result;
+
+            Assert.Null(res.Error);
+        }
+
     }
 }
