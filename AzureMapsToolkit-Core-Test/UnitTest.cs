@@ -1268,5 +1268,20 @@ namespace AzureMapsToolkit_Core_Test
 
             Assert.Null(res.Error);
         }
+
+        [Fact]
+        public void GetMinuteForecast()
+        {
+            var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
+            var q = new GetMinuteForecastRequest
+            {
+                Query = "47.632346,-122.13887",
+                Interval = 5
+            };
+            var res = am.GetMinuteForecast(q).Result;
+
+            Assert.Null(res.Error);
+        }
+
     }
 }

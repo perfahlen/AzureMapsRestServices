@@ -1259,6 +1259,12 @@ namespace AzureMapsToolkit
             return res;
         }
 
+        public virtual async Task<Response<MinuteForecastResponse>> GetMinuteForecast(GetMinuteForecastRequest req)
+        {
+            var res = await ExecuteRequest<MinuteForecastResponse, GetMinuteForecastRequest>($"{baseDomain}/weather/forecast/minute/json", req);
+            return res;
+        }
+
         #endregion
 
     }

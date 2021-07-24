@@ -153,5 +153,6 @@ namespace AzureMapsToolkit
         Task<Response<DailyForecastResponse>> GetDailyForecast(GetDailyForecastRequest req);
         Task<Response<DailyIndicesResponse>> GetDailyIndices(GetDailyIndicesRequest req);
         Task<Response<HourlyForecastResponse>> GetHourlyForecast(GetHourlyForecastRequest req);
+        Task<Response<MinuteForecastResponse>> GetMinuteForecast(GetMinuteForecastRequest req);
     }
 }
