@@ -15,16 +15,21 @@ using AzureMapsToolkit.Route;
 using AzureMapsToolkit.Search;
 using AzureMapsToolkit.Timezone;
 using AzureMapsToolkit.Traffic;
-
+using AzureMapsToolkit.Weather;
 using Xunit;
 
 namespace AzureMapsToolkit_Core_Test
 {
     public class UnitTest
     {
+        private static readonly string _KEY;
 
-        const string _KEY = AzureMapsKey._KEY;
-
+        static UnitTest()
+        {
+            _KEY = Environment.GetEnvironmentVariable("AZURE_MAPS_KEY");
+            if (string.IsNullOrEmpty(_KEY))
+                throw new Exception("Please set the AZURE_MAPS_KEY environment variable to a valid Azure Maps key.");
+        }
 
         [Fact]
         public void InvalidIPCountry()
@@ -1211,5 +1216,121 @@ namespace AzureMapsToolkit_Core_Test
             Assert.Equal(5, res.Result.Result.Length);
 
         }
+
+        [Fact]
+        public void GetCurrentCondition()
+        {
+            var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
+            var q = new GetCurrentConditionsRequest
+            {
+                Query = "47.641268,-122.125679",
+                Unit = Unit.imperial
+            };
+            var res = am.GetCurrentCondition(q).Result;
+
+            Assert.Null(res.Error);
+        }
+
+        [Fact]
+        public void GetDailyForeCast()
+        {
+            var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
+            var q = new GetForecastRequest
+            {
+                Query = "62.6490341,30.0734812",
+                Unit = Unit.metric
+            };
+            var res = am.GetDailyForecast(q).Result;
+
+            Assert.Null(res.Error);
+        }
+
+        [Fact]
+        public void GetDailyIndices()
+        {
+            var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
+            var q = new GetDailyIndicesRequest
+            {
+                Query = "43.84745,-79.37849",
+                //IndexGroupId = 11
+            };
+            var res = am.GetDailyIndices(q).Result;
+
+            Assert.Null(res.Error);
+
+        }
+
+        [Fact]
+        public void GetHourlyForecast()
+        {
+            var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
+            var q = new GetHourlyForecastRequest
+            {
+                Query = "47.632346,-122.13887",
+                Duration = 12
+            };
+            var res = am.GetHourlyForecast(q).Result;
+
+            Assert.Null(res.Error);
+        }
+
+        [Fact]
+        public void GetMinuteForecast()
+        {
+            var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
+            var q = new GetMinuteForecastRequest
+            {
+                Query = "47.632346,-122.13887",
+                Interval = 5
+            };
+            var res = am.GetMinuteForecast(q).Result;
+
+            Assert.Null(res.Error);
+        }
+
+        [Fact]
+        public void GetQuerterDayForecast()
+        {
+            var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
+            var q = new GetForecastRequest
+            {
+                Query = "47.632346,-122.13887",
+                Duration = 5
+            };
+            var res = am.GetQuarterDayForecast(q).Result;
+
+            Assert.Null(res.Error);
+
+        }
+
+        [Fact]
+        public void GetSevereWeatherAlerts()
+        {
+            var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
+            var q = new GetSevereWeatherAlertsRequest
+            {
+                Query = "47.632346,-122.13887",
+
+            };
+            var res = am.GetSevereWeatherAlerts(q).Result;
+
+            Assert.Null(res.Error);
+
+        }
+
+        [Fact]
+        public void GetWeatherAlongRoute()
+        {
+            var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
+            var q = new GetWeatherAlongRouteRequest
+            {
+                Query = "38.907,-77.037,0:38.907,-77.009,10:38.926,-76.928,20:39.033,-76.852,30:39.168,-76.732,40:39.269,-76.634,50:39.287,-76.612,60"
+
+            };
+            var res = am.GetWeatherAlongRoute(q).Result;
+
+            Assert.Null(res.Error);
+        }
+
     }
 }

@@ -15,6 +15,7 @@ using AzureMapsToolkit.Search;
 using AzureMapsToolkit.Spatial;
 using AzureMapsToolkit.Timezone;
 using AzureMapsToolkit.Traffic;
+using AzureMapsToolkit.Weather;
 
 namespace AzureMapsToolkit
 {
@@ -141,9 +142,20 @@ namespace AzureMapsToolkit
         Task<Response<ElevationResult>> GetElevationDataForBoundingBox(GetElevationDataForBoundingBoxRequest req);
 
         Task<Response<ElevationResult>> GetElevationDataForPoints(GetElevationDataForPointsRequest req);
-
+        
         Task<Response<ElevationResult>> GetElevationDataForPolyline(GetElevationDataForPolylineRequest req);
+        
         Task<Response<ElevationResult>> PostElevationDataForPoints(PostDataForPoints[] req);
+        
         Task<Response<ElevationResult>> PostElevationDataForPolyline(PostDataForPolylineRequest req, PostDataForPolylineData[] data);
+        
+        Task<Response<CurrentConditionsResponse>> GetCurrentCondition(GetCurrentConditionsRequest req);
+        Task<Response<DailyForecastResponse>> GetDailyForecast(GetForecastRequest req);
+        Task<Response<DailyIndicesResponse>> GetDailyIndices(GetDailyIndicesRequest req);
+        Task<Response<HourlyForecastResponse>> GetHourlyForecast(GetHourlyForecastRequest req);
+        Task<Response<MinuteForecastResponse>> GetMinuteForecast(GetMinuteForecastRequest req);
+        Task<Response<QuarterDayForecastResponse>> GetQuarterDayForecast(GetForecastRequest req);
+        Task<Response<SevereWeatherAlertsResponse>> GetSevereWeatherAlerts(GetSevereWeatherAlertsRequest req);
+        Task<Response<WeatherAlongRouteResponse>> GetWeatherAlongRoute(GetWeatherAlongRouteRequest req);
     }
 }
