@@ -247,7 +247,7 @@ namespace AzureMapsToolkit
             {
                 var url = $"{baseDomain}/spatial/buffer/json?subscription-key={Key}&api-version=1.0";
                 var res = await GetHttpResponseMessage(url, json, HttpMethod.Post);
-                return new Response<BufferResponse> { Result = new BufferResponse { Result = res.Content.ReadAsStringAsync().Result } };
+                return new Response<BufferResponse> { Result = new BufferResponse { Result = await res.Content.ReadAsStringAsync() } };
 
             }
             catch (AzureMapsException ex)
@@ -370,7 +370,7 @@ namespace AzureMapsToolkit
                 using var request = new HttpRequestMessage(HttpMethod.Get, url);
 
                 using var response = await client.GetAsync(url);
-                var geojson = response.Content.ReadAsStringAsync().Result;
+                var geojson = await response.Content.ReadAsStringAsync();
                 return new Response<string> { Result = geojson };
             }
             catch (AzureMapsException ex)
@@ -416,7 +416,7 @@ namespace AzureMapsToolkit
 
                 // make another request and wait for the request is processed by the service
                 var udidUrl = $"{location}&subscription-key={this.Key}";
-                string udid = GetUdidFromLocation(udidUrl);
+                var udid = await GetUdidFromLocation(udidUrl);
                 var uploadResult = JsonSerializer.Deserialize<UploadResult>(udid);
                 return new Response<UploadResult> { Result = new UploadResult { Udid = uploadResult.Udid } };
 
@@ -449,7 +449,7 @@ namespace AzureMapsToolkit
                 var res = await GetHttpResponseMessage(url, geoJson, HttpMethod.Put);
                 var location = res.Headers.GetValues("Location").First();
                 var udidUrl = $"{location}&subscription-key={this.Key}";
-                string sUdid = GetUdidFromLocation(udidUrl);
+                var sUdid = await GetUdidFromLocation(udidUrl);
                 var updateResult = JsonSerializer.Deserialize<UploadResult>(sUdid, serializerOptions);
                 return new Response<UpdateResult> { Result = new UpdateResult { Udid = updateResult.Udid } };
             }
