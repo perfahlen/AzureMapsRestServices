@@ -27,43 +27,43 @@ namespace AzureMapsToolkit_Core_Test
 
 
         [Fact]
-        public void InvalidIPCountry()
+        public async Task InvalidIPCountry()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
-            var res = am.GetIPToLocation("83.10.0.3").Result;
+            var res = await am.GetIPToLocation("83.10.0.3");
 
             Assert.NotEqual("SE", res.Result.CountryRegion.IsoCode);
 
         }
 
         [Fact]
-        public void ValidIPCountry()
+        public async Task ValidIPCountry()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
-            var res = am.GetIPToLocation("83.68.254.182").Result;
+            var res = await am.GetIPToLocation("83.68.254.182");
 
             Assert.Equal("SE", res.Result.CountryRegion.IsoCode);
 
         }
 
         [Fact]
-        public void InvaliddIPAddress()
+        public async Task InvaliddIPAddress()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
-            var res = am.GetIPToLocation("perfa").Result;
+            var res = await am.GetIPToLocation("perfa");
             Assert.True(res.Error != null);
         }
 
         [Fact]
-        public void GetCopyrightCaption()
+        public async Task GetCopyrightCaption()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
-            var result = am.GetCopyrightCaption().Result;
+            var result = await am.GetCopyrightCaption();
             Assert.Contains("TomTom", result.Result.CopyrightsCaption);
         }
 
         [Fact]
-        public void GetCopyrightForTile()
+        public async Task GetCopyrightForTile()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
             var req = new AzureMapsToolkit.Render.CopyrightForTileRequest
@@ -73,20 +73,20 @@ namespace AzureMapsToolkit_Core_Test
                 Y = 22,
                 Text = "yes"
             };
-            var resp = am.GetCopyrightForTile(req).Result;
+            var resp = await am.GetCopyrightForTile(req);
             Assert.Equal("CAN", resp.Result.Regions[0].Country.ISO3);
         }
 
         [Fact]
-        public void GetCopyrightForWorld()
+        public async Task GetCopyrightForWorld()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
-            _ = am.GetCopyrightForWorld().Result;
+            _ = await am.GetCopyrightForWorld();
 
         }
 
         [Fact]
-        public void GetCopyrightFromBoundingBox()
+        public async Task GetCopyrightFromBoundingBox()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
             var req = new CopyrightFromBoundingBoxRequest
@@ -95,13 +95,13 @@ namespace AzureMapsToolkit_Core_Test
                 Maxcoordinates = "52.41072,4.84239",
                 Text = "yes"
             };
-            var res = am.GetCopyrightFromBoundingBox(req).Result;
+            var res = await am.GetCopyrightFromBoundingBox(req);
 
             Assert.Null(res.Error);
         }
 
         [Fact]
-        public void GetMapImage()
+        public async Task GetMapImage()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
             var req = new MapImageRequest
@@ -111,13 +111,13 @@ namespace AzureMapsToolkit_Core_Test
                 Zoom = 2,
                 Center = "62,17"
             };
-            var content = am.GetMapImage(req).Result;
+            var content = await am.GetMapImage(req);
             Assert.NotEmpty(content.Result);
 
         }
 
         [Fact]
-        public void GetMapImageryTilePreview()
+        public async Task GetMapImageryTilePreview()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
             var req = new MapImageryTileRequest
@@ -128,13 +128,13 @@ namespace AzureMapsToolkit_Core_Test
                 Y = 22,
                 Style = MapImageryStyle.satellite
             };
-            var content = am.GetMapImageryTile(req).Result;
+            var content = await am.GetMapImageryTile(req);
             Assert.NotEmpty(content.Result);
         }
 
 
         [Fact]
-        public void GetMapTile()
+        public async Task GetMapTile()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
             var req = new MapTileRequest
@@ -147,12 +147,12 @@ namespace AzureMapsToolkit_Core_Test
                 Y = 22
             };
 
-            var content = am.GetMapTile(req).Result;
+            var content = await am.GetMapTile(req);
             Assert.NotEmpty(content.Result);
         }
 
         [Fact]
-        public void GetRouteDirections()
+        public async Task GetRouteDirections()
         {
 
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
@@ -162,13 +162,13 @@ namespace AzureMapsToolkit_Core_Test
                 Query = "62.469026,16.696987:62.397051,17.363892",
                 Avoid = Avoid.tollRoads
             };
-            var directions = am.GetRouteDirections(req).Result;
+            var directions = await am.GetRouteDirections(req);
             Assert.Null(directions.Error);
             Assert.NotNull(directions.Result);
         }
 
         [Fact]
-        public void GetRouteDirectionsError()
+        public async Task GetRouteDirectionsError()
         {
 
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
@@ -178,12 +178,12 @@ namespace AzureMapsToolkit_Core_Test
                 VehicleEngineType = VehicleEngineType.Combustion,
                 InstructionsType = RouteInstructionsType.text
             };
-            var directions = am.GetRouteDirections(req).Result;
+            var directions = await am.GetRouteDirections(req);
             Assert.NotNull(directions.Error);
         }
 
         [Fact]
-        public void GetRouteRange()
+        public async Task GetRouteRange()
         {
 
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
@@ -192,12 +192,12 @@ namespace AzureMapsToolkit_Core_Test
                 Query = "52.50931,13.42936",
                 TimeBudgetInSec = "12000"
             };
-            var range = am.GetRouteRange(req).Result;
+            var range = await am.GetRouteRange(req);
             Assert.NotNull(range.Result.ReachableRange.Boundary);
         }
 
         [Fact]
-        public void GetPostRouteDirections()
+        public async Task GetPostRouteDirections()
         {
 
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
@@ -223,7 +223,7 @@ namespace AzureMapsToolkit_Core_Test
                 }
             };
 
-            var (ResultUrl, ex) = am.GetRouteDirections(req).Result;
+            var (ResultUrl, ex) = await am.GetRouteDirections(req);
 
             Assert.Null(ex);
 
@@ -235,7 +235,7 @@ namespace AzureMapsToolkit_Core_Test
 
 
         [Fact]
-        public void GetDistanceMatrix()
+        public async Task GetDistanceMatrix()
         {
 
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
@@ -251,10 +251,10 @@ namespace AzureMapsToolkit_Core_Test
                 new Coordinate { Longitude =  13.42937f, Latitude = 52.50931f}
             };
 
-            var (ResultUrl, ex) = am.GetRouteMatrix(new RouteMatrixRequest
+            var (ResultUrl, ex) = await am.GetRouteMatrix(new RouteMatrixRequest
             {
                 RouteType = RouteType.Fastest
-            }, origins, destinations).Result;
+            }, origins, destinations);
 
             Assert.Null(ex);
 
@@ -265,7 +265,7 @@ namespace AzureMapsToolkit_Core_Test
         }
 
         [Fact]
-        public void GetDistanceMatrixResult()
+        public async Task GetDistanceMatrixResult()
         {
 
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
@@ -284,9 +284,9 @@ namespace AzureMapsToolkit_Core_Test
                 new Coordinate { Longitude = 4.85003f, Latitude = 52.36241f },
                 new Coordinate { Longitude =  13.42937f, Latitude = 52.50931f}
             };
-            var (ResultUrl, _) = am.GetRouteMatrix(req, origins, destinations).Result;
+            var (ResultUrl, _) = await am.GetRouteMatrix(req, origins, destinations);
 
-            var matrixResponse = am.GetRouteMatrixResult(ResultUrl).Result;
+            var matrixResponse = await am.GetRouteMatrixResult(ResultUrl);
 
             Assert.Null(matrixResponse.Error);
             Assert.NotNull(matrixResponse.Result);
@@ -294,7 +294,7 @@ namespace AzureMapsToolkit_Core_Test
 
 
         [Fact]
-        public void GetSearchAddress()
+        public async Task GetSearchAddress()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
 
@@ -312,7 +312,7 @@ namespace AzureMapsToolkit_Core_Test
                 Lon = 12.3,
                 Language = "de-DE"
             };
-            var resp = am.GetSearchAddress(searchAddressRequest).Result;
+            var resp = await am.GetSearchAddress(searchAddressRequest);
 
             Assert.Null(resp.Error);
 
@@ -321,7 +321,7 @@ namespace AzureMapsToolkit_Core_Test
         }
 
         [Fact]
-        public void GetSearchAddressReverse()
+        public async Task GetSearchAddressReverse()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
 
@@ -332,7 +332,7 @@ namespace AzureMapsToolkit_Core_Test
                 EntityType = SearchAddressEntityType.Municipality | SearchAddressEntityType.PostalCodeArea
             };
 
-            var resp = am.GetSearchAddressReverse(req).Result;
+            var resp = await am.GetSearchAddressReverse(req);
 
             Assert.Null(resp.Error);
 
@@ -340,7 +340,7 @@ namespace AzureMapsToolkit_Core_Test
         }
 
         [Fact]
-        public void GetSearchAddressReverseCrossStreet()
+        public async Task GetSearchAddressReverseCrossStreet()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
 
@@ -349,7 +349,7 @@ namespace AzureMapsToolkit_Core_Test
                 Query = "62.390132,17.305199"
             };
 
-            var resp = am.GetSearchAddressReverseCrossStreet(req).Result;
+            var resp = await am.GetSearchAddressReverseCrossStreet(req);
 
             Assert.Null(resp.Error);
 
@@ -357,7 +357,7 @@ namespace AzureMapsToolkit_Core_Test
         }
 
         [Fact]
-        public void GetSearchAddressStructured()
+        public async Task GetSearchAddressStructured()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
             var req = new SearchAddressStructuredRequest
@@ -371,7 +371,7 @@ namespace AzureMapsToolkit_Core_Test
                 Offset = 1
 
             };
-            var result = am.GetSearchAddressStructured(req).Result;
+            var result = await am.GetSearchAddressStructured(req);
 
             Assert.Null(result.Error);
 
@@ -380,7 +380,7 @@ namespace AzureMapsToolkit_Core_Test
         }
 
         [Fact]
-        public void GetSearchFuzzy()
+        public async Task GetSearchFuzzy()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
             var req = new SearchFuzzyRequest
@@ -389,7 +389,7 @@ namespace AzureMapsToolkit_Core_Test
                 Query = "seattle",
                 IdxSet = new string[] { "Geo", "POI" }
             };
-            var res = am.GetSearchFuzzy(req).Result;
+            var res = await am.GetSearchFuzzy(req);
 
             Assert.Null(res.Error);
 
@@ -397,7 +397,7 @@ namespace AzureMapsToolkit_Core_Test
         }
 
         [Fact]
-        public void GetSearchNearby()
+        public async Task GetSearchNearby()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
             var req = new SearchNearbyRequest
@@ -409,7 +409,7 @@ namespace AzureMapsToolkit_Core_Test
                 Radius = 8046
             };
 
-            var res = am.GetSearchNearby(req).Result;
+            var res = await am.GetSearchNearby(req);
 
             Assert.Null(res.Error);
 
@@ -417,7 +417,7 @@ namespace AzureMapsToolkit_Core_Test
         }
 
         [Fact]
-        public void GetSearchPoi()
+        public async Task GetSearchPoi()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
             var req = new SearchPoiRequest
@@ -430,14 +430,14 @@ namespace AzureMapsToolkit_Core_Test
                 Radius = 8074
             };
 
-            var res = am.GetSearchPoi(req).Result;
+            var res = await am.GetSearchPoi(req);
 
             Assert.Null(res.Error);
 
         }
 
         [Fact]
-        public void GetSearchPoiCategory()
+        public async Task GetSearchPoiCategory()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
             var req = new SearchPoiCategoryRequest
@@ -450,14 +450,14 @@ namespace AzureMapsToolkit_Core_Test
                 Radius = 3200
             };
 
-            var res = am.GetSearchPOICategory(req).Result;
+            var res = await am.GetSearchPOICategory(req);
 
             Assert.Null(res.Error);
 
         }
 
         [Fact]
-        public void GetSearchAddressBatch()
+        public async Task GetSearchAddressBatch()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
             var req1 = new SearchAddressRequest
@@ -478,7 +478,7 @@ namespace AzureMapsToolkit_Core_Test
 
             var req = new SearchAddressRequest[] { req1, req2, req3 };
 
-            var (ResultUrl, ex) = am.GetSearchAddress(req).Result;
+            var (ResultUrl, ex) = await am.GetSearchAddress(req);
 
             Assert.Null(ex);
 
@@ -486,7 +486,7 @@ namespace AzureMapsToolkit_Core_Test
         }
 
         [Fact]
-        public void GetSearchAddressReverseBatch()
+        public async Task GetSearchAddressReverseBatch()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
             var q1 = new SearchAddressReverseRequest
@@ -505,7 +505,7 @@ namespace AzureMapsToolkit_Core_Test
 
             var req = new SearchAddressReverseRequest[] { q1, q2, q3 };
 
-            var (ResultUrl, ex) = am.GetSearchAddressReverse(req).Result;
+            var (ResultUrl, ex) = await am.GetSearchAddressReverse(req);
 
             Assert.Null(ex);
 
@@ -513,7 +513,7 @@ namespace AzureMapsToolkit_Core_Test
         }
 
         [Fact]
-        public void GetSearchAlongRoute()
+        public async Task GetSearchAlongRoute()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
 
@@ -534,7 +534,7 @@ namespace AzureMapsToolkit_Core_Test
 
             GeoLineString lineString = new(coordinates);
 
-            var result = am.GetSearchAlongRoute(req, lineString).Result;
+            var result = await am.GetSearchAlongRoute(req, lineString);
 
             Assert.Null(result.Error);
 
@@ -543,7 +543,7 @@ namespace AzureMapsToolkit_Core_Test
         }
 
         [Fact]
-        public void GetSeachFuzzyBatch()
+        public async Task GetSeachFuzzyBatch()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
 
@@ -571,7 +571,7 @@ namespace AzureMapsToolkit_Core_Test
             };
 
             var req = new SearchFuzzyRequest[] { q1, q2, q3 };
-            var (ResultUrl, ex) = am.GetSearchFuzzy(req).Result;
+            var (ResultUrl, ex) = await am.GetSearchFuzzy(req);
 
             Assert.Null(ex);
 
@@ -580,21 +580,21 @@ namespace AzureMapsToolkit_Core_Test
         }
 
         [Fact]
-        public void SearchInsidePolygon()
+        public async Task SearchInsidePolygon()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
             var coll = JsonSerializer.Deserialize<GeoCollection>("{\"type\":\"GeometryCollection\",\"geometries\":[{\"type\":\"Polygon\",\"coordinates\":[[[-122.43576049804686,37.7524152343544],[-122.43301391601562,37.70660472542312],[-122.36434936523437,37.712059855877314],[-122.43576049804686,37.7524152343544]]]}]}");
-            var d = am.GetSearchInsidePolygon(new SearchInsidePolygonRequest
+            var d = await am.GetSearchInsidePolygon(new SearchInsidePolygonRequest
             {
                 Query = "burger"
-            }, coll).Result;
+            }, coll);
 
             Assert.Null(d.Error);
 
         }
 
         [Fact]
-        public void GetTimeZoneByCoordinates()
+        public async Task GetTimeZoneByCoordinates()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
             var req = new TimeZoneRequest
@@ -602,7 +602,7 @@ namespace AzureMapsToolkit_Core_Test
                 Query = "47.0,-122",
                 Options = TimezoneOptions.All
             };
-            var r = am.GetTimezoneByCoordinates(req).Result;
+            var r = await am.GetTimezoneByCoordinates(req);
 
             Assert.Null(r.Error);
             Assert.Equal("US", r.Result.TimeZones[0].Countries[0].Code);
@@ -610,7 +610,7 @@ namespace AzureMapsToolkit_Core_Test
 
 
         [Fact]
-        public void GetTimeZoneById()
+        public async Task GetTimeZoneById()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
             var req = new TimeZoneRequest
@@ -618,40 +618,40 @@ namespace AzureMapsToolkit_Core_Test
                 Query = "Europe/Stockholm",
                 Options = TimezoneOptions.All
             };
-            var r = am.GetTimezoneById(req).Result;
+            var r = await am.GetTimezoneById(req);
 
             Assert.Null(r.Error);
             Assert.Equal("SE", r.Result.TimeZones[0].Countries[0].Code);
         }
 
         [Fact]
-        public void GetTimezoneIANA()
+        public async Task GetTimezoneIANA()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
 
-            var r = am.GetTimezoneEnumIANA().Result;
+            var r = await am.GetTimezoneEnumIANA();
 
             Assert.Null(r.Error);
 
         }
 
         [Fact]
-        public void GetTimezoneEnumWindows()
+        public async Task GetTimezoneEnumWindows()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
 
-            var r = am.GetTimezoneEnumWindows().Result;
+            var r = await am.GetTimezoneEnumWindows();
 
             Assert.Null(r.Error);
             Assert.NotNull(r.Result);
         }
 
         [Fact]
-        public void GetTimezoneIANAVersion()
+        public async Task GetTimezoneIANAVersion()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
 
-            var r = am.GetTimezoneIANAVersion().Result;
+            var r = await am.GetTimezoneIANAVersion();
 
             Assert.Null(r.Error);
 
@@ -660,14 +660,14 @@ namespace AzureMapsToolkit_Core_Test
 
 
         [Fact]
-        public void GetTimezoneWindowsToIANA()
+        public async Task GetTimezoneWindowsToIANA()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
             var req = new TimezoneWindowsToIANARequest
             {
                 Query = "pacific standard time"
             };
-            var r = am.GetTimezoneWindowsToIANA(req).Result;
+            var r = await am.GetTimezoneWindowsToIANA(req);
 
             Assert.Null(r.Error);
 
@@ -675,7 +675,7 @@ namespace AzureMapsToolkit_Core_Test
         }
 
         [Fact]
-        public void GetTrafficFlowSegment()
+        public async Task GetTrafficFlowSegment()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
             var req = new TrafficFlowSegmentRequest
@@ -686,14 +686,14 @@ namespace AzureMapsToolkit_Core_Test
                 Zoom = 10
             };
 
-            var r = am.GetTrafficFlowSegment(req).Result;
+            var r = await am.GetTrafficFlowSegment(req);
 
             Assert.Null(r.Error);
 
         }
 
         [Fact]
-        public void GetTrafficFlowTile()
+        public async Task GetTrafficFlowTile()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
             var req = new TrafficFlowTileRequest
@@ -704,13 +704,13 @@ namespace AzureMapsToolkit_Core_Test
                 Y = 1360
             };
 
-            var r = am.GetTrafficFlowTile(req).Result;
+            var r = await am.GetTrafficFlowTile(req);
 
             Assert.Null(r.Error);
         }
 
         [Fact]
-        public void GetTrafficIncidentTile()
+        public async Task GetTrafficIncidentTile()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
             var req = new TrafficIncidentTileRequest
@@ -721,13 +721,13 @@ namespace AzureMapsToolkit_Core_Test
                 Y = 1360
             };
 
-            var r = am.GetTrafficIncidentTile(req).Result;
+            var r = await am.GetTrafficIncidentTile(req);
 
             Assert.Null(r.Error);
         }
 
         [Fact]
-        public void GetTrafficIncidentDetail()
+        public async Task GetTrafficIncidentDetail()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
             var req = new TrafficIncidentDetailRequest
@@ -739,13 +739,13 @@ namespace AzureMapsToolkit_Core_Test
                 Projection = "EPSG900913"
             };
 
-            var r = am.GetTrafficIncidentDetail(req).Result;
+            var r = await am.GetTrafficIncidentDetail(req);
 
             Assert.Null(r.Error);
         }
 
         [Fact]
-        public void GetTrafficIncidentViewport()
+        public async Task GetTrafficIncidentViewport()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
             var req = new TrafficIncidentViewportRequest
@@ -757,7 +757,7 @@ namespace AzureMapsToolkit_Core_Test
                 Copyright = true
             };
 
-            var r = am.GetTrafficIncidentViewport(req).Result;
+            var r = await am.GetTrafficIncidentViewport(req);
 
             Assert.Null(r.Error);
 
@@ -765,7 +765,7 @@ namespace AzureMapsToolkit_Core_Test
         }
 
         [Fact]
-        public void GetSearchAddresstMoq()
+        public async Task GetSearchAddresstMoq()
         {
 
             var mock = new Moq.Mock<IAzureMapsServices>();
@@ -789,12 +789,12 @@ namespace AzureMapsToolkit_Core_Test
         }
 
         [Fact]
-        public void Upload()
+        public async Task Upload()
         {
             return;
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
             var json = "{ \"type\": \"FeatureCollection\", \"features\": [ { \"type\": \"Feature\", \"properties\": { \"geometryId\": 1001 }, \"geometry\": { \"type\": \"Polygon\", \"coordinates\": [ [ [ -111.9267386, 33.5362475 ], [ -111.9627875, 33.5104882 ], [ -111.9027061, 33.5004686 ], [ -111.9267386, 33.5362475 ] ] ] } } ] }";
-            var res = am.Upload(json).Result;
+            var res = await am.Upload(json);
 
             Assert.NotNull(res.Result);
             Assert.Null(res.Error);
@@ -802,13 +802,13 @@ namespace AzureMapsToolkit_Core_Test
         }
 
         [Fact]
-        public void Update()
+        public async Task Update()
         {
             return;
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
 
             var json = "{\"type\": \"FeatureCollection\", \"features\": [{\"type\": \"Feature\",\"geometry\": {\"type\": \"Point\",\"coordinates\": [-122.126986, 47.639754]}, \"properties\": {\"geometryId\": \"001\",\"radius\": 500}}]}";
-            var res = am.Update(System.Guid.Parse(""), json).Result;
+            var res = await am.Update(System.Guid.Parse(""), json);
 
             Assert.NotNull(res.Result);
             Assert.Null(res.Error);
@@ -816,44 +816,44 @@ namespace AzureMapsToolkit_Core_Test
         }
 
         [Fact]
-        public void DeleteData()
+        public async Task DeleteData()
         {
             return;
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
-            var res = am.DeleteData(System.Guid.Parse("895e6375-7d4e-0052-48c1-749d503cf522")).Result;
+            var res = await am.DeleteData(System.Guid.Parse("895e6375-7d4e-0052-48c1-749d503cf522"));
 
             Assert.Null(res.Error);
             Assert.True(res.Result);
         }
 
         [Fact]
-        public void ListData()
+        public async Task ListData()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
-            var res = am.GetList().Result;
+            var res = await am.GetList();
             Assert.InRange(res.Result.MapDataList.Count, 0, int.MaxValue);
         }
 
         [Fact]
-        public void DownloadData()
+        public async Task DownloadData()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
-            var res = am.Download("").Result;
+            var res = await am.Download("");
             Assert.Null(res.Error);
             Assert.NotNull(res.Result);
         }
 
         [Fact]
 
-        public void GetBuffer()
+        public async Task GetBuffer()
         {
             return;
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
-            var res = am.GetBuffer(new AzureMapsToolkit.Spatial.BufferRequest
+            var res = await am.GetBuffer(new AzureMapsToolkit.Spatial.BufferRequest
             {
                 Udid = System.Guid.Parse(""),
                 Distances = 100.ToString()
-            }).Result;
+            });
 
             Assert.Null(res.Error);
 
@@ -862,42 +862,42 @@ namespace AzureMapsToolkit_Core_Test
         }
 
         [Fact]
-        public void PostBuffer()
+        public async Task PostBuffer()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
-            var buffer = am.PostBuffer("{ \"geometries\": { \"type\": \"FeatureCollection\", \"features\": [ { \"type\": \"Feature\", \"properties\": { \"geometryId\": \"ExampleId\" }, \"geometry\": { \"type\": \"Point\", \"coordinates\": [ -111.9267386, 33.5362475 ] } } ] }, \"distances\": [ 176.3 ] }").Result;
+            var buffer = await am.PostBuffer("{ \"geometries\": { \"type\": \"FeatureCollection\", \"features\": [ { \"type\": \"Feature\", \"properties\": { \"geometryId\": \"ExampleId\" }, \"geometry\": { \"type\": \"Point\", \"coordinates\": [ -111.9267386, 33.5362475 ] } } ] }, \"distances\": [ 176.3 ] }");
             Assert.Null(buffer.Error);
 
         }
 
         [Fact]
-        public void GetClosestPoint()
+        public async Task GetClosestPoint()
         {
             return;
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
-            var res = am.GetClosestPoint(new AzureMapsToolkit.Spatial.ClosestPointRequest
+            var res = await am.GetClosestPoint(new AzureMapsToolkit.Spatial.ClosestPointRequest
             {
                 Lon = -105.05860381672178,
                 Lat = 40.516153406773952,
                 Udid = Guid.Parse(""),
                 NumberOfClosestPoints = 2
-            }).Result;
+            });
 
             Assert.Null(res.Error);
         }
 
         [Fact]
-        public void GetGeofence()
+        public async Task GetGeofence()
         {
             return;
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
-            var res = am.GetGeofence(new AzureMapsToolkit.Spatial.GeofenceRequest
+            var res = await am.GetGeofence(new AzureMapsToolkit.Spatial.GeofenceRequest
             {
                 Udid = Guid.Parse(""),
                 Lat = 47.609826136787518,
                 Lon = -122.15225500989803,
                 DeviceId = "1"
-            }).Result;
+            });
 
             Assert.NotNull(res);
 
@@ -906,13 +906,13 @@ namespace AzureMapsToolkit_Core_Test
 
         [Fact]
 
-        public void GetGreatCircleDistance()
+        public async Task GetGreatCircleDistance()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
-            var res = am.GetGreatCircleDistance(new AzureMapsToolkit.Spatial.GreatCircleDistanceRequest
+            var res = await am.GetGreatCircleDistance(new AzureMapsToolkit.Spatial.GreatCircleDistanceRequest
             {
                 Query = "47.622942,-122.316456:47.610378,-122.200676"
-            }).Result;
+            });
 
             Assert.Null(res.Error);
 
@@ -921,14 +921,14 @@ namespace AzureMapsToolkit_Core_Test
 
 
         [Fact]
-        public void GetGreatCircleDistance2()
+        public async Task GetGreatCircleDistance2()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
-            var res = am.GetGreatCircleDistance(new AzureMapsToolkit.Spatial.GreatCircleDistanceRequest
+            var res = await am.GetGreatCircleDistance(new AzureMapsToolkit.Spatial.GreatCircleDistanceRequest
             {
                 Start = new AzureMapsToolkit.Spatial.Coordinate { Lat = 47.622942, Lon = -122.316456 },
                 End = new AzureMapsToolkit.Spatial.Coordinate { Lat = 47.610378, Lon = -122.200676 }
-            }).Result;
+            });
 
             Assert.Null(res.Error);
 
@@ -936,38 +936,37 @@ namespace AzureMapsToolkit_Core_Test
         }
 
         [Fact]
-        public void GetPointInPolygon()
+        public async Task GetPointInPolygon()
         {
             return;
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
-            var res = am.GetPointInPolygon(
+            var res = await am.GetPointInPolygon(
                 new AzureMapsToolkit.Spatial.PointInPolygonRequest
                 {
                     Lat = 33.5362475,
                     Lon = -111.9267386,
                     Udid = Guid.Parse("")
                 }
-                ).Result;
+                );
             Assert.Null(res.Error);
         }
 
         [Fact]
-        public void PostClosestPoint()
+        public async Task PostClosestPoint()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
-            var res = am.PostClosestPoint(new AzureMapsToolkit.Spatial.PostClosestPointRequest
+            var res = await am.PostClosestPoint(new AzureMapsToolkit.Spatial.PostClosestPointRequest
             {
                 Lon = -122.316456,
                 Lat = 47.62294,
                 NumberOfClosestPoints = 2
-            }, "{ \"type\": \"FeatureCollection\", \"features\": [ { \"type\": \"Feature\", \"properties\": { \"geometryId\": 1001 }, \"geometry\": { \"type\": \"Point\", \"coordinates\": [ -105.02860293715861, 40.516153406773952 ] } }, { \"type\": \"Feature\", \"properties\": { \"geometryId\": 1002 }, \"geometry\": { \"type\": \"Point\", \"coordinates\": [ -105.02860381672178, 40.515990990037309 ] } }, { \"type\": \"Feature\", \"properties\": { \"geometryId\": 1003 }, \"geometry\": { \"type\": \"Point\", \"coordinates\": [ -105.02812292879467, 40.516058678088562 ] } } ] }")
-            .Result;
+            }, "{ \"type\": \"FeatureCollection\", \"features\": [ { \"type\": \"Feature\", \"properties\": { \"geometryId\": 1001 }, \"geometry\": { \"type\": \"Point\", \"coordinates\": [ -105.02860293715861, 40.516153406773952 ] } }, { \"type\": \"Feature\", \"properties\": { \"geometryId\": 1002 }, \"geometry\": { \"type\": \"Point\", \"coordinates\": [ -105.02860381672178, 40.515990990037309 ] } }, { \"type\": \"Feature\", \"properties\": { \"geometryId\": 1003 }, \"geometry\": { \"type\": \"Point\", \"coordinates\": [ -105.02812292879467, 40.516058678088562 ] } } ] }");
 
             Assert.Null(res.Error);
         }
 
         [Fact]
-        public void PostGeofence()
+        public async Task PostGeofence()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
             var json = "{ \"type\": \"FeatureCollection\", \"features\": [ { \"type\": \"Feature\", \"geometry\": { \"type\": \"Polygon\", \"coordinates\": [ [ [ -122.13241226662022, 47.617011400917221 ], [ -122.12810106940353, 47.6169969269402 ], [ -122.12824948956276, 47.619076837513489 ], [ -122.12833297981392, 47.621929787055336 ], [ -122.12971398040168, 47.62184100705295 ], [ -122.1318413862121, 47.62195364373008 ], [ -122.13231034769727, 47.617163326181213 ], [ -122.13241226662022, 47.617011400917221 ] ] ] }, \"properties\": { \"geometryId\": \"2\", \"name\": \"Crossroad Mall\" } }, { \"type\": \"Feature\", \"geometry\": { \"type\": \"Polygon\", \"coordinates\": [ [ [ -122.15342205632391, 47.609818185466253 ], [ -122.153451623509, 47.606287331460038 ], [ -122.14971782206638, 47.606250040787046 ], [ -122.14817354810637, 47.606391046012305 ], [ -122.14827351288071, 47.609833167963558 ], [ -122.15225500989803, 47.609826136787518 ], [ -122.15342205632391, 47.609818185466253 ] ] ] }, \"properties\": { \"geometryId\": \"1\", \"name\": \"Sammamish High school\" } } ] }";
@@ -980,43 +979,43 @@ namespace AzureMapsToolkit_Core_Test
                 Mode = AzureMapsToolkit.Spatial.Mode.EnterAndExit,
                 IsAsync = false
             };
-            var res = am.PostGeofence(reqOjb, json).Result;
+            var res = await am.PostGeofence(reqOjb, json);
 
             Assert.Null(res.Error);
         }
 
         [Fact]
-        public void PostPointInPolygon()
+        public async Task PostPointInPolygon()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
             var json = "{ \"type\": \"FeatureCollection\", \"features\": [ { \"type\": \"Feature\", \"properties\": { \"geometryId\": 1001 }, \"geometry\": { \"type\": \"Polygon\", \"coordinates\": [ [ [ -111.9267386, 33.5362475 ], [ -111.9627875, 33.5104882 ], [ -111.9027061, 33.5004686 ], [ -111.9267386, 33.5362475 ] ] ] } } ] }";
-            var res = am.PostPointInPolygon(new AzureMapsToolkit.Spatial.PostPointInPolygonRequest { Lat = 33.5362475, Lon = -111.9267386 }, json).Result;
+            var res = await am.PostPointInPolygon(new AzureMapsToolkit.Spatial.PostPointInPolygonRequest { Lat = 33.5362475, Lon = -111.9267386 }, json);
             Assert.Null(res.Error);
         }
 
         // not sure how to test this service, it seems it requires a vehicleId, but which?
         [Fact]
-        public void GetCarShareInfo()
+        public async Task GetCarShareInfo()
         {
             return;
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
-            var res = am.GetCarShareInfo(new AzureMapsToolkit.Mobility.CarShareInfoRequest
+            var res = await am.GetCarShareInfo(new AzureMapsToolkit.Mobility.CarShareInfoRequest
             {
                 Query = ""
-            }).Result;
+            });
 
             Assert.Null(res.Error);
         }
 
         [Fact]
-        public void GetMetroAreaInfo()
+        public async Task GetMetroAreaInfo()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
-            var res = am.GetMetroAreaInfo(new AzureMapsToolkit.Mobility.MetroAreaInfoRequest
+            var res = await am.GetMetroAreaInfo(new AzureMapsToolkit.Mobility.MetroAreaInfoRequest
             {
                 Query = "121",
                 DetailType = $"{AzureMapsToolkit.Mobility.DetailType.AGENCIES}"
-            }).Result;
+            });
 
             Assert.Null(res.Error);
 
@@ -1024,14 +1023,14 @@ namespace AzureMapsToolkit_Core_Test
         }
 
         [Fact]
-        public void GetMetroArea()
+        public async Task GetMetroArea()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
-            var res = am.GetMetroArea(new AzureMapsToolkit.Mobility.MetroAreaRequest
+            var res = await am.GetMetroArea(new AzureMapsToolkit.Mobility.MetroAreaRequest
             {
                 Query = "40.648677,-74.010535",
                 QueryType = AzureMapsToolkit.Mobility.QueryType.position
-            }).Result;
+            });
 
             Assert.Null(res.Error);
 
@@ -1042,10 +1041,10 @@ namespace AzureMapsToolkit_Core_Test
         }
 
         [Fact]
-        public void GetNearbyTransit()
+        public async Task GetNearbyTransit()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
-            var res = am.GetNearbyTransit(new AzureMapsToolkit.Mobility.NearbyTransitRequest
+            var res = await am.GetNearbyTransit(new AzureMapsToolkit.Mobility.NearbyTransitRequest
             {
                 MetroId = 121,
                 Query = "40.693393,-73.988310",
@@ -1053,34 +1052,34 @@ namespace AzureMapsToolkit_Core_Test
                 Radius = 300,
                 ObjectType = AzureMapsToolkit.Mobility.ObjectType.Stop
 
-            }).Result;
+            });
 
             Assert.Null(res.Error);
         }
 
         [Fact]
-        public void GetRealTimeArrivals()
+        public async Task GetRealTimeArrivals()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
-            var res = am.GetRealTimeArrivals(new AzureMapsToolkit.Mobility.RealTimeArrivalsRequest
+            var res = await am.GetRealTimeArrivals(new AzureMapsToolkit.Mobility.RealTimeArrivalsRequest
             {
                 Query = "121---19919516"
-            }).Result;
+            });
 
             Assert.Null(res.Error);
         }
 
         [Fact]
-        public void GetTransitItenary()
+        public async Task GetTransitItenary()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
-            _ = am.GetTransitItinerary(new AzureMapsToolkit.Mobility.TransitItineraryRequest
+            _ = await am.GetTransitItinerary(new AzureMapsToolkit.Mobility.TransitItineraryRequest
             {
-            }).Result;
+            });
         }
 
         [Fact]
-        public void GetTransitLineInfo()
+        public async Task GetTransitLineInfo()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
             var transitLineInfoRequest = new AzureMapsToolkit.Mobility.TransitLineInfoRequest
@@ -1089,12 +1088,12 @@ namespace AzureMapsToolkit_Core_Test
                 Query = "121---373227",
                 DetailTypes = TransitLineDetailType.Stops | TransitLineDetailType.Schedule | TransitLineDetailType.Stops
             };
-            var res = am.GetTransitLineInfo(transitLineInfoRequest).Result;
+            var res = await am.GetTransitLineInfo(transitLineInfoRequest);
             Assert.Null(res.Error);
         }
 
         [Fact]
-        public void GetTransitRoute()
+        public async Task GetTransitRoute()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
             var transitRouteRequest = new TransitRouteRequest
@@ -1105,13 +1104,13 @@ namespace AzureMapsToolkit_Core_Test
                 Destination = "40.682051,-73.976702",
                 DestinationType = DestinationType.position
             };
-            var res = am.GetTransitRoute(transitRouteRequest).Result;
+            var res = await am.GetTransitRoute(transitRouteRequest);
 
             Assert.Null(res.Error);
         }
 
         [Fact]
-        public void GetElevationDataForBoundingBox()
+        public async Task GetElevationDataForBoundingBox()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
             var req = new AzureMapsToolkit.Elevation.GetElevationDataForBoundingBoxRequest
@@ -1120,13 +1119,13 @@ namespace AzureMapsToolkit_Core_Test
                 Rows = 2,
                 Columns = 3
             };
-            var res = am.GetElevationDataForBoundingBox(req).Result;
+            var res = await am.GetElevationDataForBoundingBox(req);
 
             Assert.Null(res.Error);
         }
 
         [Fact]
-        public void GetElevationDataForPoints()
+        public async Task GetElevationDataForPoints()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
             var req = new AzureMapsToolkit.Elevation.GetElevationDataForPointsRequest
@@ -1134,13 +1133,13 @@ namespace AzureMapsToolkit_Core_Test
                 Points = "-121.66853362143818, 46.84646479863713|-121.68853362143818, 46.856464798637127",
 
             };
-            var res = am.GetElevationDataForPoints(req).Result;
+            var res = await am.GetElevationDataForPoints(req);
 
             Assert.Null(res.Error);
         }
 
         [Fact]
-        public void GetElevationDataForPolyline()
+        public async Task GetElevationDataForPolyline()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
             var req = new AzureMapsToolkit.Elevation.GetElevationDataForPolylineRequest
@@ -1149,7 +1148,7 @@ namespace AzureMapsToolkit_Core_Test
                 Samples = 5
 
             };
-            var res = am.GetElevationDataForPolyline(req).Result;
+            var res = await am.GetElevationDataForPolyline(req);
 
             Assert.Null(res.Error);
 
@@ -1157,7 +1156,7 @@ namespace AzureMapsToolkit_Core_Test
         }
 
         [Fact]
-        public void PostElevationDataForPoints()
+        public async Task PostElevationDataForPoints()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
             var req = new AzureMapsToolkit.Elevation.PostDataForPoints[] {
@@ -1174,7 +1173,7 @@ namespace AzureMapsToolkit_Core_Test
             };
 
 
-            var res = am.PostElevationDataForPoints(req).Result;
+            var res = await am.PostElevationDataForPoints(req);
 
             Assert.Null(res.Error);
             Assert.Equal(2, res.Result.Result.Length);
@@ -1182,7 +1181,7 @@ namespace AzureMapsToolkit_Core_Test
         }
 
         [Fact]
-        public void PostElevationDataForPoline()
+        public async Task PostElevationDataForPoline()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
             var req = new AzureMapsToolkit.Elevation.PostDataForPolylineRequest
@@ -1205,7 +1204,7 @@ namespace AzureMapsToolkit_Core_Test
             };
 
 
-            var res = am.PostElevationDataForPolyline(req, data).Result;
+            var res = await am.PostElevationDataForPolyline(req, data);
 
             Assert.Null(res.Error);
             Assert.Equal(5, res.Result.Result.Length);
@@ -1213,7 +1212,7 @@ namespace AzureMapsToolkit_Core_Test
         }
 
         [Fact]
-        public void GetCurrentCondition()
+        public async Task GetCurrentCondition()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
             var q = new GetCurrentConditionsRequest
@@ -1221,13 +1220,13 @@ namespace AzureMapsToolkit_Core_Test
                 Query = "47.641268,-122.125679",
                 Unit = Unit.imperial
             };
-            var res = am.GetCurrentCondition(q).Result;
+            var res = await am.GetCurrentCondition(q);
 
             Assert.Null(res.Error);
         }
 
         [Fact]
-        public void GetDailyForeCast()
+        public async Task GetDailyForeCast()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
             var q = new GetForecastRequest
@@ -1235,13 +1234,13 @@ namespace AzureMapsToolkit_Core_Test
                 Query = "62.6490341,30.0734812",
                 Unit = Unit.metric
             };
-            var res = am.GetDailyForecast(q).Result;
+            var res = await am.GetDailyForecast(q);
 
             Assert.Null(res.Error);
         }
 
         [Fact]
-        public void GetDailyIndices()
+        public async Task GetDailyIndices()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
             var q = new GetDailyIndicesRequest
@@ -1249,14 +1248,14 @@ namespace AzureMapsToolkit_Core_Test
                 Query = "43.84745,-79.37849",
                 //IndexGroupId = 11
             };
-            var res = am.GetDailyIndices(q).Result;
+            var res = await am.GetDailyIndices(q);
 
             Assert.Null(res.Error);
 
         }
 
         [Fact]
-        public void GetHourlyForecast()
+        public async Task GetHourlyForecast()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
             var q = new GetHourlyForecastRequest
@@ -1264,13 +1263,13 @@ namespace AzureMapsToolkit_Core_Test
                 Query = "47.632346,-122.13887",
                 Duration = 12
             };
-            var res = am.GetHourlyForecast(q).Result;
+            var res = await am.GetHourlyForecast(q);
 
             Assert.Null(res.Error);
         }
 
         [Fact]
-        public void GetMinuteForecast()
+        public async Task GetMinuteForecast()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
             var q = new GetMinuteForecastRequest
@@ -1278,13 +1277,13 @@ namespace AzureMapsToolkit_Core_Test
                 Query = "47.632346,-122.13887",
                 Interval = 5
             };
-            var res = am.GetMinuteForecast(q).Result;
+            var res = await am.GetMinuteForecast(q);
 
             Assert.Null(res.Error);
         }
 
         [Fact]
-        public void GetQuerterDayForecast()
+        public async Task GetQuerterDayForecast()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
             var q = new GetForecastRequest
@@ -1292,14 +1291,14 @@ namespace AzureMapsToolkit_Core_Test
                 Query = "47.632346,-122.13887",
                 Duration = 5
             };
-            var res = am.GetQuarterDayForecast(q).Result;
+            var res = await am.GetQuarterDayForecast(q);
 
             Assert.Null(res.Error);
 
         }
 
         [Fact]
-        public void GetSevereWeatherAlerts()
+        public async Task GetSevereWeatherAlerts()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
             var q = new GetSevereWeatherAlertsRequest
@@ -1307,14 +1306,14 @@ namespace AzureMapsToolkit_Core_Test
                 Query = "47.632346,-122.13887",
 
             };
-            var res = am.GetSevereWeatherAlerts(q).Result;
+            var res = await am.GetSevereWeatherAlerts(q);
 
             Assert.Null(res.Error);
 
         }
 
         [Fact]
-        public void GetWeatherAlongRoute()
+        public async Task GetWeatherAlongRoute()
         {
             var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
             var q = new GetWeatherAlongRouteRequest
@@ -1322,7 +1321,7 @@ namespace AzureMapsToolkit_Core_Test
                 Query = "38.907,-77.037,0:38.907,-77.009,10:38.926,-76.928,20:39.033,-76.852,30:39.168,-76.732,40:39.269,-76.634,50:39.287,-76.612,60"
 
             };
-            var res = am.GetWeatherAlongRoute(q).Result;
+            var res = await am.GetWeatherAlongRoute(q);
 
             Assert.Null(res.Error);
         }

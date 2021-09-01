@@ -234,13 +234,13 @@ namespace AzureMapsToolkit.Common
             var res = await client.GetAsync(url);
             if (res.StatusCode == System.Net.HttpStatusCode.OK)
             {
-                var json = res.Content.ReadAsStringAsync().Result;
+                var json = await res.Content.ReadAsStringAsync();
                 var val = JsonSerializer.Deserialize<T>(json);
                 return val;
             }
             else
             {
-                string content = res.Content.ReadAsStringAsync().Result;
+                string content = await res.Content.ReadAsStringAsync();
 
                 var ex = JsonSerializer.Deserialize<ErrorResponse>(content);
 
@@ -249,22 +249,22 @@ namespace AzureMapsToolkit.Common
 
         }
 
-        internal static string GetUdidFromLocation(string location)
+        internal static async Task<string> GetUdidFromLocation(string location)
         {
             using (var client = GetClient(location))
             {
                 var tries = 0;
                 while (tries < 20)
                 {
-                    var result = client.GetAsync(location).Result;
+                    var result = await client.GetAsync(location);
                     if (result.StatusCode == System.Net.HttpStatusCode.Created)
                     {
-                        var data = result.Content.ReadAsStringAsync().Result;
+                        var data = await result.Content.ReadAsStringAsync();
                         return data;
                     }
                     else if (result.StatusCode == System.Net.HttpStatusCode.Accepted)
                     {
-                        System.Threading.Thread.Sleep(100);
+                        await Task.Delay(100);
                     }
                     else
                     {
