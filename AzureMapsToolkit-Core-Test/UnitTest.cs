@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -8,14 +7,13 @@ using Azure.Core.GeoJson;
 
 using AzureMapsToolkit;
 using AzureMapsToolkit.Common;
-using AzureMapsToolkit.GeoJson;
-using AzureMapsToolkit.Mobility;
 using AzureMapsToolkit.Render;
 using AzureMapsToolkit.Route;
 using AzureMapsToolkit.Search;
 using AzureMapsToolkit.Timezone;
 using AzureMapsToolkit.Traffic;
 using AzureMapsToolkit.Weather;
+
 using Xunit;
 
 namespace AzureMapsToolkit_Core_Test
@@ -994,120 +992,120 @@ namespace AzureMapsToolkit_Core_Test
         }
 
         // not sure how to test this service, it seems it requires a vehicleId, but which?
-        [Fact]
-        public async Task GetCarShareInfo()
-        {
-            return;
-            var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
-            var res = await am.GetCarShareInfo(new AzureMapsToolkit.Mobility.CarShareInfoRequest
-            {
-                Query = ""
-            });
+        //[Fact]
+        //public async Task GetCarShareInfo()
+        //{
+        //    return;
+        //    var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
+        //    var res = await am.GetCarShareInfo(new AzureMapsToolkit.Mobility.CarShareInfoRequest
+        //    {
+        //        Query = ""
+        //    });
 
-            Assert.Null(res.Error);
-        }
+        //    Assert.Null(res.Error);
+        //}
 
-        [Fact]
-        public async Task GetMetroAreaInfo()
-        {
-            var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
-            var res = await am.GetMetroAreaInfo(new AzureMapsToolkit.Mobility.MetroAreaInfoRequest
-            {
-                Query = "121",
-                DetailType = $"{AzureMapsToolkit.Mobility.DetailType.AGENCIES}"
-            });
+        //[Fact]
+        //public async Task GetMetroAreaInfo()
+        //{
+        //    var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
+        //    var res = await am.GetMetroAreaInfo(new AzureMapsToolkit.Mobility.MetroAreaInfoRequest
+        //    {
+        //        Query = "121",
+        //        DetailType = $"{AzureMapsToolkit.Mobility.DetailType.AGENCIES}"
+        //    });
 
-            Assert.Null(res.Error);
+        //    Assert.Null(res.Error);
 
-            Assert.Equal("NICE bus", res.Result.Agencies.First().AgencyName);
-        }
+        //    Assert.Equal("NICE bus", res.Result.Agencies.First().AgencyName);
+        //}
 
-        [Fact]
-        public async Task GetMetroArea()
-        {
-            var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
-            var res = await am.GetMetroArea(new AzureMapsToolkit.Mobility.MetroAreaRequest
-            {
-                Query = "40.648677,-74.010535",
-                QueryType = AzureMapsToolkit.Mobility.QueryType.position
-            });
+        //[Fact]
+        //public async Task GetMetroArea()
+        //{
+        //    var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
+        //    var res = await am.GetMetroArea(new AzureMapsToolkit.Mobility.MetroAreaRequest
+        //    {
+        //        Query = "40.648677,-74.010535",
+        //        QueryType = AzureMapsToolkit.Mobility.QueryType.position
+        //    });
 
-            Assert.Null(res.Error);
+        //    Assert.Null(res.Error);
 
-            Assert.NotNull(res.Result.Results[0].Geometry);
+        //    Assert.NotNull(res.Result.Results[0].Geometry);
 
-            Assert.Equal(121, res.Result.Results[0].MetroId);
+        //    Assert.Equal(121, res.Result.Results[0].MetroId);
 
-        }
+        //}
 
-        [Fact]
-        public async Task GetNearbyTransit()
-        {
-            var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
-            var res = await am.GetNearbyTransit(new AzureMapsToolkit.Mobility.NearbyTransitRequest
-            {
-                MetroId = 121,
-                Query = "40.693393,-73.988310",
-                Limit = 5,
-                Radius = 300,
-                ObjectType = AzureMapsToolkit.Mobility.ObjectType.Stop
+        //[Fact]
+        //public async Task GetNearbyTransit()
+        //{
+        //    var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
+        //    var res = await am.GetNearbyTransit(new AzureMapsToolkit.Mobility.NearbyTransitRequest
+        //    {
+        //        MetroId = 121,
+        //        Query = "40.693393,-73.988310",
+        //        Limit = 5,
+        //        Radius = 300,
+        //        ObjectType = AzureMapsToolkit.Mobility.ObjectType.Stop
 
-            });
+        //    });
 
-            Assert.Null(res.Error);
-        }
+        //    Assert.Null(res.Error);
+        //}
 
-        [Fact]
-        public async Task GetRealTimeArrivals()
-        {
-            var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
-            var res = await am.GetRealTimeArrivals(new AzureMapsToolkit.Mobility.RealTimeArrivalsRequest
-            {
-                Query = "121---19919516"
-            });
+        //[Fact]
+        //public async Task GetRealTimeArrivals()
+        //{
+        //    var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
+        //    var res = await am.GetRealTimeArrivals(new AzureMapsToolkit.Mobility.RealTimeArrivalsRequest
+        //    {
+        //        Query = "121---19919516"
+        //    });
 
-            Assert.Null(res.Error);
-        }
+        //    Assert.Null(res.Error);
+        //}
 
-        [Fact]
-        public async Task GetTransitItenary()
-        {
-            var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
-            _ = await am.GetTransitItinerary(new AzureMapsToolkit.Mobility.TransitItineraryRequest
-            {
-            });
-        }
+        //[Fact]
+        //public async Task GetTransitItenary()
+        //{
+        //    var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
+        //    _ = await am.GetTransitItinerary(new AzureMapsToolkit.Mobility.TransitItineraryRequest
+        //    {
+        //    });
+        //}
 
-        [Fact]
-        public async Task GetTransitLineInfo()
-        {
-            var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
-            var transitLineInfoRequest = new AzureMapsToolkit.Mobility.TransitLineInfoRequest
-            {
-                MetroId = 121,
-                Query = "121---373227",
-                DetailTypes = TransitLineDetailType.Stops | TransitLineDetailType.Schedule | TransitLineDetailType.Stops
-            };
-            var res = await am.GetTransitLineInfo(transitLineInfoRequest);
-            Assert.Null(res.Error);
-        }
+        //[Fact]
+        //public async Task GetTransitLineInfo()
+        //{
+        //    var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
+        //    var transitLineInfoRequest = new AzureMapsToolkit.Mobility.TransitLineInfoRequest
+        //    {
+        //        MetroId = 121,
+        //        Query = "121---373227",
+        //        DetailTypes = TransitLineDetailType.Stops | TransitLineDetailType.Schedule | TransitLineDetailType.Stops
+        //    };
+        //    var res = await am.GetTransitLineInfo(transitLineInfoRequest);
+        //    Assert.Null(res.Error);
+        //}
 
-        [Fact]
-        public async Task GetTransitRoute()
-        {
-            var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
-            var transitRouteRequest = new TransitRouteRequest
-            {
-                MetroId = 121,
-                Origin = "40.680903,-73.983723",
-                OriginType = OriginType.position,
-                Destination = "40.682051,-73.976702",
-                DestinationType = DestinationType.position
-            };
-            var res = await am.GetTransitRoute(transitRouteRequest);
+        //[Fact]
+        //public async Task GetTransitRoute()
+        //{
+        //    var am = new AzureMapsToolkit.AzureMapsServices(_KEY);
+        //    var transitRouteRequest = new TransitRouteRequest
+        //    {
+        //        MetroId = 121,
+        //        Origin = "40.680903,-73.983723",
+        //        OriginType = OriginType.position,
+        //        Destination = "40.682051,-73.976702",
+        //        DestinationType = DestinationType.position
+        //    };
+        //    var res = await am.GetTransitRoute(transitRouteRequest);
 
-            Assert.Null(res.Error);
-        }
+        //    Assert.Null(res.Error);
+        //}
 
         [Fact]
         public async Task GetElevationDataForBoundingBox()
