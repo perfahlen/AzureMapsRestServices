@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Description>.Net standard library for Azure Maps Services</Description>
     <PackageProjectUrl>https://github.com/perfahlen/AzureMapsRestServices</PackageProjectUrl>
@@ -12,18 +12,24 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <RepositoryType>GIT</RepositoryType>
     <PackageTags>.NET Azure Maps REST API </PackageTags>
-    <Version>7.0.0</Version>
-    <AssemblyVersion>7.1.0.0</AssemblyVersion>
+    <Version>8.0.0</Version>
+    <AssemblyVersion>8.0.0.0</AssemblyVersion>
     <RootNamespace>AzureMapsToolkit</RootNamespace>
-    <FileVersion>7.1.0.0</FileVersion>
+    <FileVersion>8.0.0.0</FileVersion>
     <Authors>Per Fahlen,Vincent Baaij</Authors>
     <Copyright>© 2021</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Core.Experimental" Version="0.1.0-preview.13" />
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+    <Compile Remove="Mobility\**" />
+    <EmbeddedResource Remove="Mobility\**" />
+    <None Remove="Mobility\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Core.Experimental" Version="0.1.0-preview.18" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
   </ItemGroup>
 
 </Project>
