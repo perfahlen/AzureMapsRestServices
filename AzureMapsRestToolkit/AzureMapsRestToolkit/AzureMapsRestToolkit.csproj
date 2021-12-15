@@ -5,7 +5,7 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Description>.Net standard library for Azure Maps Services</Description>
     <PackageProjectUrl>https://github.com/perfahlen/AzureMapsRestServices</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/perfahlen/AzureMapsRestServicet</RepositoryUrl>
+    <RepositoryUrl>https://github.com/perfahlen/AzureMapsRestServices</RepositoryUrl>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <IncludeSymbols>true</IncludeSymbols>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
