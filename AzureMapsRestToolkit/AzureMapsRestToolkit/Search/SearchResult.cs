@@ -50,6 +50,12 @@ namespace AzureMapsToolkit.Search
         [JsonPropertyName("type")]
         public string Type { get; set; }
 
+        /// <summary>
+        /// Entity type property
+        /// </summary>
+        [JsonPropertyName("entityType")]
+        public string EntityType { get; set; }
+
 
         /// <summary>
         /// The viewport that covers the result represented by the top-left and bottom-right coordinates of the viewport.
